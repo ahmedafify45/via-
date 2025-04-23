@@ -2,6 +2,7 @@ import Portfolio from "@/components/profile";
 import { Button } from "@/components/ui/button";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PortfolioAds from "./PortfolioAds";
 
 function OurPortfolio() {
   const portfolio = [
@@ -30,6 +31,7 @@ function OurPortfolio() {
           </Button>
         </div>
       </div>
+      <PortfolioAds />
     </section>
   );
 }
