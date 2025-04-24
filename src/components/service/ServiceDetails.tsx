@@ -104,7 +104,7 @@ function ServiceDetails() {
   }
 
   return (
-    <main className="mt-[80px]">
+    <main className="py-[150px]">
       <div className="mx-[80px]">
         <Banner
           title="Our Services"

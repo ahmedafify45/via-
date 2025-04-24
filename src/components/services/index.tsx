@@ -1,21 +1,8 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/autoplay";
-import ServicesCard from "./ServicesCard";
+import Banner from "../custom/banner";
+import ServicesCard from "../service/ServicesCard";
 
-interface ServiceSectionProps {
-  onSwiperInit: (swiper: SwiperType) => void;
-}
-
-function ServiceSection({ onSwiperInit }: ServiceSectionProps) {
+function Services() {
   const serviceSection = [
     {
       id: 1,
@@ -51,37 +38,18 @@ function ServiceSection({ onSwiperInit }: ServiceSectionProps) {
       link: "/services/content-marketing",
     },
   ];
-
   return (
-    <div className="relative">
-      <Swiper
-        modules={[Navigation, Autoplay]}
-        spaceBetween={24}
-        slidesPerView={1}
-        navigation={false}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        onSwiper={onSwiperInit}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-        }}
-        className="service-swiper"
-      >
+    <section className="mt-[220px] mx-[80px] mb-[156px]">
+      <Banner subtitle="home/services" title="Our Services" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px]">
         {serviceSection.map((service) => (
-          <SwiperSlide key={service.slug}>
+          <div key={service.id}>
             <ServicesCard service={service} />
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
-    </div>
+      </div>
+    </section>
   );
 }
 
-export default ServiceSection;
+export default Services;

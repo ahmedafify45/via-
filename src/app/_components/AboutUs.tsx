@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,6 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import AboutDetails from "./AboutDetails";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 function AboutUs() {
   const aboutUsIcon = [
@@ -17,30 +21,56 @@ function AboutUs() {
   ];
   const imageData = [
     {
+      id: 1,
       group: "/images/sidebar/LogoSCE.png",
       alt: "LogoSCE",
       width: 51,
       height: 51,
     },
     {
+      id: 2,
       group: "/images/sidebar/Group.png",
       alt: "Group",
       width: 100,
       height: 41,
     },
     {
+      id: 3,
       group: "/images/sidebar/LogoFEG.png",
       alt: "LogoFEG",
       width: 157,
       height: 76,
     },
     {
+      id: 4,
       group: "/images/sidebar/Logodt_logo.png",
       alt: "LogoBdC.png",
       width: 140,
       height: 59,
     },
     {
+      id: 5,
+      group: "/images/sidebar/LogoBdC.png",
+      alt: "LogoBdC.png",
+      width: 87,
+      height: 63,
+    },
+    {
+      id: 6,
+      group: "/images/sidebar/LogoBdC.png",
+      alt: "LogoBdC.png",
+      width: 87,
+      height: 63,
+    },
+    {
+      id: 7,
+      group: "/images/sidebar/LogoBdC.png",
+      alt: "LogoBdC.png",
+      width: 87,
+      height: 63,
+    },
+    {
+      id: 8,
       group: "/images/sidebar/LogoBdC.png",
       alt: "LogoBdC.png",
       width: 87,
@@ -49,7 +79,7 @@ function AboutUs() {
   ];
 
   return (
-    <section>
+    <section className="px-4 md:px-0">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="w-full md:w-1/2">
           <Image
@@ -63,49 +93,87 @@ function AboutUs() {
         </div>
         <div className="w-full md:w-1/2">
           <div
-            className="bg-cover w-full h-[612px] overflow-hidden "
+            className="bg-cover w-full h-auto md:h-[612px] overflow-hidden"
             style={{ backgroundImage: "url('/images/aboutus_text.png')" }}
           >
-            <div className="ml-[155px]">
-              <h2 className="font-bold text-4xl md:text-[48px] text-black pt-[92px]">
+            <div className="px-4 md:ml-[155px] py-8 md:py-0">
+              <h2 className="font-bold text-3xl md:text-[48px] text-black pt-8 md:pt-[92px]">
                 About Us
               </h2>
-              <p className="mb-[16px] mt-[24px]">
+              <p className="mb-4 md:mb-[16px] mt-4 md:mt-[24px] text-base md:text-lg">
                 Once upon a time in the vibrant city of Cairo, four visionaries
                 came together with a shared passion for transforming ideas into
                 impactful stories.
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-4 md:gap-2">
                 {aboutUsIcon.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <div className="w-[44px] h-[44px] bg-[#0C0D0F] rounded-tl-[16px] rounded-br-[16px] text-primary text-[18px] flex items-center justify-center">
+                    <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] bg-[#0C0D0F] rounded-tl-[16px] rounded-br-[16px] text-primary text-[18px] flex items-center justify-center">
                       <FontAwesomeIcon
                         icon={item.icon}
-                        className="w-[18px] h-[26px]"
+                        className="w-[16px] md:w-[18px] h-[24px] md:h-[26px]"
                       />
                     </div>
-                    <p className="text-[24px] font-bold">{item.title}</p>
+                    <p className="text-lg md:text-[24px] font-bold">
+                      {item.title}
+                    </p>
                   </div>
                 ))}
               </div>
-              <Button className="text-black w-[220px] h-[50px] p-[16px] mt-[24px]">
+              <Button className="text-black w-full md:w-[220px] h-[50px] p-[16px] mt-6 md:mt-[24px]">
                 More Info <FontAwesomeIcon icon={faArrowRight} />
               </Button>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between bg-white rounded-tl-[16px] rounded-br-[16px] w-[1284px] h-[96px] mr-[76px] ml-[80px]">
-        {imageData.map((item, index) => (
-          <div key={index}>
-            <Image
-              src={item.group}
-              alt={item.alt}
-              width={item.width}
-              height={item.height}
-            />
-          </div>
-        ))}
+      <div className="bg-white rounded-tl-[16px] rounded-br-[16px] w-full md:w-[90%] lg:w-[1284px] h-auto md:h-[96px] mx-auto p-4 md:p-0">
+        <Swiper
+          modules={[Autoplay]}
+          spaceBetween={30}
+          slidesPerView={5}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          breakpoints={{
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            480: {
+              slidesPerView: 3,
+              spaceBetween: 15,
+            },
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+          }}
+          className="w-full h-full flex items-center"
+        >
+          {imageData.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              className="flex items-center justify-center h-full"
+            >
+              <div className="flex items-center justify-center w-full h-full">
+                <Image
+                  src={item.group}
+                  alt={item.alt}
+                  width={item.width}
+                  height={item.height}
+                  className="w-auto h-auto object-contain max-w-[80%] md:max-w-[90%] lg:max-w-full"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
       <AboutDetails />
     </section>

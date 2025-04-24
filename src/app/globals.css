@@ -5,6 +5,20 @@
 body {
   background-color: #0c0d0f;
 }
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -121,4 +135,39 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Swiper Custom Styles */
+.service-swiper {
+  padding: 20px 0;
+}
+
+.service-swiper .swiper-button-next,
+.service-swiper .swiper-button-prev {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.service-swiper .swiper-button-next:hover,
+.service-swiper .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.service-swiper .swiper-button-next::after,
+.service-swiper .swiper-button-prev::after {
+  font-size: 20px;
+}
+
+.service-swiper .swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.5;
+}
+
+.service-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #fff;
 }

@@ -84,10 +84,10 @@ function Footer() {
             Innovative marketing solutions that drive growth and create
             meaningful connections between brands and their audiences.
           </p>
-          <div className="flex gap-4">
-            <FontAwesomeIcon icon={faYoutube} />
-            <FontAwesomeIcon icon={faTwitter} />
-            <FontAwesomeIcon icon={faInstagram} />
+          <div className="flex gap-4 ">
+            <FontAwesomeIcon icon={faYoutube} className="w-[32px] h-[24px]" />
+            <FontAwesomeIcon icon={faTwitter} className="w-[32px] h-[24px]" />
+            <FontAwesomeIcon icon={faInstagram} className="w-[32px] h-[24px]" />
           </div>
         </div>
         <div className="flex flex-col gap-4">
