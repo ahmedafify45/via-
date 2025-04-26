@@ -3,14 +3,13 @@ import { Button } from "@/components/ui/button";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PortfolioAds from "./PortfolioAds";
-
+export const portfolio = [
+  { title: "All", slug: "all" },
+  { title: "Social Designs", slug: "social-designs" },
+  { title: "Photo shoot", slug: "photo-shoot" },
+  { title: "Branding", slug: "branding" },
+];
 function OurPortfolio() {
-  const portfolio = [
-    { title: "All" },
-    { title: "Social Designs" },
-    { title: "Photo shoot" },
-    { title: "Branding" },
-  ];
   return (
     <section className="px-4 md:px-6 lg:px-8">
       <div>

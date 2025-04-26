@@ -11,7 +11,9 @@ export default function Home() {
       <AboutUs />
       <OurPortfolio />
       <OurService />
-      <OurClients />
+      <div className="mx-[80px]">
+        <OurClients />
+      </div>
     </main>
   );
 }

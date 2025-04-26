@@ -45,7 +45,7 @@ function Clients() {
 
   return (
     <section className="py-16">
-      <div className="mx-[80px] max-w-7xl">
+      <div className=" max-w-7xl">
         <Swiper
           onBeforeInit={(swiper) => {
             swiperRef.current = swiper;
