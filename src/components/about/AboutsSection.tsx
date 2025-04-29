@@ -1,19 +1,21 @@
-import Force from "@/app/_components/about/Force";
-import OurMission from "@/app/_components/about/OurMission";
-import OurStory from "@/app/_components/about/OurStory";
-import OurVision from "@/app/_components/about/OurVision";
-import WhatChoose from "@/app/_components/about/WhatChoose";
-import OurClients from "@/app/_components/OurClients";
+import Force from "@/app/[locale]/_components/about/Force";
+import OurMission from "@/app/[locale]/_components/about/OurMission";
+import OurStory from "@/app/[locale]/_components/about/OurStory";
+import OurVision from "@/app/[locale]/_components/about/OurVision";
+import WhatChoose from "@/app/[locale]/_components/about/WhatChoose";
+import OurClients from "@/app/[locale]/_components/OurClients";
 
 function AboutsSection() {
   return (
-    <section className="mt-[150px]">
+    <section className="my-[220px]">
       <OurStory />
       <OurMission />
       <OurVision />
       <WhatChoose />
       <Force />
-      <OurClients />
+      <div className="flex items-center justify-center">
+        <OurClients />
+      </div>
     </section>
   );
 }

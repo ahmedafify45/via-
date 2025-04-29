@@ -27,12 +27,12 @@ function OurService() {
   };
 
   return (
-    <section className="mt-[80.54px] mx-[80px]">
-      <div className="flex items-center justify-between">
+    <section className="mt-[80.54px] mx-[20px] lg:mx-[80px]">
+      <div className="flex items-center justify-between mb-[40px] lg:mb-[10px]" >
         <p className="md:text-[48px] font-bold text-primary text-[20px]">
           Our Services
         </p>
-        <div className="flex items-center gap-[20px]">
+        <div className="flex items-center gap-[20px] ">
           <Button
             onClick={handlePrevSlide}
             className="bg-transparent hover:bg-[#FFCD054D] border border-primary hover:text-white text-primary"

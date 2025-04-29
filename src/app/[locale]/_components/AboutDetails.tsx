@@ -1,32 +1,66 @@
+"use client";
 import Image from "next/image";
+
+import { motion, useInView, useSpring, useTransform } from "framer-motion";
+import { useRef, useEffect } from "react";
+
+function AnimatedNumber({ value, plus, delay }: { value: number; plus: string; delay: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  const spring = useSpring(0, {
+    stiffness: 100,
+    damping: 30,
+  });
+
+  const display = useTransform(spring, (current) => {
+    return Math.floor(current);
+  });
+
+  useEffect(() => {
+    if (isInView) {
+      spring.set(0);
+      spring.set(value);
+    }
+  }, [isInView, spring, value]);
+
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isInView ? 1 : 0 }}
+      transition={{ duration: 0.5, delay }}
+    >
+      <motion.span>{display}</motion.span>
+      <span className="text-primary">{plus}</span>
+    </motion.span>
+  );
+}
 
 function AboutDetails() {
   const details = [
     {
-      number: "10",
+      number: 10,
       title: "Years of Experience",
       plus: "+",
     },
     {
-      number: "250",
+      number: 250,
       title: "Projects Completed",
       plus: "+",
     },
     {
-      number: "250",
+      number: 250,
       title: "Projects Completed",
       plus: "+",
     },
     {
-      number: "95",
+      number: 95,
       title: "Client Satisfaction",
       plus: "+",
     },
-    {
-      number: "15",
-      title: "Industry Awards",
-    },
   ];
+
   return (
     <div className="bg-white">
       <div className="w-full">
@@ -43,7 +77,11 @@ function AboutDetails() {
         {details.map((item, index) => (
           <div key={index} className="text-center">
             <p className="text-4xl lg:text-6xl lg:text-[82px] font-bold">
-              {item.number} <span className="text-primary">{item.plus}</span>
+              <AnimatedNumber 
+                value={item.number} 
+                plus={item.plus} 
+                delay={index * 0.3}
+              />
             </p>
             <p className="text-sm md:text-base lg:text-lg">{item.title}</p>
           </div>
@@ -54,3 +92,4 @@ function AboutDetails() {
 }
 
 export default AboutDetails;
+

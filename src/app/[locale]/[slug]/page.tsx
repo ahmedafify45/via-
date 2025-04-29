@@ -1,4 +1,4 @@
-import { team } from "@/app/_components/about/Force";
+import { team } from "@/app/[locale]/_components/about/Force";
 import Banner from "@/components/custom/banner";
 import {
   faYoutube,

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 function Footer() {
   const services = [
@@ -35,22 +36,27 @@ function Footer() {
     {
       id: 1,
       name: "About Us",
+      herf:"about"
     },
     {
       id: 2,
       name: "Portfolio",
+      herf:"portfolio"
     },
     {
       id: 3,
       name: "Blog",
+      herf:"blogs"
     },
     {
       id: 4,
       name: "Contact Us",
+      herf :"contact"
     },
     {
       id: 5,
       name: "Privacy Policy",
+      herf:"/"
     },
   ];
   const ContactUs = [
@@ -101,9 +107,9 @@ function Footer() {
         <div className="flex flex-col gap-4">
           <p className="text-[24px] font-bold">Quick Links</p>
           {quickLinks.map((link) => (
-            <p key={link.id} className="text-[14px]">
+            <Link href={link.herf} key={link.id} className="text-[14px]">
               {link.name}
-            </p>
+            </Link>
           ))}
         </div>
         <div className="flex flex-col gap-4">
@@ -113,7 +119,7 @@ function Footer() {
               {contact.name}
             </p>
           ))}
-          <div className="flex items-center">
+          <div className="flex items-center justify-center">
             <input
               className=" h-[44px] p-3 outline-none border border-accent"
               type="email"

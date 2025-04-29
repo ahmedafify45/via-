@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
+import LanguageSwitcher from "./Language-switcher";
+
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,17 +32,20 @@ function Header() {
         </button>
 
         {/* Desktop Book Now Button */}
+      <div className="flex items-center">
+        <LanguageSwitcher />
         <Button className="hidden xl:flex w-[133px] h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
-          Book Now
+          <Link href="/booking">Book Now</Link>
         </Button>
 
+      </div>
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black xl:hidden">
             <Navbar isMobile={true} />
             <div className="p-4">
               <Button className="w-full h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
-                Book Now
+                <Link href="/booking">Book Now</Link>
               </Button>
             </div>
           </div>

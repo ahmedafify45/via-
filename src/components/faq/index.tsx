@@ -4,7 +4,7 @@ import AskQushions from "./AskQushions";
 
 function FaqSection() {
   return (
-    <section className="my-[150px] mx-[80px]">
+    <section className="my-[220px] mx-[80px]">
       <Banner title="FAQ" subtitle="home/faq" />
       <AskQushions />
     </section>

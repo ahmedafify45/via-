@@ -11,6 +11,7 @@ function Navbar({ isMobile = false }: NavbarProps) {
     { title: "About", href: "/about" },
     { title: "Services", href: "/services" },
     { title: "Portfolio", href: "/portfolio" },
+    { title: "Blogs", href: "/blogs" },
     { title: "Contact", href: "/contact" },
   ];
 

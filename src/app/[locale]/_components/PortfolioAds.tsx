@@ -46,7 +46,7 @@ function PortfolioAds() {
   ];
 
   return (
-    <section className="bg-[#181818] text-white mt-[84.5px] px-4 sm:px-6 md:px-8">
+    <section className="bg-[#181818] text-white mt-[84.5px]">
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center lg:ml-[110px] gap-[13px]">
         <div className="max-w-[535px] max-h-[158px] flex flex-col justify-center items-center mx-auto lg:mx-0">
           <p className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium text-center mt-[100px] lg:mt-0">
@@ -57,7 +57,7 @@ function PortfolioAds() {
             Request a free consultation
           </Button>
         </div>
-        <div className="w-full h-auto mt-8 lg:mt-0">
+        <div className="w-full h-utoa mt-8 lg:mt-0">
           <Image
             src="/images/portfolioAds.png"
             alt="portfolioAds"
@@ -67,7 +67,7 @@ function PortfolioAds() {
           />
         </div>
       </div>
-      <div className="bg-primary text-black max-w-[1534.33px] h-[80px] sm:h-[90px] md:h-[110px] -rotate-[3deg] relative overflow-hidden mt-8">
+      <div className="bg-primary text-black w-[100%] h-[80px] sm:h-[90px] md:h-[110px] -rotate-[3deg] relative overflow-hidden mt-8">
         <Swiper
           modules={[Autoplay, FreeMode]}
           spaceBetween={20}

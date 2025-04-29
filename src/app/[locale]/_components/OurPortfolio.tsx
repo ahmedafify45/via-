@@ -11,7 +11,7 @@ export const portfolio = [
 ];
 function OurPortfolio() {
   return (
-    <section className="px-4 md:px-6 lg:px-8">
+    <section className="">
       <div>
         <div className="flex flex-col items-center justify-center pt-[40px] md:pt-[60px] lg:pt-[80px]">
           <h2 className="text-primary text-[32px] md:text-[40px] lg:text-[48px] font-bold text-center">

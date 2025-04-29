@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/thumbs";
 
 import Banner from "../custom/banner";
-import OurClients from "@/app/_components/OurClients";
+import OurClients from "@/app/[locale]/_components/OurClients";
 import TransformBrand from "./TransformBrand";
 
 interface PortfolioDetailsProps {
@@ -32,10 +32,10 @@ interface PortfolioDetailsProps {
 
 function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <main>
-      <div className="px-4 md:px-[80px] py-[50px] md:py-[150px]">
+      <div className="px-4 md:px-[80px] md:my-[220px]">
         <Banner
           title={"Our Portfolio"}
           subtitle="Home / Portfolio / Portfolio Details"
@@ -52,6 +52,7 @@ function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
               thumbs={{ swiper: thumbsSwiper }}
               modules={[Thumbs]}
               className="h-[300px] md:h-[500px] rounded-lg"
+              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
             >
               {portfolio.gallery.map((item, index) => (
                 <SwiperSlide key={index}>
@@ -66,7 +67,18 @@ function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
                 </SwiperSlide>
               ))}
             </Swiper>
-
+            <div className="flex gap-4 mt-4 items-center justify-center">
+          {portfolio.gallery.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-[10px] w-[48px] transition-all duration-200 ${
+                activeIndex === idx
+                  ? "bg-[#FFD600]" // yellow
+                  : "bg-[#4B3F13] border border-[#FFD600]"
+              }`}
+            />
+          ))}
+        </div>
             {/* Thumbnail Slider - Positioned absolutely at bottom center */}
           </div>
         </div>

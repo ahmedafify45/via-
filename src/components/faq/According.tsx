@@ -1,14 +1,10 @@
 "use client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { Button } from "../ui/button";
 import { useState } from "react";
+import AccordInformation from "./AccordInformation";
 
-export function Accordions() {
+export function Accordions({ CategoryStatus = true }: { CategoryStatus?: boolean }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const accordions = [
@@ -73,9 +69,12 @@ export function Accordions() {
           (accordion) => accordion.category === selectedCategory
         );
 
+
+
   return (
     <div>
-      <div className="text-white bg-[#FFFFFF1A] p-[8px] mb-[21px] rounded-tl-[16px] rounded-br-[16px] flex flex-wrap gap-[8px]">
+      {CategoryStatus && (
+        <div className="text-white bg-[#FFFFFF1A] p-[8px] mb-[21px] rounded-tl-[16px] rounded-br-[16px] flex flex-wrap gap-[8px]">
         {categories.map((category: string) => (
           <Button
             key={category}
@@ -88,22 +87,8 @@ export function Accordions() {
           </Button>
         ))}
       </div>
-      <Accordion
-        type="single"
-        collapsible
-        className="bg text-white w-full lg:w-[638px] min-h-[104px] bg-[#FFFFFF21] p-[16px] rounded-[8px]"
-      >
-        {filteredAccordions.map((accordion) => (
-          <AccordionItem value={`item-${accordion.id}`} key={accordion.id}>
-            <AccordionTrigger className="text-sm md:text-base">
-              {accordion.title}
-            </AccordionTrigger>
-            <AccordionContent className="text-sm md:text-base">
-              {accordion.content}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+      )}
+      <AccordInformation filteredAccordions={filteredAccordions} />
     </div>
   );
 }

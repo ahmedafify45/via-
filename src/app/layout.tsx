@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
-import "./globals.css";
-import "./fontawesome";
+import "./[locale]/globals.css";
+import "./[locale]/fontawesome";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";

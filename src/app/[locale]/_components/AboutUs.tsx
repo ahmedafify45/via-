@@ -12,6 +12,7 @@ import AboutDetails from "./AboutDetails";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { motion } from "framer-motion";
 
 function AboutUs() {
   const aboutUsIcon = [
@@ -79,24 +80,36 @@ function AboutUs() {
   ];
 
   return (
-    <section className="px-4 md:px-0">
+    <section className="md:px-0">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="w-full md:w-1/2">
+        <motion.div 
+          className="w-full md:w-1/2"
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <Image
             src="/images/aboutus.png"
             alt="About Us"
             width={422}
             height={535}
-            className="w-full h-auto object-contain"
+            className="w-full h-auto object-contain scale-90 md:scale-100"
             priority
           />
-        </div>
-        <div className="w-full md:w-1/2">
+        </motion.div>
+        <motion.div 
+          className="w-full md:w-1/2"
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div
-            className="bg-cover w-full h-auto md:h-[612px] overflow-hidden"
+            className="bg-cover w-full h-auto md:h-[612px] overflow-hidden [transform:scaleX(-1)] md:[transform:scaleX(1)]"
             style={{ backgroundImage: "url('/images/aboutus_text.png')" }}
           >
-            <div className="px-4 md:ml-[155px] py-8 md:py-0">
+            <div className="px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
               <h2 className="font-bold text-3xl md:text-[48px] text-black pt-8 md:pt-[92px]">
                 About Us
               </h2>
@@ -125,7 +138,7 @@ function AboutUs() {
               </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <div className="bg-white rounded-tl-[16px] rounded-br-[16px] w-full md:w-[90%] lg:w-[1284px] h-auto md:h-[96px] mx-auto p-4 md:p-0">
         <Swiper

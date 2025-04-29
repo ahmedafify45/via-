@@ -72,20 +72,33 @@ function Portfolio({ portfolio }: PortfolioProps) {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mb-[24px]">
-      <div className="flex items-center justify-center gap-4 mt-[40px]">
-        {portfolio.map((item) => (
+      <div className="flex items-center justify-center gap-4 mt-[40px] overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex items-center gap-4 bg-[#FFFFFF1A] px-6 py-3 rounded-tl-[24px] rounded-br-[24px] backdrop-blur-sm">
           <Button
-            key={item.slug}
-            onClick={() => setSelectedCategory(item.title)}
+            onClick={() => setSelectedCategory("All")}
             className={`${
-              selectedCategory === item.title
-                ? "bg-primary text-black"
+              selectedCategory === "All"
+                ? "bg-primary text-black shadow-lg"
                 : "bg-secondary hover:bg-primary hover:text-black"
-            } transition-all duration-300`}
+            } transition-all duration-300 snap-center h-[40px] px-6 rounded-full text-sm font-medium sm:hidden`}
           >
-            {item.title}
+            All
           </Button>
-        ))}
+
+          {portfolio.map((item) => (
+            <Button
+              key={item.slug}
+              onClick={() => setSelectedCategory(item.title)}
+              className={`${
+                selectedCategory === item.title
+                  ? "bg-primary text-black shadow-lg"
+                  : "bg-secondary hover:bg-primary hover:text-black"
+              } transition-all duration-300 snap-center h-[40px] px-6 rounded-full text-sm font-medium`}
+            >
+              {item.title}
+            </Button>
+          ))}
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[24px]">
         {filteredPortfolio.map((item) => (

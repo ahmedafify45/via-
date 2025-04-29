@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import Banner from "../custom/banner";
 import Link from "next/link";
+import InformationContact from "../contact/InformationContact";
+import { Accordions } from "../faq/According";
+import AccordInformation from "../faq/AccordInformation";
 
 // This would typically come from an API or database
 const serviceDetails = {
@@ -145,54 +148,17 @@ function ServiceDetails() {
             </div>
           </div>
         </div>
+        <div>
+          <InformationContact />
+        </div>
+        <div className="w-full mt-[80px]">
+          <h3 className="text-[48px] text-primary font-medium">FAQ</h3>
+        <Accordions CategoryStatus={false}/>
+        </div>
       </div>
     </main>
   );
 }
 
 export default ServiceDetails;
-// {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-// {/* Image Section */}
-// <div className="relative aspect-[4/3] w-full">
-//   <Image
-//     src={service.image}
-//     alt={service.title}
-//     fill
-//     className="object-cover rounded-[20px]"
-//   />
-// </div>
 
-// {/* Content Section */}
-// <div className="space-y-8">
-//   <h1 className="text-4xl font-bold text-primary">{service.title}</h1>
-//   <p className="text-lg text-gray-600">{service.longDescription}</p>
-
-//   {/* Features Section */}
-//   <div>
-//     <h2 className="text-2xl font-semibold mb-4">
-//       Our Services Include
-//     </h2>
-//     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//       {service.features.map((feature, index) => (
-//         <li key={index} className="flex items-center space-x-2">
-//           <span className="w-2 h-2 bg-primary rounded-full"></span>
-//           <span>{feature}</span>
-//         </li>
-//       ))}
-//     </ul>
-//   </div>
-
-//   {/* Benefits Section */}
-//   <div>
-//     <h2 className="text-2xl font-semibold mb-4">Key Benefits</h2>
-//     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//       {service.benefits.map((benefit, index) => (
-//         <li key={index} className="flex items-center space-x-2">
-//           <span className="w-2 h-2 bg-primary rounded-full"></span>
-//           <span>{benefit}</span>
-//         </li>
-//       ))}
-//     </ul>
-//   </div>
-// </div>
-// </div> */}
