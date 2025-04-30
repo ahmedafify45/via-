@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,8 +14,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
+import { Languages } from "@/constants/enums";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useEffect } from "react";
 
-function AboutUs() {
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+function AboutUs({ about }: any) {
+  const params = useParams();
+  const locale = params?.locale as string;
+  const aboutImageRef = useRef<HTMLImageElement>(null);
+
   const aboutUsIcon = [
     { title: "Creativity And Innovation media", icon: faLightbulb },
     { title: "Excellence And Adaptability", icon: faStar },
@@ -79,10 +92,31 @@ function AboutUs() {
     },
   ];
 
+  useEffect(() => {
+    if (aboutImageRef.current) {
+      const image = aboutImageRef.current;
+
+      // Create a trigger point for the final position
+      ScrollTrigger.create({
+        trigger: image,
+        start: "top center",
+        onEnter: () => {
+          gsap.to(image, {
+            rotation: 0,
+            scale: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        },
+      });
+    }
+  }, []);
+
   return (
     <section className="md:px-0">
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-        <motion.div 
+        <motion.div
           className="w-full md:w-1/2"
           initial={{ x: -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
@@ -90,15 +124,18 @@ function AboutUs() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <Image
+            ref={aboutImageRef}
             src="/images/aboutus.png"
             alt="About Us"
             width={422}
             height={535}
-            className="w-full h-auto object-contain scale-90 md:scale-100"
+            className={`w-full h-auto object-contain scale-90 md:scale-100 will-change-transform ${
+              locale === Languages.ARABIC ? "rotate-y-180" : ""
+            }`}
             priority
           />
         </motion.div>
-        <motion.div 
+        <motion.div
           className="w-full md:w-1/2"
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
@@ -111,12 +148,10 @@ function AboutUs() {
           >
             <div className="px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
               <h2 className="font-bold text-3xl md:text-[48px] text-black pt-8 md:pt-[92px]">
-                About Us
+                {about.title}
               </h2>
               <p className="mb-4 md:mb-[16px] mt-4 md:mt-[24px] text-base md:text-lg">
-                Once upon a time in the vibrant city of Cairo, four visionaries
-                came together with a shared passion for transforming ideas into
-                impactful stories.
+                {about.discription}
               </p>
               <div className="flex flex-col gap-4 md:gap-2">
                 {aboutUsIcon.map((item, index) => (
@@ -134,7 +169,11 @@ function AboutUs() {
                 ))}
               </div>
               <Button className="text-black w-full md:w-[220px] h-[50px] p-[16px] mt-6 md:mt-[24px]">
-                More Info <FontAwesomeIcon icon={faArrowRight} />
+                More Info{" "}
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className={locale === Languages.ARABIC ? "rotate-180" : ""}
+                />
               </Button>
             </div>
           </div>

@@ -1,10 +1,18 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 function OurVision() {
   return (
-    <div className=" py-[80px] ">
+    <div className="py-[80px]">
       <div className="flex flex-col lg:flex-row items-center justify-between mx-6 md:mx-[80px] gap-10">
-        <div className="max-w-[676px] flex-1 text-center md:text-left ">
+        <motion.div
+          className="max-w-[676px] flex-1 text-center md:text-left"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <h3 className="text-[36px] md:text-[48px] font-bold text-primary">
             Our Vision
           </h3>
@@ -14,8 +22,14 @@ function OurVision() {
             gateway for unprecedented growth and influence in the MEA markets
             over the next 10 years.
           </p>
-        </div>
-        <div className="relative">
+        </motion.div>
+        <motion.div
+          className="relative"
+          initial={{ opacity: 0, y: -100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <Image
             src="/images/about/eyes.png"
             alt="about"
@@ -23,7 +37,7 @@ function OurVision() {
             height={210}
             className="md:w-[323px] md:h-[333px]"
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

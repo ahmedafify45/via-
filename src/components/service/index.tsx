@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -58,6 +57,7 @@ function ServiceSection({ onSwiperInit }: ServiceSectionProps) {
         modules={[Navigation, Autoplay]}
         spaceBetween={24}
         slidesPerView={1}
+        loop={true}
         navigation={false}
         autoplay={{
           delay: 3000,

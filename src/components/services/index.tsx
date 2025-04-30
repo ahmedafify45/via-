@@ -39,7 +39,7 @@ function Services() {
     },
   ];
   return (
-    <section className="mt-[220px] mx-[80px] mb-[156px]">
+    <section className="mt-[220px] mx-[3px] lg:mx-[80px] mb-[156px]">
       <Banner subtitle="home/services" title="Our Services" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px]">
         {serviceSection.map((service) => (

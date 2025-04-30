@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Swiper as SwiperType } from "swiper";
+import { Languages } from "@/constants/enums";
+import { useParams } from "next/navigation";
 
 function OurService() {
+  const params = useParams();
+  const locale = params?.locale as string;
   const swiperRef = useRef<SwiperType | null>(null);
 
   const handleSwiperInit = (swiper: SwiperType) => {
@@ -28,20 +32,24 @@ function OurService() {
 
   return (
     <section className="mt-[80.54px] mx-[20px] lg:mx-[80px]">
-      <div className="flex items-center justify-between mb-[40px] lg:mb-[10px]" >
+      <div className="flex items-center justify-between mb-[40px] lg:mb-[10px]">
         <p className="md:text-[48px] font-bold text-primary text-[20px]">
           Our Services
         </p>
         <div className="flex items-center gap-[20px] ">
           <Button
             onClick={handlePrevSlide}
-            className="bg-transparent hover:bg-[#FFCD054D] border border-primary hover:text-white text-primary"
+            className={`bg-transparent hover:bg-[#FFCD054D] border border-primary hover:text-white text-primary ${
+              locale === Languages.ARABIC ? "rotate-180" : ""
+            }`}
           >
             <FontAwesomeIcon icon={faArrowLeft} />
           </Button>
           <Button
             onClick={handleNextSlide}
-            className="bg-transparent hover:bg-[#FFCD054D] border border-primary hover:text-white text-primary"
+            className={`bg-transparent hover:bg-[#FFCD054D] border border-primary hover:text-white text-primary ${
+              locale === Languages.ARABIC ? "rotate-180" : ""
+            }`}
           >
             <FontAwesomeIcon icon={faArrowRight} />
           </Button>

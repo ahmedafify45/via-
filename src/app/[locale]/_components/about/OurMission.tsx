@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 function OurMission() {
   return (
@@ -14,16 +16,45 @@ function OurMission() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row items-center justify-between mx-4 sm:mx-6 md:mx-[80px] gap-6 sm:gap-8 md:gap-10 pt-[40px] sm:pt-[60px] md:pt-[80px]">
-        <div className="w-full md:w-auto">
+        <motion.div
+          className="w-full md:w-auto relative"
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            duration: 0.8,
+          }}
+        >
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[240px] md:w-[280px] h-[200px] sm:h-[240px] md:h-[280px] bg-primary -rotate-[15deg] transform-gpu"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
+              zIndex: -1,
+            }}
+          />
           <Image
             src="/images/about/Our_Mission.png"
             alt="ourMission"
             width={200}
             height={320}
-            className="w-[150px] sm:w-[180px] md:w-[200px] h-auto mx-auto md:mx-0"
+            className="w-[150px] sm:w-[180px] md:w-[200px] h-auto mx-auto md:mx-0 relative z-10"
           />
-        </div>
-        <div className="text-center md:text-left">
+        </motion.div>
+        <motion.div
+          className="text-center md:text-left"
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            duration: 0.8,
+          }}
+        >
           <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold text-primary">
             Our Mission
           </h2>
@@ -34,7 +65,7 @@ function OurMission() {
             we provide the essential tools and resources for their journey,
             ensuring every ambition is within reach.
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

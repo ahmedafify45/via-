@@ -6,6 +6,7 @@ export enum Directions {
 export enum Languages {
   ENGLISH = "en",
   ARABIC = "ar",
+  SPAN="sp"
 }
 
 export enum Routes {

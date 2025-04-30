@@ -1,4 +1,4 @@
-import Booking from "@/components/booking";
+
 import AboutUs from "./_components/AboutUs";
 import Hero from "./_components/Hero";
 import OurClients from "./_components/OurClients";
@@ -7,12 +7,19 @@ import OurService from "./_components/OurService";
 import Image from "next/image";
 import BookingInput from "@/components/booking/BookingInput";
 import BookingButton from "@/components/booking/BookingButton";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 
-export default function Home() {
+
+export default async function Home() {
+  const locale = await getCurrentLocale()
+  const {home} = await getTrans(locale)
+  const {about}= home
+  
   return (
     <main className="my-[220px] overflow-x-hidden">
       <Hero />
-      <AboutUs />
+      <AboutUs about ={about} />
       <OurPortfolio />
       <OurService />
       <div className="flex items-center justify-center">
@@ -24,13 +31,14 @@ export default function Home() {
             <p className="text-white">Your Information</p>
             <BookingInput/>
           </div>
-          <div className="w-full sm:w-[90%] lg:w-auto order-1 lg:order-2">
+          <div className="w-full sm:w-[90%] lg:w-auto order-1 lg:order-2 flex items-center justify-center lg:block">
             <Image 
-              src="/images/about/ourStory.png" 
+              src="/images/booking.png" 
               alt="" 
-              width={800} 
-              height={800}
-              className="w-full h-auto object-cover max-w-[800px]"
+              width={450} 
+              height={600}
+
+             
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +7,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
+import { Languages } from "@/constants/enums";
+import { useParams } from "next/navigation";
 
 function Hero() {
+  const params = useParams();
+  const locale = params?.locale as string;
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -17,23 +21,26 @@ function Hero() {
       id: 1,
       title: "Transform Your Brand's",
       subtitle: "Digital Presence",
-      description: "We craft strategic marketing campaigns that elevate your brand, engage your audience, and drive measurable results.",
-      image: "/images/hero.png"
+      description:
+        "We craft strategic marketing campaigns that elevate your brand, engage your audience, and drive measurable results.",
+      image: "/images/hero.png",
     },
     {
       id: 2,
       title: "Elevate Your Business",
       subtitle: "With Innovation",
-      description: "Cutting-edge solutions that transform your business and set you apart from the competition.",
-      image: "/images/aboutus.png"
+      description:
+        "Cutting-edge solutions that transform your business and set you apart from the competition.",
+      image: "/images/booking.png",
     },
     {
       id: 3,
       title: "Grow Your Audience",
       subtitle: "With Strategy",
-      description: "Data-driven strategies that help you reach and engage your target audience effectively.",
-      image: "/images/hero.png"
-    }
+      description:
+        "Data-driven strategies that help you reach and engage your target audience effectively.",
+      image: "/images/hero.png",
+    },
   ];
 
   const handlePrevSlide = () => {
@@ -57,6 +64,7 @@ function Hero() {
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         spaceBetween={30}
         slidesPerView={1}
+        loop={true}
         className="w-full"
       >
         {heroItems.map((item) => (
@@ -75,7 +83,7 @@ function Hero() {
                 </Button>
               </div>
 
-              <div className="w-full md:w-[530px] h-[300px] md:h-[530px] relative mt-8 md:mt-0">
+              <div className="w-full md:w-[530px] h-[300px] md:h-[530px] relative mt-8 md:mt-8 animate-float ">
                 <Image
                   src={item.image}
                   alt="Hero illustration"
@@ -89,17 +97,23 @@ function Hero() {
       </Swiper>
       <div className="flex flex-col items-center gap-2 mt-8">
         <div className="flex items-center gap-4 justify-center">
-          <Button 
+          <Button
             onClick={handlePrevSlide}
             className="text-primary bg-transparent border border-primary w-[56px] h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className={locale === Languages.ARABIC ? "rotate-180" : ""}
+            />
           </Button>
-          <Button 
+          <Button
             onClick={handleNextSlide}
             className="rounded-tr-[16px] rounded-bl-[16px] rounded-tl-none rounded-br-none text-primary bg-transparent border border-primary w-[56px] h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
           >
-            <FontAwesomeIcon icon={faArrowRight} />
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className={locale === Languages.ARABIC ? "rotate-180" : ""}
+            />
           </Button>
         </div>
         <div className="flex gap-4 mt-4">

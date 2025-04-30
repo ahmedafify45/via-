@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PortfolioItem {
   title: string;
@@ -16,9 +17,10 @@ interface PortfolioProps {
     title: string;
     slug: string;
   }[];
+  limit?: number;
 }
 
-function Portfolio({ portfolio }: PortfolioProps) {
+function Portfolio({ portfolio, limit }: PortfolioProps) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
@@ -67,8 +69,10 @@ function Portfolio({ portfolio }: PortfolioProps) {
 
   const filteredPortfolio =
     selectedCategory === "All"
-      ? portfolio_Product
-      : portfolio_Product.filter((item) => item.category === selectedCategory);
+      ? portfolio_Product.slice(0, limit)
+      : portfolio_Product
+          .filter((item) => item.category === selectedCategory)
+          .slice(0, limit);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mb-[24px]">
@@ -101,29 +105,35 @@ function Portfolio({ portfolio }: PortfolioProps) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[24px]">
-        {filteredPortfolio.map((item) => (
-          <div
-            key={item.slug}
-            onClick={() => handlePortfolioClick(item.slug)}
-            className="group relative overflow-hidden rounded-[20px] bg-white shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
-          >
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <div className="flex h-full items-center justify-center">
-                <h3 className="text-xl font-semibold text-white">
-                  {item.title}
-                </h3>
+        <AnimatePresence mode="wait">
+          {filteredPortfolio.map((item, index) => (
+            <motion.div
+              key={item.slug}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              onClick={() => handlePortfolioClick(item.slug)}
+              className="group relative overflow-hidden rounded-[20px] bg-white shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+            >
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
-            </div>
-          </div>
-        ))}
+              <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="flex h-full items-center justify-center">
+                  <h3 className="text-xl font-semibold text-white">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

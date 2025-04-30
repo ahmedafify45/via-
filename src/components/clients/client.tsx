@@ -5,14 +5,51 @@ import { Button } from "../ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import type { Swiper as SwiperType } from "swiper";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Import Swiper styles
 import "swiper/css";
+import { useParams } from "next/navigation";
+import { Languages } from "@/constants/enums";
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 function Clients() {
-  const swiperRef = useRef<SwiperType>();
+  const params = useParams();
+  const locale = params?.locale as string;
+  const swiperRef = useRef<SwiperType | null>(null);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    // Initialize GSAP animations for each image
+    imageRefs.current.forEach((imageRef, index) => {
+      if (imageRef) {
+        gsap.fromTo(
+          imageRef,
+          {
+            clipPath: "circle(0% at 50% 50%)",
+          },
+          {
+            clipPath: "circle(50% at 50% 50%)",
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: imageRef,
+              start: "top 80%",
+              end: "top 20%",
+              scrub: 1,
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    });
+  }, []);
+
   const clients = [
     {
       id: 1,
@@ -50,14 +87,18 @@ function Clients() {
           onBeforeInit={(swiper) => {
             swiperRef.current = swiper;
           }}
+          loop={true}
           spaceBetween={30}
           slidesPerView={1}
           className="w-full"
         >
-          {clients.map((client) => (
+          {clients.map((client, index) => (
             <SwiperSlide key={client.id}>
               <div className="relative overflow-hidden min-h-[360px]">
-                <div className="w-32 h-32 rounded-full m-auto">
+                <div
+                  ref={(el) => (imageRefs.current[index] = el)}
+                  className="w-32 h-32 rounded-full m-auto overflow-hidden"
+                >
                   <Image
                     src={client.image}
                     alt={client.name}
@@ -93,13 +134,23 @@ function Clients() {
             className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-[36px] h-[36px]"
             onClick={() => swiperRef.current?.slidePrev()}
           >
-            <FontAwesomeIcon icon={faArrowLeft} className="w-[22px]" />
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className={`w-[22px] ${
+                locale === Languages.ARABIC ? "rotate-180" : ""
+              }`}
+            />
           </Button>
           <Button
             className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-[36px] h-[36px]"
             onClick={() => swiperRef.current?.slideNext()}
           >
-            <FontAwesomeIcon icon={faArrowRight} className="w-[22px]" />
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className={`w-[22px] ${
+                locale === Languages.ARABIC ? "rotate-180" : ""
+              }`}
+            />
           </Button>
         </div>
       </div>

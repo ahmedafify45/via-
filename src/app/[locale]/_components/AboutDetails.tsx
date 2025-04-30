@@ -1,13 +1,25 @@
 "use client";
 import Image from "next/image";
-
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function AnimatedNumber({ value, plus, delay }: { value: number; plus: string; delay: number }) {
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+function AnimatedNumber({
+  value,
+  plus,
+  delay,
+}: {
+  value: number;
+  plus: string;
+  delay: number;
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  
+
   const spring = useSpring(0, {
     stiffness: 100,
     damping: 30,
@@ -38,6 +50,7 @@ function AnimatedNumber({ value, plus, delay }: { value: number; plus: string; d
 }
 
 function AboutDetails() {
+  const imageRef = useRef<HTMLDivElement>(null);
   const details = [
     {
       number: 10,
@@ -61,15 +74,41 @@ function AboutDetails() {
     },
   ];
 
+  useEffect(() => {
+    if (imageRef.current) {
+      const image = imageRef.current;
+
+      // Create a door-like effect using clip-path
+      gsap.fromTo(
+        image,
+        {
+          clipPath: "inset(0% 50% 0% 50%)",
+        },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: image,
+            start: "top 80%",
+            end: "top 20%",
+            scrub: 1,
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className="bg-white">
-      <div className="w-full">
+      <div className="w-full overflow-hidden mt-[80px]" ref={imageRef}>
         <Image
           src="/images/aboutdetails.png"
           alt="details.png"
           width={1920}
           height={1080}
-          className="w-full h-auto"
+          className="w-full h-auto "
           priority
         />
       </div>
@@ -77,9 +116,9 @@ function AboutDetails() {
         {details.map((item, index) => (
           <div key={index} className="text-center">
             <p className="text-4xl lg:text-6xl lg:text-[82px] font-bold">
-              <AnimatedNumber 
-                value={item.number} 
-                plus={item.plus} 
+              <AnimatedNumber
+                value={item.number}
+                plus={item.plus}
                 delay={index * 0.3}
               />
             </p>
@@ -92,4 +131,3 @@ function AboutDetails() {
 }
 
 export default AboutDetails;
-

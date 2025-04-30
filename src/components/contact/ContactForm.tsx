@@ -11,42 +11,44 @@ function ContactForm() {
     { id: 4, label: "Your Subject", placeholder: "NAW" },
   ];
   return (
-    <form className="bg-[#17181C] p-[32px] rounded-[2px]">
+    <form className="bg-[#17181C] p-[32px] md:p-[24px] sm:p-[16px] rounded-[2px]">
       <div>
-        <h2 className="text-primary text-[24px] font-bold">
+        <h2 className="text-primary text-[24px] md:text-[20px] sm:text-[18px] font-bold">
           Let&apos;s talk about your project.
         </h2>
-        <p className="text-[14px] font-medium text-white mb-[34px] mt-[8px] ">
+        <p className="text-[14px] font-medium text-white mb-[34px] mt-[8px]">
           Please give us a call, drop us an email or fill out the contact form
           and we&apos;ll get back to you.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[27px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[27px] md:gap-[20px] sm:gap-[16px]">
         {bookingForm.map((item) => (
           <div key={item.id}>
-            <label className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block">
+            <label className="text-[16px] md:text-[14px] font-medium text-white mb-[8px] block">
               {item.label}
             </label>
             <Input
-              className="w-[267px] h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              className="w-full md:w-[267px] h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
               type="text"
               placeholder={item.placeholder}
             />
           </div>
         ))}
       </div>
-      <div className="mt-[34px]">
-        <label className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block">
+      <div className="mt-[34px] md:mt-[24px] sm:mt-[20px]">
+        <label className="text-[16px] md:text-[14px] font-medium text-white mb-[8px] block">
           Message
         </label>
         <div>
           <Textarea
-            className="w-[561px] h-[104px] border-secondary bg-[#161718] placeholder:text-[#808080] resize-none overflow-y-auto text-white whitespace-pre-wrap"
+            className="w-full md:w-[561px] h-[104px] border-secondary bg-[#161718] placeholder:text-[#808080] resize-none overflow-y-auto text-white whitespace-pre-wrap"
             placeholder="Write your message here..."
           />
         </div>
       </div>
-      <Button className="mt-[34px] h-[48px] w-[269px]">Send Message</Button>
+      <Button className="mt-[34px] md:mt-[24px] sm:mt-[20px] h-[48px] w-full md:w-[269px]">
+        Send Message
+      </Button>
     </form>
   );
 }

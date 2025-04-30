@@ -7,7 +7,7 @@ import OurClients from "@/app/[locale]/_components/OurClients";
 
 function AboutsSection() {
   return (
-    <section className="my-[220px]">
+    <section className="my-[220px] overflow-hidden">
       <OurStory />
       <OurMission />
       <OurVision />

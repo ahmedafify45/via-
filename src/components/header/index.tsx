@@ -6,9 +6,10 @@ import Navbar from "./Navbar";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import LanguageSwitcher from "./Language-switcher";
-
+import { useParams } from "next/navigation";
 
 function Header() {
+  const { locale } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -32,13 +33,12 @@ function Header() {
         </button>
 
         {/* Desktop Book Now Button */}
-      <div className="flex items-center">
-        <LanguageSwitcher />
-        <Button className="hidden xl:flex w-[133px] h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
-          <Link href="/booking">Book Now</Link>
-        </Button>
-
-      </div>
+        <div className="flex items-center">
+          <LanguageSwitcher />
+          <Button className="hidden xl:flex w-[133px] h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
+            <Link href={`/${locale}/booking`}>Book Now</Link>
+          </Button>
+        </div>
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-black xl:hidden">

@@ -3,13 +3,18 @@ import { Button } from "@/components/ui/button";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PortfolioAds from "./PortfolioAds";
+import Link from "next/link";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+
 export const portfolio = [
   { title: "All", slug: "all" },
   { title: "Social Designs", slug: "social-designs" },
   { title: "Photo shoot", slug: "photo-shoot" },
   { title: "Branding", slug: "branding" },
 ];
-function OurPortfolio() {
+
+async function OurPortfolio() {
+  const locale = await getCurrentLocale();
   return (
     <section className="">
       <div>
@@ -22,16 +27,21 @@ function OurPortfolio() {
             needs and goals.
           </p>
         </div>
-        <Portfolio portfolio={portfolio} />
+        <Portfolio portfolio={portfolio} limit={3} />
         <div className="flex justify-center mb-[40px] md:mb-[60px] lg:mb-[80px]">
-          <Button className="w-[140px] md:w-[160px] h-[48px] md:h-[56px] flex items-center justify-center gap-2 text-sm md:text-base">
-            See More
-            <span className="bg-white text-black w-[40px] md:w-[48px] h-[40px] md:h-[48px] flex items-center justify-center rounded-tl-[12px] md:rounded-tl-[16px] rounded-br-[12px] md:rounded-br-[16px]">
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                className="text-sm md:text-base"
-              />
-            </span>
+          <Button className="w-[140px] md:w-[160px] h-[48px] md:h-[56px]  text-sm md:text-base">
+            <Link
+              href={`/${locale}/portfolio`}
+              className="flex items-center justify-center gap-2"
+            >
+              See More
+              <span className="bg-white text-black w-[40px] md:w-[48px] h-[40px] md:h-[48px] flex items-center justify-center rounded-tl-[12px] md:rounded-tl-[16px] rounded-br-[12px] md:rounded-br-[16px]">
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="text-sm md:text-base"
+                />
+              </span>
+            </Link>
           </Button>
         </div>
       </div>

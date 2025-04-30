@@ -68,17 +68,17 @@ function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
               ))}
             </Swiper>
             <div className="flex gap-4 mt-4 items-center justify-center">
-          {portfolio.gallery.map((_, idx) => (
-            <div
-              key={idx}
-              className={`h-[10px] w-[48px] transition-all duration-200 ${
-                activeIndex === idx
-                  ? "bg-[#FFD600]" // yellow
-                  : "bg-[#4B3F13] border border-[#FFD600]"
-              }`}
-            />
-          ))}
-        </div>
+              {portfolio.gallery.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-[10px] w-[48px] transition-all duration-200 ${
+                    activeIndex === idx
+                      ? "bg-[#FFD600]" // yellow
+                      : "bg-[#4B3F13] border border-[#FFD600]"
+                  }`}
+                />
+              ))}
+            </div>
             {/* Thumbnail Slider - Positioned absolutely at bottom center */}
           </div>
         </div>
@@ -134,7 +134,9 @@ function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
             </div>
           </div>
         </div>
-        <OurClients />
+        <div className="flex justify-center">
+          <OurClients />
+        </div>
         <TransformBrand />
       </div>
     </main>
