@@ -6,35 +6,53 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useFetch } from "@/hooks/useFetch";
+
+interface GeneralSettings {
+  data: {
+    email_address: string;
+    phone_number: string;
+    whatsapp_number: string;
+    address: string;
+  };
+}
 
 function InformationContact() {
+  const { data, loading, error } = useFetch<GeneralSettings>(
+    "/items/general_settings/1"
+  );
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading contact information</div>;
+  if (!data) return null;
+
   const information = [
     {
       id: 1,
       icon: <FontAwesomeIcon icon={faPhone} />,
       title: "Live support",
-      description: "+1800 396 756",
-      link: "tel:+1800396756",
+      description: data.data.phone_number,
+      link: `tel:${data.data.phone_number}`,
     },
     {
       id: 2,
       icon: <FontAwesomeIcon icon={faWhatsapp} />,
       title: "Whatsapp",
-      description: "+1800 396 756",
-      link: "https://wa.me/1800396756",
+      description: data.data.whatsapp_number,
+      link: `https://wa.me/${data.data.whatsapp_number}`,
     },
     {
       id: 3,
       icon: <FontAwesomeIcon icon={faEnvelope} />,
       title: "Email Support",
-      description: "support@VIA.com",
-      link: "mailto:support@VIA.com",
+      description: data.data.email_address,
+      link: `mailto:${data.data.email_address}`,
     },
     {
       id: 4,
       icon: <FontAwesomeIcon icon={faLocation} />,
       title: "Our Address",
-      description: "9826 , United States.",
+      description: data.data.address || "Address not available",
       link: "#",
     },
   ];

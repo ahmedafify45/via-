@@ -1,35 +1,39 @@
+import { TeamMember } from "@/types/team";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface TeamMember {
-  id: number;
-  slug: string;
-  image: string;
-  name: string;
-  job: string;
+interface TeamCardProps {
+  team: TeamMember[];
+  locale: string;
 }
 
-function TeamCard({ team }: { team: TeamMember[] }) {
+function TeamCard({ team, locale }: TeamCardProps) {
+  const isEnglish = locale === "en";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {team.map((item) => (
         <Link
-          href={`/team/${item.slug}`}
-          key={item.slug}
+          href={`/team/${item.id}`}
+          key={item.id}
           className="flex flex-col items-center justify-center gap-1 mt-3 hover:opacity-80 transition-opacity"
         >
           <div>
             <Image
-              src={item.image}
-              alt={item.name}
+              src={`/images/team/${item.avatar}.png`}
+              alt={isEnglish ? item.name_en : item.name}
               width={360}
               height={360}
               className="rounded-[8px]"
             />
           </div>
-          <h5 className="text-[#D6D6D6] text-[24px] font-bold">{item.name}</h5>
-          <p className="text-[#D6D6D6] text-[20px] font-medium">{item.job}</p>
+          <h5 className="text-[#D6D6D6] text-[24px] font-bold">
+            {isEnglish ? item.name_en : item.name}
+          </h5>
+          <p className="text-[#D6D6D6] text-[20px] font-medium">
+            {isEnglish ? item.designation_en : item.designation}
+          </p>
         </Link>
       ))}
     </div>

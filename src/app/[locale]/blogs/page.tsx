@@ -1,10 +1,16 @@
 import React from "react";
 import Blogs from "@/components/blogs/Blogs";
 
-function BlogsPage() {
+interface PageProps {
+  params: {
+    locale: string;
+  };
+}
+
+function BlogsPage({ params: { locale } }: PageProps) {
   return (
     <main>
-      <Blogs />
+      <Blogs locale={locale} />
     </main>
   );
 }

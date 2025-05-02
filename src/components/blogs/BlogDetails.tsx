@@ -1,9 +1,109 @@
+"use client";
+
 import Image from "next/image";
 import Banner from "../custom/banner";
 import BlogItem from "./BlogItem";
 import CommentSection from "./CommentSection";
+import { useFetch } from "@/hooks/useFetch";
+import { Languages } from "@/constants/enums";
 
-function BlogDetails({ blog }: any) {
+interface Blog {
+  id: number;
+  title: string;
+  title_en: string;
+  slug: string;
+  description: string;
+  description_en: string;
+  thumbnail: string | null;
+  thumbnail_en: string | null;
+  created_on: string;
+  category: number;
+  tags: string;
+  tags_en: string | null;
+  seo_meta: {
+    title: string;
+    description: string;
+  };
+  seo_meta_en: {
+    title: string;
+    description: string;
+  };
+}
+
+interface ApiResponse {
+  data: Blog[];
+  public: boolean;
+}
+
+function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
+  const {
+    data: response,
+    loading,
+    error,
+  } = useFetch<ApiResponse>("/items/posts");
+  const isEnglish = locale === "en";
+
+  console.log("Blog Details Debug:", {
+    slug,
+    locale,
+    loading,
+    error,
+    response,
+    apiUrl: "/items/posts",
+  });
+
+  if (loading) {
+    return (
+      <main className="mx-[80px] my-[220px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </main>
+    );
+  }
+
+  if (error) {
+    console.error("Blog fetch error details:", {
+      error,
+      slug,
+      apiUrl: "/items/posts",
+      response,
+    });
+    return (
+      <main className="mx-[80px] my-[220px] flex items-center justify-center">
+        <div className="text-white text-xl">
+          Error loading blog. Please try again later.
+          <div className="text-sm mt-2">Error: {error.message}</div>
+        </div>
+      </main>
+    );
+  }
+
+  if (!response?.data) {
+    console.error("No blog data found:", {
+      slug,
+      response,
+      apiUrl: "/items/posts",
+    });
+    return (
+      <main className="mx-[80px] my-[220px] flex items-center justify-center">
+        <div className="text-white text-xl">Blog not found.</div>
+      </main>
+    );
+  }
+
+  const blog = response.data.find((post) => post.slug === slug);
+
+  if (!blog) {
+    console.error("Blog with slug not found:", {
+      slug,
+      availableSlugs: response.data.map((post) => post.slug),
+    });
+    return (
+      <main className="mx-[80px] my-[220px] flex items-center justify-center">
+        <div className="text-white text-xl">Blog not found.</div>
+      </main>
+    );
+  }
+
   return (
     <main className="mx-[80px] my-[220px]">
       <div>
@@ -11,22 +111,34 @@ function BlogDetails({ blog }: any) {
         <div className="flex justify-between gap-[20px] lg:flex-row flex-col">
           <div className="flex flex-col gap-[20px]">
             <div>
-              <Image
-                width={847}
-                height={531}
-                src={blog.imageDescription}
-                alt={blog.imageDescription}
-                className="rounded-[4px]"
-              />
+              {blog.thumbnail && (
+                <Image
+                  width={847}
+                  height={531}
+                  src={
+                    Languages.ENGLISH
+                      ? blog.thumbnail_en || blog.thumbnail
+                      : blog.thumbnail
+                  }
+                  alt={isEnglish ? blog.title_en : blog.title}
+                  className="rounded-[4px]"
+                />
+              )}
             </div>
             <h1 className="text-primary text-[24px] font-medium">
-              {blog.title} / {blog.date}
+              {Languages.ENGLISH ? blog.title_en : blog.title} /{" "}
+              {new Date(blog.created_on).toLocaleDateString()}
             </h1>
-            <p className="text-white max-w-[847px]">{blog.description}</p>
+            <div
+              className="text-white max-w-[847px]"
+              dangerouslySetInnerHTML={{
+                __html: isEnglish ? blog.description_en : blog.description,
+              }}
+            />
           </div>
-          <BlogItem />
+          <BlogItem locale={locale} />
         </div>
-          <CommentSection />
+        <CommentSection />
       </div>
     </main>
   );

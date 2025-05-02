@@ -1,88 +1,41 @@
+"use client";
+
 import TeamCard from "@/components/team/TeamCard";
+import { TeamMember } from "@/types/team";
+import { useFetch } from "@/hooks/useFetch";
 
-export const team = [
-  {
-    id: 1,
-    slug: "jane-cooper-1",
-    image: "/images/about/team1.png",
-    name: "Jane Cooper",
-    job: "Medical Assistant",
-    responsibility: " Land Transport",
-    phone: "+123 456 7890",
-    experience: "9 Years",
-    email: "jane.cooper@example.com",
-    mission: "I help my clients stand out and they help me grow.",
-    facebook: "https://www.facebook.com/jane.cooper",
-    instagram: "https://www.instagram.com/jane.cooper",
-    twitter: "https://www.twitter.com/jane.cooper",
-    youtube: "https://www.linkedin.com/jane.cooper",
-  },
-  {
-    id: 2,
-    slug: "jane-cooper-2",
-    image: "/images/about/team2.png",
-    name: "Jane Cooper",
-    job: "Medical Assistant",
-    phone: "+123 456 7890",
-    responsibility: " Land Transport",
-    experience: "10 Years",
-    email: "jane.cooper@example.com",
-    mission: "I help my clients stand out and they help me grow.",
-    facebook: "https://www.facebook.com/jane.cooper",
-    instagram: "https://www.instagram.com/jane.cooper",
-    twitter: "https://www.twitter.com/jane.cooper",
-    youtube: "https://www.linkedin.com/jane.cooper",
-  },
-  {
-    id: 3,
-    slug: "jane-cooper-3",
-    image: "/images/about/team3.png",
-    name: "Jane Cooper",
-    job: "Medical Assistant",
-    phone: "+123 456 7890",
-    responsibility: " Land Transport",
-    experience: "11 Years",
-    email: "jane.cooper@example.com",
-    mission: "I help my clients stand out and they help me grow.",
-    facebook: "https://www.facebook.com/jane.cooper",
-    instagram: "https://www.instagram.com/jane.cooper",
-    twitter: "https://www.twitter.com/jane.cooper",
-    youtube: "https://www.linkedin.com/jane.cooper",
-  },
-  {
-    id: 4,
-    slug: "jane-cooper-4",
-    image: "/images/about/team1.png",
-    name: "Jane Cooper",
-    job: "Medical Assistant",
-    phone: "+123 456 7890",
-    esponsibility: " Land Transport",
-    xperience: "12 Years",
-    email: "jane.cooper@example.com",
-    mission: "I help my clients stand out and they help me grow.",
-    facebook: "https://www.facebook.com/jane.cooper",
-    instagram: "https://www.instagram.com/jane.cooper",
-    twitter: "https://www.twitter.com/jane.cooper",
-    youtube: "https://www.linkedin.com/jane.cooper",
-  },
-  {
-    id: 5,
-    slug: "jane-cooper-5",
-    image: "/images/about/team1.png",
-    name: "Jane Cooper",
-    job: "Medical Assistant",
-    responsibility: " Land Transport",
-    experience: "13 Years",
-    email: "jane.cooper@example.com",
-    mission: "I help my clients stand out and they help me grow.",
-    facebook: "https://www.facebook.com/jane.cooper",
-    instagram: "https://www.instagram.com/jane.cooper",
-    twitter: "https://www.twitter.com/jane.cooper",
-    youtube: "https://www.linkedin.com/jane.cooper",
-  },
-];
+interface ApiResponse {
+  data: TeamMember[];
+  public: boolean;
+}
 
-function Force() {
+interface ForceProps {
+  locale: string;
+}
+
+function Force({ locale }: ForceProps) {
+  const {
+    data: response,
+    loading,
+    error,
+  } = useFetch<ApiResponse>("/items/team_members");
+
+  if (loading) {
+    return (
+      <div className="mx-[80px] mb-[80px] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (error || !response?.data) {
+    return (
+      <div className="mx-[80px] mb-[80px] text-center text-red-500">
+        Failed to load team members
+      </div>
+    );
+  }
+
   return (
     <div className="mx-[80px] mb-[80px]">
       <div className="flex flex-col items-center justify-center text-center">
@@ -96,7 +49,7 @@ function Force() {
           Simplify your workflow, boost your productivity, and achieve more.
         </p>
       </div>
-      <TeamCard team={team} />
+      <TeamCard team={response.data} locale={locale} />
     </div>
   );
 }

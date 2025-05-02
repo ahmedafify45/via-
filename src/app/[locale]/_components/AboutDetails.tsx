@@ -4,17 +4,19 @@ import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useFetch } from "@/hooks/useFetch";
+import { useParams } from "next/navigation";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 function AnimatedNumber({
   value,
-  plus,
+  extra,
   delay,
 }: {
   value: number;
-  plus: string;
+  extra: string;
   delay: number;
 }) {
   const ref = useRef(null);
@@ -44,35 +46,24 @@ function AnimatedNumber({
       transition={{ duration: 0.5, delay }}
     >
       <motion.span>{display}</motion.span>
-      <span className="text-primary">{plus}</span>
+      <span className="text-primary">{extra}</span>
     </motion.span>
   );
 }
 
 function AboutDetails() {
   const imageRef = useRef<HTMLDivElement>(null);
-  const details = [
-    {
-      number: 10,
-      title: "Years of Experience",
-      plus: "+",
-    },
-    {
-      number: 250,
-      title: "Projects Completed",
-      plus: "+",
-    },
-    {
-      number: 250,
-      title: "Projects Completed",
-      plus: "+",
-    },
-    {
-      number: 95,
-      title: "Client Satisfaction",
-      plus: "+",
-    },
-  ];
+  const params = useParams();
+  const locale = params?.locale as string;
+  const { data, loading, error } = useFetch<{
+    data: Array<{
+      id: number;
+      number: string;
+      name: string;
+      name_en: string;
+      extra: string;
+    }>;
+  }>("/items/counters");
 
   useEffect(() => {
     if (imageRef.current) {
@@ -100,6 +91,10 @@ function AboutDetails() {
     }
   }, []);
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading counters</div>;
+  if (!data?.data) return null;
+
   return (
     <div className="bg-white">
       <div className="w-full overflow-hidden mt-[80px]" ref={imageRef}>
@@ -113,16 +108,18 @@ function AboutDetails() {
         />
       </div>
       <div className="flex flex-col xl:flex-row items-center justify-between px-4 md:px-8 lg:px-[89px] py-8 md:py-12 lg:py-[45px] gap-8 md:gap-4 lg:gap-0">
-        {details.map((item, index) => (
-          <div key={index} className="text-center">
+        {data.data.map((item, index) => (
+          <div key={item.id} className="text-center">
             <p className="text-4xl lg:text-6xl lg:text-[82px] font-bold">
               <AnimatedNumber
-                value={item.number}
-                plus={item.plus}
+                value={Number(item.number)}
+                extra={item.extra}
                 delay={index * 0.3}
               />
             </p>
-            <p className="text-sm md:text-base lg:text-lg">{item.title}</p>
+            <p className="text-sm md:text-base lg:text-lg">
+              {locale === "ar" ? item.name : item.name_en}
+            </p>
           </div>
         ))}
       </div>

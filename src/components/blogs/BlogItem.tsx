@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -11,8 +13,36 @@ import {
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { useFetch } from "@/hooks/useFetch";
 
-function BlogItem() {
+interface Category {
+  id: number;
+  title: string;
+  title_en: string;
+  slug: string;
+  seo_meta: {
+    title: string;
+    description: string;
+  };
+  seo_meta_en: {
+    title: string;
+    description: string;
+  };
+}
+
+interface ApiResponse {
+  data: Category[];
+  public: boolean;
+}
+
+function BlogItem({ locale }: { locale: string }) {
+  const {
+    data: response,
+    loading,
+    error,
+  } = useFetch<ApiResponse>("/items/post_categories");
+  const isEnglish = locale === "en";
+
   const recentPosts = [
     {
       id: 1,
@@ -45,24 +75,7 @@ function BlogItem() {
       date: "20 Feb 2025",
     },
   ];
-  const categories = [
-    {
-      id: 1,
-      title: "Digital Marketing",
-    },
-    {
-      id: 2,
-      title: "Digital Marketing",
-    },
-    {
-      id: 3,
-      title: "Digital Marketing",
-    },
-    {
-      id: 4,
-      title: "Digital Marketing",
-    },
-  ];
+
   const followUs = [
     {
       id: 1,
@@ -85,6 +98,7 @@ function BlogItem() {
       link: "https://www.youtube.com",
     },
   ];
+
   const tags = [
     {
       id: 1,
@@ -103,6 +117,7 @@ function BlogItem() {
       title: "Photo shoot",
     },
   ];
+
   return (
     <div className="lg:w-[413px] w-full">
       <div className="flex items-center bg-[#17181C] rounded-lg p-[16px] w-full h-[104px] border border-[#25231B]">
@@ -144,16 +159,22 @@ function BlogItem() {
           Our Categories
         </h3>
         <div className="flex flex-col gap-[16px] ">
-          {categories.map((category) => (
-            <div key={category.id} className="flex items-center gap-[16px]">
-              <Link
-                href={`/categories/${category.id}`}
-                className="text-[18px] font-medium text-white hover:text-primary transition-all duration-300"
-              >
-                {category.title}
-              </Link>
-            </div>
-          ))}
+          {loading ? (
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></div>
+          ) : error ? (
+            <p className="text-white">Error loading categories</p>
+          ) : (
+            response?.data.map((category) => (
+              <div key={category.id} className="flex items-center gap-[16px]">
+                <Link
+                  href={`/categories/${category.slug}`}
+                  className="text-[18px] font-medium text-white hover:text-primary transition-all duration-300"
+                >
+                  {isEnglish ? category.title_en : category.title}
+                </Link>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">

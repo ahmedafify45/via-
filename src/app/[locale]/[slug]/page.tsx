@@ -1,4 +1,4 @@
-import { team } from "@/app/[locale]/_components/about/Force";
+import { TeamMember } from "@/types/team";
 import Banner from "@/components/custom/banner";
 import {
   faYoutube,
@@ -10,21 +10,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Languages } from "@/constants/enums";
 
 interface PageProps {
   params: {
     slug: string;
+    locale: string;
   };
 }
 
-export function generateStaticParams() {
+async function getTeamMembers() {
+  const res = await fetch(
+    "https://gmsapi.guessitt.com/public/gms/items/team_members"
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch team members");
+  }
+  const data = await res.json();
+  return data.data as TeamMember[];
+}
+
+export async function generateStaticParams() {
+  const team = await getTeamMembers();
   return team.map((member) => ({
-    slug: member.slug,
+    slug: member.id.toString(),
   }));
 }
 
-export default function TeamMemberPage({ params }: PageProps) {
-  const member = team.find((m) => m.slug === params.slug);
+export default async function TeamMemberPage({ params }: PageProps) {
+  const team = await getTeamMembers();
+  const member = team.find((m) => m.id.toString() === params.slug);
+  const isEnglish = params.locale === Languages.ENGLISH;
 
   if (!member) {
     notFound();
@@ -37,8 +53,8 @@ export default function TeamMemberPage({ params }: PageProps) {
         <div className="flex flex-col md:flex-row gap-[24px] md:gap-[48px] bg-[#17181C] py-[16px] px-4 md:px-0">
           <div className="w-full md:w-auto">
             <Image
-              src={member.image}
-              alt={member.name}
+              src={`/images/team/${member.avatar}.png`}
+              alt={isEnglish ? member.name_en : member.name}
               width={450}
               height={400}
               className="w-full h-auto object-cover"
@@ -46,19 +62,13 @@ export default function TeamMemberPage({ params }: PageProps) {
           </div>
           <div className="text-white flex flex-col gap-[12px] md:gap-[16px]">
             <h1 className="text-[28px] md:text-[38px] font-bold">
-              {member.name}
+              {isEnglish ? member.name_en : member.name}
             </h1>
             <p className="text-primary text-[16px] md:text-[20px] font-bold">
-              {member.job}
+              {isEnglish ? member.designation_en : member.designation}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
-              {member.mission}
-            </p>
-            <p className="text-[16px] md:text-[20px] font-medium">
-              Responsibility: {member.responsibility}
-            </p>
-            <p className="text-[16px] md:text-[20px] font-medium">
-              Experience: {member.experience}
+              {isEnglish ? member.tagline_en : member.tagline}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
               Email: {member.email}
@@ -66,48 +76,70 @@ export default function TeamMemberPage({ params }: PageProps) {
             <p className="text-[16px] md:text-[20px] font-medium">
               Phone: {member.phone}
             </p>
-            <div className="flex items-center gap-[12px] md:gap-[16px]">
-              <Link
-                target="_blank"
-                href={member.facebook}
-                className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                />
-              </Link>
-              <Link
-                target="_blank"
-                href={member.instagram}
-                className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faInstagram}
-                  className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                />
-              </Link>
-              <Link
-                target="_blank"
-                href={member.twitter}
-                className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faTwitter}
-                  className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                />
-              </Link>
-              <Link
-                target="_blank"
-                href={member.youtube}
-                className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faYoutube}
-                  className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                />
-              </Link>
-            </div>
+            {member.website && (
+              <p className="text-[16px] md:text-[20px] font-medium">
+                Website:y{" "}
+                <Link
+                  href={member.website}
+                  target="_blank"
+                  className="text-primary hover:underline"
+                >
+                  {member.website}
+                </Link>
+              </p>
+            )}
+            {member.social_media && (
+              <div className="flex items-center gap-[12px] md:gap-[16px]">
+                {member.social_media.facebook && (
+                  <Link
+                    target="_blank"
+                    href={member.social_media.facebook}
+                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
+                  >
+                    <FontAwesomeIcon
+                      icon={faFacebookF}
+                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                    />
+                  </Link>
+                )}
+                {member.social_media.instagram && (
+                  <Link
+                    target="_blank"
+                    href={member.social_media.instagram}
+                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
+                  >
+                    <FontAwesomeIcon
+                      icon={faInstagram}
+                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                    />
+                  </Link>
+                )}
+                {member.social_media.twitter && (
+                  <Link
+                    target="_blank"
+                    href={member.social_media.twitter}
+                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
+                  >
+                    <FontAwesomeIcon
+                      icon={faTwitter}
+                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                    />
+                  </Link>
+                )}
+                {member.social_media.youtube && (
+                  <Link
+                    target="_blank"
+                    href={member.social_media.youtube}
+                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
+                  >
+                    <FontAwesomeIcon
+                      icon={faYoutube}
+                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                    />
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -116,8 +148,7 @@ export default function TeamMemberPage({ params }: PageProps) {
           Personal Experience
         </h2>
         <p className="text-[16px] md:text-[20px] font-medium text-[#FFFFFF] mt-4">
-          Lorem ipsum dolor sit amet consectetur. Dictum fermentum tempor turpis
-          quis justo arcu et volutpat. Auctor laoreet velit ridiculus tristique.
+          {isEnglish ? member.tagline_en : member.tagline}
         </p>
       </div>
     </main>

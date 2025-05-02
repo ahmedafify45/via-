@@ -4,19 +4,38 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 interface Blog {
-  id: string;
-  image: string;
-  date: string;
+  id: number;
   title: string;
+  title_en: string;
   slug: string;
-  imageDescription: string;
   description: string;
+  description_en: string;
+  thumbnail: string | null;
+  thumbnail_en: string | null;
+  created_on: string;
+  category: number;
+  tags: string;
+  tags_en: string | null;
+  seo_meta: {
+    title: string;
+    description: string;
+  };
+  seo_meta_en: {
+    title: string;
+    description: string;
+  };
 }
 
-function BlogCard({ blogs }: { blogs: Blog[] }) {
+interface BlogCardProps {
+  blogs: Blog[];
+  locale: string;
+}
+
+function BlogCard({ blogs, locale }: BlogCardProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
+  const isEnglish = locale === "en";
 
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
@@ -32,24 +51,30 @@ function BlogCard({ blogs }: { blogs: Blog[] }) {
           >
             <div className="relative h-[250px] group">
               <Image
-                src={blog.image}
-                alt={blog.title}
+                src={
+                  isEnglish
+                    ? blog.thumbnail_en || blog.thumbnail || "/images/blog.png"
+                    : blog.thumbnail || "/images/blog.png"
+                }
+                alt={isEnglish ? blog.title_en : blog.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-[8px]"
               />
               <div className="absolute bottom-[-20] right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full lg:w-[338px] h-[42px]">
                 <p className="text-[20px] font-medium flex items-center justify-between">
-                  Industry
-                  <span className="text-[14px] font-normal">{blog.date}</span>
+                  {blog.category}
+                  <span className="text-[14px] font-normal">
+                    {new Date(blog.created_on).toLocaleDateString()}
+                  </span>
                 </p>
               </div>
             </div>
             <div className="p-6 flex flex-col items-center justify-center gap-[16px] mt-[20px]">
               <h3 className="text-xl font-semibold text-white mb-4 line-clamp-2 text-center">
-                {blog.title}
+                {isEnglish ? blog.title_en : blog.title}
               </h3>
               <Link
-                href={`/blogs/${blog.slug}`}
+                href={`/${locale}/blogs/${blog.slug}`}
                 className="text-white text-[18px] font-bold hover:text-primary transition-all duration-300"
               >
                 Read More →
