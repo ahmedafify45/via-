@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Be_Vietnam_Pro, Cairo } from "next/font/google";
 import "./globals.css";
 import "./fontawesome";
 
@@ -8,10 +8,16 @@ import Footer from "@/components/footer";
 import { Locale } from "@/i8n.config";
 import { Directions, Languages } from "@/constants/enums";
 import PageTransition from "@/components/PageTransition";
+import LoadingWrapper from "@/components/LoadingWrapper";
 
 const Vietnam = Be_Vietnam_Pro({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
+});
+
+const cairo = Cairo({
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["arabic"],
 });
 
 export const metadata: Metadata = {
@@ -27,14 +33,19 @@ export default async function RootLayout({
   params: Promise<{ locale: Locale }>;
 }>) {
   const locale = (await params).locale;
+  const fontClass =
+    locale === Languages.ARABIC ? cairo.className : Vietnam.className;
+
   return (
     <html
       lang={locale}
       dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}
     >
-      <body className={Vietnam.className}>
+      <body className={fontClass}>
         <Header />
-        <PageTransition>{children}</PageTransition>
+        <LoadingWrapper>
+          <PageTransition>{children}</PageTransition>
+        </LoadingWrapper>
         <Footer />
       </body>
     </html>

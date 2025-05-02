@@ -1,0 +1,3370 @@
+{
+  "info": {
+    "_postman_id": "0efc87b1-37c5-43a3-8c57-3d11a52020e1",
+    "name": "GUESSIT CMS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "21705045"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"idevhashem@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/authenticate",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "authenticate"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "The `/me` endpoints let you manage information about the authenticated user."
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"active\", // draft, invited, active, draft, suspended, deleted\r\n    \"role\": 1, // 1=Admin\r\n    \"first_name\": \"Test\",\r\n    \"last_name\": \"User\",\r\n    \"email\": \"testuser@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"theme\": \"auto\", // auto, light, dark\r\n    \"timezone\": \"UTC\",\r\n    \"locale\": \"en-US\", // en-US, ar-SA\r\n    \"avatar\": null, // File ID \r\n    \"title\": null, // Postion\r\n    \"email_notifications\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/files",
+              "host": ["{{baseUrl}}"],
+              "path": ["files"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/files/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["files", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "type": "file",
+                  "src": "/C:/Users/HASHEM/Downloads/image_fx_ (35).jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/files",
+              "host": ["{{baseUrl}}"],
+              "path": ["files"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/files/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["files", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/clients",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "clients"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/clients/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "clients", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\", // draft\r\n    \"sort\": null,\r\n    \"photo\": 3, // file id\r\n    \"url\": \"https://www.google.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/clients",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "clients"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"url\": \"https://fb.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/clients/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "clients", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/clients/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "clients", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "FAQs",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/faqs",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "faqs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/faqs/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "faqs", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\", // draft\r\n    \"sort\": null, // EX: 1, 2, 3\r\n    \"question\": \"السؤال يوضع هنا\",\r\n    \"answer\": \"مثال للإجابة\",\r\n    \"answer_en\": \"Example for Answar !\",\r\n    \"question_en\": \"Question Here\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/faqs",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "faqs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/faqs/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "faqs", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/faqs/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "faqs", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Testimonials",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/testimonials",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "testimonials"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/testimonials/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "testimonials", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\", // draft\r\n    \"sort\": null,\r\n    \"owner\": 1,\r\n    \"name\": \"جون سميث\",\r\n    \"company\": \"شركة جيسيت\",\r\n    \"rating\": 3, // 1 TO 5\r\n    \"avatar\": 1, // File ID\r\n    \"comment\": \"مثال للريفيو\",\r\n    \"comment_en\": \"Review Example\",\r\n    \"name_en\": \"John Smeth\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/testimonials",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "testimonials"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/testimonials/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "testimonials", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/testimonials/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "testimonials", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Team Members",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/team_members",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "team_members"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/team_members/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "team_members", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n\r\n\r\n\r\n{\r\n    \"status\": \"draft\",\r\n    \"sort\": null,\r\n    \"name\": \"ناديا ريوس\",\r\n    \"name_en\": \"Naida Rios\",\r\n    \"designation\": \"مطور ويب\",\r\n    \"designation_en\": \"Web Developer\",\r\n    \"avatar\": 1,\r\n    \"phone\": \"+1 (136) 425-6816\",\r\n    \"tagline\": \"Elit lorem fuga De\",\r\n    \"tagline_en\": \"Eum est et aliquid p\",\r\n    \"email\": \"pydaduhe@mailinator.com\",\r\n    \"website\": \"https:\\/\\/www.tin.mobi\",\r\n    \"facebook\": \"\",\r\n    \"twitter\": \"\",\r\n    \"linkedin\": \"\",\r\n    \"instagram\": \"e\",\r\n    \"youtube\": \"\",\r\n    \"pinterest\": \"\",\r\n    \"behance\": \"\",\r\n    \"github\": \"\",\r\n    \"seo_meta\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/team_members",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "team_members"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/team_members/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "team_members", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/team_members/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "team_members", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Portfolios",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\", // draft\r\n    \"sort\": null, // 1, 2, 3, 4 .. etc\r\n    \"name\": \"Tara Mccarty\",\r\n    \"name_en\": \"Tiger Davis\",\r\n    \"slug\": \"tiger-davis\",\r\n    \"description\": \"<p>tiger-davis tiger-davis<\\/p>\",\r\n    \"description_en\": \"<p>tiger-davis tiger-davis<\\/p>\",\r\n    \"date\": \"2007-05-15\",\r\n    \"client\": \"Veniam sint\",\r\n    \"website\": \"https://www.xawefo.me.uk\",\r\n    \"location\": \"Anim quidem, aut ,rem qui\",\r\n    \"thumbnail\": 1, // File ID\r\n    \"banner\": 1, // File ID\r\n    \"seo_meta\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/services",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/services/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "services", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"name\": \"Ezekiel Woodard\",\r\n    \"name_en\": \"Macon Malone\",\r\n    \"slug\": \"eum-magnam-ipsum-et-tempora-quia-reiciendis-eiu\",\r\n    \"summary\": \"Accusamus amet volu\",\r\n    \"summary_en\": \"Quia beatae neque ip\",\r\n    \"description\": \"\",\r\n    \"description_en\": \"<h3>Quia beatae<\\/h3>\\n<p>neque ip<\\/p>\",\r\n    \"photo\": null,\r\n    \"banner\": null,\r\n    \"pdf\": null,\r\n    \"icon\": \"fa fa-fb\",\r\n    \"seo_meta\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/services",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "services"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/services/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "services", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/portfolios/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "portfolios", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sliders",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/sliders",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "sliders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/sliders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "sliders", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"button_text\": \"Est recusandae\",\r\n    \"button_text_en\": \"doloremque\",\r\n    \"button_url\": \"https://www.guessitt.com\",\r\n    \"text\": \"Et omnis\",\r\n    \"text_en\": \"Accusantium\",\r\n    \"banner\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/sliders",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "sliders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/sliders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "sliders", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/sliders/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "sliders", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menus",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Parents Item",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus?filter[owner]=1&fields=*&limit=100&sort=-created_on",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus"],
+              "query": [
+                {
+                  "key": "filter[owner]",
+                  "value": "1"
+                },
+                {
+                  "key": "fields",
+                  "value": "*"
+                },
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "sort",
+                  "value": "-created_on"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"name\": \"قائمة فرعية\",\r\n    \"name_en\": \"Test Menu\",\r\n    \"url\": \"/test-menu\",\r\n    \"icon\": \"fa fab-home\",\r\n    \"is_parent\": false,\r\n    \"parent\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/menus/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "menus", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pricing Plans",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/pricing_plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "pricing_plans"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/pricing_plans/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "pricing_plans", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"name\": \"Mckenzie\",\r\n    \"name_en\": \"Rebecca\",\r\n    \"price\": \"1200\",\r\n    \"currency\": {\r\n        \"code\": \"EG\",\r\n        \"name\": \"جنيه مصري\",\r\n        \"name_en\": \"Egyption Pound\",\r\n        \"symbols\": \"ج.م\",\r\n        \"symbols_en\": \"EGP\"\r\n    },\r\n    \"period\": \"شهريا\",\r\n    \"period_en\": \"Monthly\",\r\n    \"button_text\": \"blanditiis\",\r\n    \"button_text_en\": \"excepteur\",\r\n    \"button_url\": \"https://gooel.com\",\r\n    \"photo\": 5,\r\n    \"options\": [\r\n        {\r\n            \"sort\": 1,\r\n            \"name\": \"تجربة\",\r\n            \"icon\": \"\"\r\n        }\r\n    ],\r\n    \"options_en\": [\r\n        {\r\n            \"sort\": 1,\r\n            \"name\": \"Test\",\r\n            \"icon\": \"\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/pricing_plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "pricing_plans"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/pricing_plans/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "pricing_plans", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/pricing_plans/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "pricing_plans", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Subscribers",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/subscribers",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "subscribers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/subscribers/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "subscribers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"email\": \"test@example.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/subscribers",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "subscribers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/subscribers/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "subscribers", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/subscribers/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "subscribers", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Blog",
+      "item": [
+        {
+          "name": "Posts",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/posts",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "posts"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/posts/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "posts", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"thumbnail\": null, // ID\r\n    \"status\": \"published\", // draft\r\n    \"title\": \"عنوان التدوينة\",\r\n    \"title_en\": \"Article Title here\",\r\n    \"description\": \"<p>هذا مثال للنص</p>\",\r\n    \"description_en\": \"<p>this text</p>\",\r\n    \"slug\": \"this-example\", // With - \r\n    \"category\": null, // ID \r\n    \"seo_meta\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/posts",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "posts"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/posts/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "posts", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/posts/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "posts", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Category",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/post_categories",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "post_categories"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/post_categories/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "post_categories", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\",\r\n    \"sort\": null,\r\n    \"title\": \"تجربة\",\r\n    \"title_en\": \"test\",\r\n    \"slug\": \"test-category\",\r\n    \"seo_meta\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"\",\r\n        \"description\": \"\"\r\n    }\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/post_categories",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "post_categories"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان  تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/post_categories/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "post_categories", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/post_categories/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "post_categories", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Other Pages",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/other_pages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "other_pages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/other_pages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "other_pages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"owner\": 1,\r\n    \"title\": \"اسم الصفحة\",\r\n    \"title_en\": null,\r\n    \"seo_meta\": null,\r\n    \"seo_meta_en\": null,\r\n    \"banner\": null,\r\n    \"options\": {\r\n        \"main_title\": {\r\n            \"id\": 1,\r\n            \"name\": \"Main Title\",\r\n            \"name_en\": \"العنوان الرئيسيي\",\r\n            \"field\": \"main_title\",\r\n            \"datatype\": \"TEXT\",\r\n            \"type\": \"string\", // number ..etc\r\n            \"interface\": \"input\", // input // textarea ..etc\r\n            \"default_value\": null,\r\n            \"note\": \"\",\r\n            \"sort\": 1,\r\n            \"required\": false,\r\n            \"length\": null,\r\n            \"value\": {\r\n                \"en\": \"Test Title\",\r\n                \"ar\": \"تجربة عنوان\"\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/other_pages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "other_pages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/other_pages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "other_pages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/other_pages/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "other_pages", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Custom Pages",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_pages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_pages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_pages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_pages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\",\r\n    \"sort\": null,\r\n    \"name\": \"تجربة صفحة\",\r\n    \"name_en\": \"Custome PAge\",\r\n    \"slug\": \"custom-pages\",\r\n    \"content\": \"<p>المحتوي يوضع هنا</p>\",\r\n    \"content_en\": \"<p>Content Here</p>\",\r\n    \"seo_meta\": {\r\n        \"title\": \"تجربة عنوان\",\r\n        \"description\": \"تجربة وصف\"\r\n    },\r\n    \"seo_meta_en\": {\r\n        \"title\": \"Test Title\",\r\n        \"description\": \"Test Description\"\r\n    },\r\n    \"banner\": 12\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_pages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_pages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_pages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_pages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_pages/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_pages", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Languages",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/languages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "languages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/languages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "languages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"name\": \"English\",\r\n    \"code\": \"EN\",\r\n    \"is_rtl\": true,\r\n    \"icon\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/languages",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "languages"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/languages/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "languages", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/languages/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "languages", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "General Settings",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/general_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "general_settings", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/general_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "general_settings", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Seo Settings",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/seo_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "seo_settings", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/seo_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "seo_settings", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Appearance Settings",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/appearance_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "appearance_settings", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/appearance_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "appearance_settings", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Integration Settings",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/integration_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "integration_settings", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/integration_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "integration_settings", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment Gateways",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/payment_gateways/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "payment_gateways", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/payment_gateways/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "payment_gateways", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email Settings",
+      "item": [
+        {
+          "name": "GET",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/email_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "email_settings", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/email_settings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "email_settings", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Custom Notifications",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_notifications"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_notifications/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_notifications", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"name\": \"new user registration\",\r\n    \"text\": \"Hello User How are you !\",\r\n    \"slug\": \"new-user-registration\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_notifications"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_notifications/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_notifications", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/custom_notifications/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "custom_notifications", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home Page Setting",
+      "item": [
+        {
+          "name": "GET ALL",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/home_page_setting",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "home_page_setting"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET ONE",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/home_page_setting/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "home_page_setting", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CREATE",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"title\": \"Call to Action\",\r\n    \"sub_title\": null,\r\n    \"text\": null,\r\n    \"how_many\": null,\r\n    \"is_active\": false,\r\n    \"title_en\": null,\r\n    \"sub_title_en\": null,\r\n    \"text_en\": null,\r\n    \"slug\": \"call-to-action\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/home_page_setting",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "home_page_setting"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/home_page_setting/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "home_page_setting", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/items/home_page_setting/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["items", "home_page_setting", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Website Sections",
+      "item": [
+        {
+          "name": "Hero Section",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/hero_section",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "hero_section"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/hero_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "hero_section", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"banner\": 23,\r\n    \"image\": null,\r\n    \"title\": \"Test\",\r\n    \"sub_title\": \"Test\",\r\n    \"button_text\": \"Test\",\r\n    \"button_url\": \"https://google.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/hero_section",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "hero_section"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/hero_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "hero_section", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/hero_section/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "hero_section", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "About Section",
+          "item": [
+            {
+              "name": "GET",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/about_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "about_section", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/about_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "about_section", "1"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Call-to-Action Section",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/calltoaction_settings",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "calltoaction_settings"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/calltoaction_settings/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "calltoaction_settings", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"title\": \"test\",\r\n    \"sub_title\": \"test\",\r\n    \"button_text\": null,\r\n    \"button_url\": null,\r\n    \"slug\": null,\r\n    \"title_en\": null,\r\n    \"sub_title_en\": null,\r\n    \"button_text_en\": null\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/calltoaction_settings",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "calltoaction_settings"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/calltoaction_settings/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "calltoaction_settings", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/calltoaction_settings/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "calltoaction_settings", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Counters Sections",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/counters",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "counters"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/counters/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "counters", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"number\": \"50\",\r\n    \"plus_active\": true,\r\n    \"icon\": \"fa fb-test\",\r\n    \"name\": null,\r\n    \"name_en\": null\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/counters",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "counters"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/counters/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "counters", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/counters/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "counters", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Features Section",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/features_section",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "features_section"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/features_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "features_section", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/features_section",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "features_section"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/features_section/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "features_section", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/features_section/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "features_section", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Clients Sections",
+          "item": [
+            {
+              "name": "GET ALL",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/clients",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "clients"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET ONE",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/clients/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "clients", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CREATE",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"published\",\r\n    \"sort\": null,\r\n    \"photo\": 69,\r\n    \"url\": \"https://facebook.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/clients",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "clients"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "UPDATE",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\": \"draft\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/clients/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "clients", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"عنوان التدوينة تعديل\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/items/clients/4",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["items", "clients", "4"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzMzNDIwNjc5LCJ0dGwiOjIwMDAsInR5cGUiOiJhdXRoIiwia2V5IjoiNjcyM2Q3MmItZTMxNi00YzFhLTk3MGEtNTA1YWEzZjE4ZjkwIiwicHJvamVjdCI6ImdtcyJ9.d_m6-XodvVB5N37dj7Kc7ft_K6ynupKidUJt_W5TlIk",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://gmsapi.guessitt.com/public/gms"
+    }
+  ]
+}

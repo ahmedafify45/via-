@@ -9,24 +9,44 @@ import { useRef, useEffect } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useFetch } from "@/hooks/useFetch";
+import { Languages } from "@/constants/enums";
 
 // Import Swiper styles
 import "swiper/css";
 import { useParams } from "next/navigation";
-import { Languages } from "@/constants/enums";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
+
+interface Testimonial {
+  id: number;
+  name: string;
+  name_en: string;
+  company: string;
+  rating: number;
+  avatar: number;
+  comment: string;
+  comment_en: string;
+}
+
+interface TestimonialsResponse {
+  data: Testimonial[];
+  public: boolean;
+}
 
 function Clients() {
   const params = useParams();
   const locale = params?.locale as string;
   const swiperRef = useRef<SwiperType | null>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { data: testimonialsData } = useFetch<TestimonialsResponse>(
+    "/items/testimonials"
+  );
 
   useEffect(() => {
     // Initialize GSAP animations for each image
-    imageRefs.current.forEach((imageRef, index) => {
+    imageRefs.current.forEach((imageRef) => {
       if (imageRef) {
         gsap.fromTo(
           imageRef,
@@ -50,35 +70,9 @@ function Clients() {
     });
   }, []);
 
-  const clients = [
-    {
-      id: 1,
-      image: "/images/client.png",
-      name: "Leslie Alexander",
-      jobs: "Marketing Coordinator",
-      Evaluation:
-        "via completely transformed our digital marketing strategy. Their creative approach to social media and influencer partnerships helped us reach new audiences we hadn't tapped into before. Our engagement rates have increased by 150% since working with them.",
-      rating: "5",
-    },
-    {
-      id: 2,
-      image: "/images/client.png",
-      name: "Leslie Alexander",
-      jobs: "Marketing Coordinator",
-      Evaluation:
-        "via completely transformed our digital marketing strategy. Their creative approach to social media and influencer partnerships helped us reach new audiences we hadn't tapped into before. Our engagement rates have increased by 150% since working with them.",
-      rating: "4",
-    },
-    {
-      id: 3,
-      image: "/images/client.png",
-      name: "Leslie Alexander",
-      jobs: "Marketing Coordinator",
-      Evaluation:
-        "via completely transformed our digital marketing strategy. Their creative approach to social media and influencer partnerships helped us reach new audiences we hadn't tapped into before. Our engagement rates have increased by 150% since working with them.",
-      rating: "4",
-    },
-  ];
+  if (!testimonialsData?.data) {
+    return null;
+  }
 
   return (
     <section className="py-16">
@@ -92,16 +86,22 @@ function Clients() {
           slidesPerView={1}
           className="w-full"
         >
-          {clients.map((client, index) => (
-            <SwiperSlide key={client.id}>
+          {testimonialsData.data.map((testimonial, index) => (
+            <SwiperSlide key={testimonial.id}>
               <div className="relative overflow-hidden min-h-[360px]">
                 <div
-                  ref={(el) => (imageRefs.current[index] = el)}
+                  ref={(el) => {
+                    if (el) imageRefs.current[index] = el;
+                  }}
                   className="w-32 h-32 rounded-full m-auto overflow-hidden"
                 >
                   <Image
-                    src={client.image}
-                    alt={client.name}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE}/assets/${testimonial.avatar}`}
+                    alt={
+                      locale === Languages.ARABIC
+                        ? testimonial.name
+                        : testimonial.name_en
+                    }
                     width={128}
                     height={128}
                     className="w-full h-full object-cover"
@@ -115,13 +115,21 @@ function Clients() {
                     </div>
                     <div className="pt-16">
                       <h3 className="text-xl font-semibold mb-2 mt-[27px]">
-                        {client.name}
+                        {locale === Languages.ARABIC
+                          ? testimonial.name
+                          : testimonial.name_en}
                       </h3>
-                      <p className="text-gray-600 mb-4">{client.jobs}</p>
+                      <p className="text-gray-600 mb-4">
+                        {testimonial.company}
+                      </p>
                       <div className="flex justify-center mb-4">
-                        <StarRating rating={client.rating} />
+                        <StarRating rating={testimonial.rating.toString()} />
                       </div>
-                      <p className="text-gray-700">{client.Evaluation}</p>
+                      <p className="text-gray-700">
+                        {locale === Languages.ARABIC
+                          ? testimonial.comment
+                          : testimonial.comment_en}
+                      </p>
                     </div>
                   </div>
                 </div>

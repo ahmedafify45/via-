@@ -9,6 +9,12 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import { Languages } from "@/constants/enums";
 import { useParams } from "next/navigation";
+import { useFetch } from "@/hooks/useFetch";
+import { HeroItem } from "@/types/hero";
+
+interface HeroResponse {
+  data: HeroItem[];
+}
 
 function Hero() {
   const params = useParams();
@@ -16,32 +22,14 @@ function Hero() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const heroItems = [
-    {
-      id: 1,
-      title: "Transform Your Brand's",
-      subtitle: "Digital Presence",
-      description:
-        "We craft strategic marketing campaigns that elevate your brand, engage your audience, and drive measurable results.",
-      image: "/images/hero.png",
-    },
-    {
-      id: 2,
-      title: "Elevate Your Business",
-      subtitle: "With Innovation",
-      description:
-        "Cutting-edge solutions that transform your business and set you apart from the competition.",
-      image: "/images/booking.png",
-    },
-    {
-      id: 3,
-      title: "Grow Your Audience",
-      subtitle: "With Strategy",
-      description:
-        "Data-driven strategies that help you reach and engage your target audience effectively.",
-      image: "/images/hero.png",
-    },
-  ];
+  const { data, loading, error } = useFetch<HeroResponse>(
+    "/items/hero_section"
+  );
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading hero section</div>;
+
+  const heroItems = data?.data.sort((a, b) => a.sort - b.sort) || [];
 
   const handlePrevSlide = () => {
     if (swiperRef.current) {
@@ -72,21 +60,35 @@ function Hero() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-[24px]">
               <div className="text-white w-full md:w-[744px] text-center md:text-left">
                 <h1 className="font-bold text-[40px] md:text-[64px]">
-                  {item.title}
-                  <span className="text-primary block">{item.subtitle}</span>
+                  {locale === Languages.ARABIC ? item.title : item.title_en}
+                  <span className="text-primary block">
+                    {locale === Languages.ARABIC
+                      ? item.sub_title
+                      : item.sub_title_en}
+                  </span>
                 </h1>
                 <p className="font-medium text-[18px] md:text-[24px] mt-4">
-                  {item.description}
+                  {locale === Languages.ARABIC ? item.text : item.text_en}
                 </p>
-                <Button className="mt-[24px] rounded-tl-[16px] rounded-br-[16px] rounded-bl-none rounded-tr-none">
-                  Start Your Project
+                <Button
+                  className="mt-[24px] rounded-tl-[16px] rounded-br-[16px] rounded-bl-none rounded-tr-none"
+                  onClick={() =>
+                    (window.location.href =
+                      locale === Languages.ARABIC
+                        ? item.button_url
+                        : item.button_url_en)
+                  }
+                >
+                  {locale === Languages.ARABIC
+                    ? item.button_text
+                    : item.button_text_en}
                 </Button>
               </div>
 
-              <div className="w-full md:w-[530px] h-[300px] md:h-[530px] relative mt-8 md:mt-8 animate-float ">
+              <div className="w-full md:w-[530px] h-[300px] md:h-[530px] relative mt-8 md:mt-8 animate-float">
                 <Image
-                  src={item.image}
-                  alt="Hero illustration"
+                  src={`/api/files/${item.banner}`}
+                  alt={locale === Languages.ARABIC ? item.title : item.title_en}
                   fill
                   className="object-contain"
                 />
@@ -122,7 +124,7 @@ function Hero() {
               key={idx}
               className={`h-[10px] w-[48px] transition-all duration-200 ${
                 activeIndex === idx
-                  ? "bg-[#FFD600]" // yellow
+                  ? "bg-[#FFD600]"
                   : "bg-[#4B3F13] border border-[#FFD600]"
               }`}
             />
