@@ -25,7 +25,7 @@ interface Testimonial {
   name_en: string;
   company: string;
   rating: number;
-  avatar: number;
+  avatar: { data: { full_url: string } };
   comment: string;
   comment_en: string;
 }
@@ -41,7 +41,10 @@ function Clients() {
   const swiperRef = useRef<SwiperType | null>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { data: testimonialsData } = useFetch<TestimonialsResponse>(
-    "/items/testimonials"
+    "/items/testimonials",
+    {
+      fields: "*.*",
+    }
   );
 
   useEffect(() => {
@@ -96,7 +99,7 @@ function Clients() {
                   className="w-32 h-32 rounded-full m-auto overflow-hidden"
                 >
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE}/assets/${testimonial.avatar}`}
+                    src={testimonial.avatar?.data?.full_url}
                     alt={
                       locale === Languages.ARABIC
                         ? testimonial.name

@@ -1,6 +1,7 @@
 "use client";
 
-import { TeamMember } from "@/types/api";
+import { TeamMember } from "@/types/team";
+import Image from "next/image";
 
 interface OurTeamProps {
   teamMembers: TeamMember[];
@@ -17,14 +18,16 @@ export default function OurTeam({ teamMembers }: OurTeamProps) {
               key={member.id}
               className="bg-white rounded-lg shadow-md p-6 text-center"
             >
-              <img
-                src={member.avatar}
+              <Image
+                src={member.avatar?.data?.full_url}
                 alt={member.name}
+                width={360}
+                height={360}
                 className="w-32 h-32 rounded-full mx-auto mb-4"
               />
               <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
-              <p className="text-gray-600 mb-4">{member.position}</p>
-              <p className="text-gray-500 text-sm">{member.bio}</p>
+              <p className="text-gray-600 mb-4">{member.designation}</p>
+              <p className="text-gray-500 text-sm">{member.tagline}</p>
             </div>
           ))}
         </div>

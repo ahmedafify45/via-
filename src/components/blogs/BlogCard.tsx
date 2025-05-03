@@ -1,30 +1,9 @@
 "use client";
+import { Languages } from "@/constants/enums";
+import { Blog } from "@/types/Blogs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-
-interface Blog {
-  id: number;
-  title: string;
-  title_en: string;
-  slug: string;
-  description: string;
-  description_en: string;
-  thumbnail: string | null;
-  thumbnail_en: string | null;
-  created_on: string;
-  category: number;
-  tags: string;
-  tags_en: string | null;
-  seo_meta: {
-    title: string;
-    description: string;
-  };
-  seo_meta_en: {
-    title: string;
-    description: string;
-  };
-}
 
 interface BlogCardProps {
   blogs: Blog[];
@@ -35,7 +14,7 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
-  const isEnglish = locale === "en";
+  const isEnglish = locale === Languages.ENGLISH;
 
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
@@ -53,8 +32,8 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
               <Image
                 src={
                   isEnglish
-                    ? blog.thumbnail_en || blog.thumbnail || "/images/blog.png"
-                    : blog.thumbnail || "/images/blog.png"
+                    ? blog.thumbnail_en?.data?.full_url ?? "/placeholder.jpg"
+                    : blog.thumbnail?.data?.full_url ?? "/placeholder.jpg"
                 }
                 alt={isEnglish ? blog.title_en : blog.title}
                 fill
@@ -62,9 +41,15 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
               />
               <div className="absolute bottom-[-20] right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full lg:w-[338px] h-[42px]">
                 <p className="text-[20px] font-medium flex items-center justify-between">
-                  {blog.category}
+                  {blog.category
+                    ? isEnglish
+                      ? blog.category.title_en
+                      : blog.category.title
+                    : ""}
                   <span className="text-[14px] font-normal">
-                    {new Date(blog.created_on).toLocaleDateString()}
+                    {blog.created_on
+                      ? new Date(blog.created_on).toLocaleDateString()
+                      : ""}
                   </span>
                 </p>
               </div>

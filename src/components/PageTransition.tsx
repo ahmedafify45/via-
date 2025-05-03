@@ -13,13 +13,13 @@ export default function PageTransition({
 
   useEffect(() => {
     if (contentRef.current) {
-      // Initial animation when component mounts
       gsap.fromTo(
         contentRef.current,
         {
           opacity: 0,
           y: 50,
         },
+
         {
           opacity: 1,
           y: 0,

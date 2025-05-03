@@ -1,8 +1,5 @@
 "use client";
-
 import Image from "next/image";
-import React from "react";
-
 const Loading = () => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-black backdrop-blur-sm z-50">

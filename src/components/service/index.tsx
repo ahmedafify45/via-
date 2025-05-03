@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -8,18 +8,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import ServicesCard from "./ServicesCard";
-import { fetcher } from "@/lib/fetcher";
-
-interface Service {
-  id: number;
-  name_en: string;
-  slug: string;
-  summary_en: string;
-  description_en: string;
-  photo: number;
-  banner: number;
-  icon: string;
-}
+import { useFetch } from "@/hooks/useFetch";
+import Loading from "../Loading";
+import { Service } from "@/types/services";
 
 interface ServicesResponse {
   data: Service[];
@@ -31,26 +22,23 @@ interface ServiceSectionProps {
 }
 
 function ServiceSection({ onSwiperInit }: ServiceSectionProps) {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const data = await fetcher<ServicesResponse>("/items/services");
-        setServices(data.data);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchServices();
-  }, []);
+  const { data, loading, error } = useFetch<ServicesResponse>(
+    "/items/services",
+    {
+      fields: "*.*",
+    }
+  );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error fetching services</div>;
   }
 
   return (
@@ -76,7 +64,7 @@ function ServiceSection({ onSwiperInit }: ServiceSectionProps) {
         }}
         className="service-swiper"
       >
-        {services.map((service) => (
+        {data?.data.map((service) => (
           <SwiperSlide key={service.id}>
             <ServicesCard service={service} />
           </SwiperSlide>

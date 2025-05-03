@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
 import { useFetch } from "@/hooks/useFetch";
+import { Loader } from "lucide-react";
 
 interface MenuItem {
   id: number;
@@ -26,7 +27,12 @@ function Navbar({ isMobile = false }: NavbarProps) {
     "/items/menus"
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   if (error) return <div>Error loading menus</div>;
 
   const menus = data?.data.sort((a, b) => a.sort - b.sort) || [];

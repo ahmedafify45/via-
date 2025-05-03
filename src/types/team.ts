@@ -10,7 +10,7 @@ export interface TeamMember {
   name_en: string;
   designation: string;
   designation_en: string;
-  avatar: number;
+  avatar: { data: { full_url: string } };
   phone: string;
   tagline: string;
   tagline_en: string;

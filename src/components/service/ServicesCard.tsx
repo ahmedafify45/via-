@@ -2,31 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useParams } from "next/navigation";
-
-interface Service {
-  id: number;
-  name_en: string;
-  slug: string;
-  summary_en: string;
-  description_en: string;
-  photo: number;
-  banner: number;
-  icon: string;
-}
+import { Service } from "@/types/services";
 
 function ServicesCard({ service }: { service: Service }) {
   const params = useParams();
   const locale = params?.locale as string;
-  const imageUrl = service.photo
-    ? `/api/assets/${service.photo}`
-    : "/images/placeholder.jpg";
 
   return (
     <Link href={`/${locale}/services/${service.slug}`}>
       <div className="group relative overflow-hidden rounded-[20px] bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
         <div className="relative aspect-[4/3] w-full">
           <Image
-            src={imageUrl}
+            src={service.photo?.data?.full_url}
             alt={service.name_en}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

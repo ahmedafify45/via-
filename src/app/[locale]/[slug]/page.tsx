@@ -1,3 +1,5 @@
+"use client";
+
 import { TeamMember } from "@/types/team";
 import Banner from "@/components/custom/banner";
 import {
@@ -11,36 +13,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Languages } from "@/constants/enums";
-
-interface PageProps {
+import { useFetch } from "@/hooks/useFetch";
+import Loading from "@/components/Loading";
+type PageProps = {
   params: {
     slug: string;
     locale: string;
   };
-}
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
-async function getTeamMembers() {
-  const res = await fetch(
-    "https://gmsapi.guessitt.com/public/gms/items/team_members"
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch team members");
+export default function TeamMemberPage({ params }: PageProps) {
+  const {
+    data: team,
+    loading,
+    error,
+  } = useFetch<TeamMember[]>("/items/team_members", {
+    fields: "*.*",
+  });
+  if (loading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
-  const data = await res.json();
-  return data.data as TeamMember[];
-}
 
-export async function generateStaticParams() {
-  const team = await getTeamMembers();
-  return team.map((member) => ({
-    slug: member.id.toString(),
-  }));
-}
+  if (error) {
+    return <div>Error loading team members</div>;
+  }
 
-export default async function TeamMemberPage({ params }: PageProps) {
-  const team = await getTeamMembers();
-  const member = team.find((m) => m.id.toString() === params.slug);
-  const isEnglish = params.locale === Languages.ENGLISH;
+  const member = team?.find((m) => m.id.toString() === params.slug);
 
   if (!member) {
     notFound();
@@ -53,8 +56,8 @@ export default async function TeamMemberPage({ params }: PageProps) {
         <div className="flex flex-col md:flex-row gap-[24px] md:gap-[48px] bg-[#17181C] py-[16px] px-4 md:px-0">
           <div className="w-full md:w-auto">
             <Image
-              src={`/images/team/${member.avatar}.png`}
-              alt={isEnglish ? member.name_en : member.name}
+              src={member.avatar?.data?.full_url}
+              alt={Languages.ENGLISH ? member.name_en : member.name}
               width={450}
               height={400}
               className="w-full h-auto object-cover"
@@ -62,13 +65,13 @@ export default async function TeamMemberPage({ params }: PageProps) {
           </div>
           <div className="text-white flex flex-col gap-[12px] md:gap-[16px]">
             <h1 className="text-[28px] md:text-[38px] font-bold">
-              {isEnglish ? member.name_en : member.name}
+              {Languages.ENGLISH ? member.name_en : member.name}
             </h1>
             <p className="text-primary text-[16px] md:text-[20px] font-bold">
-              {isEnglish ? member.designation_en : member.designation}
+              {Languages.ENGLISH ? member.designation_en : member.designation}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
-              {isEnglish ? member.tagline_en : member.tagline}
+              {Languages.ENGLISH ? member.tagline_en : member.tagline}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
               Email: {member.email}
@@ -78,7 +81,7 @@ export default async function TeamMemberPage({ params }: PageProps) {
             </p>
             {member.website && (
               <p className="text-[16px] md:text-[20px] font-medium">
-                Website:y{" "}
+                Website:{" "}
                 <Link
                   href={member.website}
                   target="_blank"
@@ -148,7 +151,7 @@ export default async function TeamMemberPage({ params }: PageProps) {
           Personal Experience
         </h2>
         <p className="text-[16px] md:text-[20px] font-medium text-[#FFFFFF] mt-4">
-          {isEnglish ? member.tagline_en : member.tagline}
+          {Languages.ENGLISH ? member.tagline_en : member.tagline}
         </p>
       </div>
     </main>

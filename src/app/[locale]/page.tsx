@@ -6,18 +6,12 @@ import OurService from "./_components/OurService";
 import Image from "next/image";
 import BookingInput from "@/components/booking/BookingInput";
 import BookingButton from "@/components/booking/BookingButton";
-import { getCurrentLocale } from "@/lib/getCurrentLocale";
-import getTrans from "@/lib/translation";
 
 export default async function Home() {
-  const locale = await getCurrentLocale();
-  const { home } = await getTrans(locale);
-  const { about } = home;
-
   return (
     <main className="my-[220px] overflow-x-hidden">
       <Hero />
-      <AboutUs about={about} />
+      <AboutUs />
       <OurPortfolio />
       <OurService />
       <div className="flex items-center justify-center">

@@ -7,8 +7,8 @@ function TransformBrand() {
         Ready to Transform Your Brand?
       </h4>
       <p className="text-white text-[24px] font-medium max-w-[867px]">
-        Ready to Transform Your Brand? Let's create a compelling brand identity
-        that resonates with your audience and drives business growth.
+        Ready to Transform Your Brand? Let&lsquo;s create a compelling brand
+        identity that resonates with your audience and drives business growth.
       </p>
       <div className="flex gap-4">
         <Button className="bg-primary text-blackw-[192px] h-[50px]">

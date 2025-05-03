@@ -6,29 +6,8 @@ import BlogItem from "./BlogItem";
 import CommentSection from "./CommentSection";
 import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
-
-interface Blog {
-  id: number;
-  title: string;
-  title_en: string;
-  slug: string;
-  description: string;
-  description_en: string;
-  thumbnail: string | null;
-  thumbnail_en: string | null;
-  created_on: string;
-  category: number;
-  tags: string;
-  tags_en: string | null;
-  seo_meta: {
-    title: string;
-    description: string;
-  };
-  seo_meta_en: {
-    title: string;
-    description: string;
-  };
-}
+import { Blog } from "@/types/Blogs";
+import { useState } from "react";
 
 interface ApiResponse {
   data: Blog[];
@@ -36,21 +15,15 @@ interface ApiResponse {
 }
 
 function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
+  const [searchQuery, setSearchQuery] = useState("");
   const {
     data: response,
     loading,
     error,
-  } = useFetch<ApiResponse>("/items/posts");
-  const isEnglish = locale === "en";
-
-  console.log("Blog Details Debug:", {
-    slug,
-    locale,
-    loading,
-    error,
-    response,
-    apiUrl: "/items/posts",
+  } = useFetch<ApiResponse>("/items/posts", {
+    fields: "*.*",
   });
+  const isEnglish = locale === Languages.ENGLISH;
 
   if (loading) {
     return (
@@ -116,9 +89,9 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
                   width={847}
                   height={531}
                   src={
-                    Languages.ENGLISH
-                      ? blog.thumbnail_en || blog.thumbnail
-                      : blog.thumbnail
+                    isEnglish
+                      ? blog.thumbnail_en?.data?.full_url
+                      : blog.thumbnail?.data?.full_url
                   }
                   alt={isEnglish ? blog.title_en : blog.title}
                   className="rounded-[4px]"
@@ -136,7 +109,11 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
               }}
             />
           </div>
-          <BlogItem locale={locale} />
+          <BlogItem
+            locale={locale}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
         <CommentSection />
       </div>

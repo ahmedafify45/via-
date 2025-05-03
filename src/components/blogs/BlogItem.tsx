@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,15 +14,16 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { useFetch } from "@/hooks/useFetch";
+import { Languages } from "@/constants/enums";
 
 interface Category {
-  id: number;
-  title: string;
-  title_en: string;
-  slug: string;
-  seo_meta: {
-    title: string;
-    description: string;
+  id?: number;
+  title?: string;
+  title_en?: string;
+  slug?: string;
+  seo_meta?: {
+    title?: string;
+    description?: string;
   };
   seo_meta_en: {
     title: string;
@@ -36,12 +37,16 @@ interface ApiResponse {
 }
 
 function BlogItem({ locale }: { locale: string }) {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const {
     data: response,
     loading,
     error,
-  } = useFetch<ApiResponse>("/items/post_categories");
-  const isEnglish = locale === "en";
+  } = useFetch<ApiResponse>("/items/post_categories", {
+    fields: "*.*",
+  });
+  const isEnglish = locale === Languages.ENGLISH;
 
   const recentPosts = [
     {
@@ -118,17 +123,36 @@ function BlogItem({ locale }: { locale: string }) {
     },
   ];
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/${locale}/blogs?q=${encodeURIComponent(
+        searchQuery
+      )}`;
+    } else {
+      window.location.href = `/${locale}/blogs`;
+    }
+  };
+
   return (
     <div className="lg:w-[413px] w-full">
-      <div className="flex items-center bg-[#17181C] rounded-lg p-[16px] w-full h-[104px] border border-[#25231B]">
+      <form
+        onSubmit={handleSearch}
+        className="flex items-center bg-[#17181C] rounded-lg p-[16px] w-full h-[104px] border border-[#25231B]"
+      >
         <Input
           placeholder="Search Here"
           className="rounded-none border border-secondary text-white bg-[#161718] placeholder:text-[#808080] h-[56px]"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <Button className="text-white bg-primary rounded-none w-[59px] h-[56px]">
+        <Button
+          type="submit"
+          className="text-white bg-primary rounded-none w-[59px] h-[56px]"
+        >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </Button>
-      </div>
+      </form>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
         <h3 className="text-[20px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
           Recent Posts
@@ -167,7 +191,8 @@ function BlogItem({ locale }: { locale: string }) {
             response?.data.map((category) => (
               <div key={category.id} className="flex items-center gap-[16px]">
                 <Link
-                  href={`/categories/${category.slug}`}
+                  // href={`/categories/${category.slug}`}
+                  href={`/${locale}/blogs?category=${category.id}`}
                   className="text-[18px] font-medium text-white hover:text-primary transition-all duration-300"
                 >
                   {isEnglish ? category.title_en : category.title}

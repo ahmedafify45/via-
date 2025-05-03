@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Banner from "../custom/banner";
@@ -7,22 +7,9 @@ import Link from "next/link";
 import InformationContact from "../contact/InformationContact";
 import { Accordions } from "../faq/According";
 import { Languages } from "@/constants/enums";
-import { fetcher } from "@/lib/fetcher";
-import { Loader } from "lucide-react";
-
-interface Service {
-  id: number;
-  name: string;
-  name_en: string;
-  slug: string;
-  summary: string;
-  summary_en: string;
-  description: string;
-  description_en: string;
-  photo: number;
-  banner: number;
-  icon: string;
-}
+import { useFetch } from "@/hooks/useFetch";
+import { Service } from "@/types/services";
+import Loading from "../Loading";
 
 interface ServicesResponse {
   data: Service[];
@@ -32,34 +19,20 @@ interface ServicesResponse {
 function ServiceDetails() {
   const params = useParams();
   const locale = params?.locale as string;
-  const [service, setService] = useState<Service | null>(null);
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const data = await fetcher<ServicesResponse>("/items/services");
-        setServices(data.data);
-
-        const currentService = data.data.find(
-          (s: Service) => s.slug === params?.slug
-        );
-        setService(currentService || null);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchServices();
-  }, [params?.slug]);
+  const { data: servicesData, loading } = useFetch<ServicesResponse>(
+    "/items/services",
+    {
+      fields: "*.*",
+    }
+  );
+  const services = servicesData?.data || [];
+  const service =
+    services.find((s: Service) => s.slug === params?.slug) || null;
 
   if (loading) {
     return (
       <div>
-        <Loader />
+        <Loading />
       </div>
     );
   }
@@ -67,10 +40,6 @@ function ServiceDetails() {
   if (!service) {
     return <div>Service not found</div>;
   }
-
-  const bannerUrl = service.banner
-    ? `/api/assets/${service.banner}`
-    : "/images/banner.png";
 
   const displayName =
     locale === Languages.ARABIC ? service.name : service.name_en;
@@ -85,11 +54,11 @@ function ServiceDetails() {
         <Banner
           title="Our Services"
           subtitle="home/services/details"
-          image={bannerUrl}
+          image={service.banner?.data?.full_url}
         />
         <div className="relative w-full max-w-[1280px] aspect-[1280/472] mx-auto">
           <Image
-            src={bannerUrl}
+            src={service.photo?.data?.full_url}
             alt={displayName}
             fill
             className="object-cover rounded-xl"

@@ -1,3 +1,4 @@
+import { Languages } from "@/constants/enums";
 import { TeamMember } from "@/types/team";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,8 +10,6 @@ interface TeamCardProps {
 }
 
 function TeamCard({ team, locale }: TeamCardProps) {
-  const isEnglish = locale === "en";
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {team.map((item) => (
@@ -21,18 +20,18 @@ function TeamCard({ team, locale }: TeamCardProps) {
         >
           <div>
             <Image
-              src={`/images/team/${item.avatar}.png`}
-              alt={isEnglish ? item.name_en : item.name}
+              src={item.avatar?.data?.full_url}
+              alt={Languages.ENGLISH ? item.name_en : item.name}
               width={360}
               height={360}
               className="rounded-[8px]"
             />
           </div>
           <h5 className="text-[#D6D6D6] text-[24px] font-bold">
-            {isEnglish ? item.name_en : item.name}
+            {Languages.ENGLISH ? item.name_en : item.name}
           </h5>
           <p className="text-[#D6D6D6] text-[20px] font-medium">
-            {isEnglish ? item.designation_en : item.designation}
+            {Languages.ENGLISH ? item.designation_en : item.designation}
           </p>
         </Link>
       ))}

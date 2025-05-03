@@ -11,6 +11,7 @@ import { Languages } from "@/constants/enums";
 import { useParams } from "next/navigation";
 import { useFetch } from "@/hooks/useFetch";
 import { HeroItem } from "@/types/hero";
+import Loading from "@/components/Loading";
 
 interface HeroResponse {
   data: HeroItem[];
@@ -23,10 +24,18 @@ function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { data, loading, error } = useFetch<HeroResponse>(
-    "/items/hero_section"
+    "/items/hero_section",
+    {
+      fields: "*.*",
+    }
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error loading hero section</div>;
 
   const heroItems = data?.data.sort((a, b) => a.sort - b.sort) || [];
@@ -49,7 +58,10 @@ function Hero() {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+        onSlideChange={(swiper) => {
+          const realIndex = swiper.realIndex;
+          setActiveIndex(realIndex);
+        }}
         spaceBetween={30}
         slidesPerView={1}
         loop={true}
@@ -86,12 +98,16 @@ function Hero() {
               </div>
 
               <div className="w-full md:w-[530px] h-[300px] md:h-[530px] relative mt-8 md:mt-8 animate-float">
-                <Image
-                  src={`/api/files/${item.banner}`}
-                  alt={locale === Languages.ARABIC ? item.title : item.title_en}
-                  fill
-                  className="object-contain"
-                />
+                {item.image?.data?.full_url && (
+                  <Image
+                    src={item.image?.data?.full_url}
+                    alt={
+                      locale === Languages.ARABIC ? item.title : item.title_en
+                    }
+                    fill
+                    className="object-contain"
+                  />
+                )}
               </div>
             </div>
           </SwiperSlide>
