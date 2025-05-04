@@ -16,20 +16,19 @@ const cairo = Cairo({
   subsets: ["arabic"],
 });
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: { locale: Locale };
 }) {
+  const { locale } = await params;
   const fontClass =
-    params.locale === Languages.ARABIC ? cairo.className : Vietnam.className;
+    locale === Languages.ARABIC ? cairo.className : Vietnam.className;
 
   return (
-    <html
-      dir={params.locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}
-    >
+    <html dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}>
       <body className={fontClass}>
         <Header />
         {children}
