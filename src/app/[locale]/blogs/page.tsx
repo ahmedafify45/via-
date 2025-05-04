@@ -1,12 +1,18 @@
 import Blogs from "@/components/blogs/Blogs";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 }
 
-function BlogsPage({ params: { locale } }: PageProps) {
+async function BlogsPage(props: PageProps) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   return (
     <main>
       <Blogs locale={locale} />

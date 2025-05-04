@@ -1,4 +1,5 @@
-"use client";
+"use client";;
+import { use } from "react";
 
 import Banner from "@/components/custom/banner";
 import TeamCard from "@/components/team/TeamCard";
@@ -11,7 +12,8 @@ interface ApiResponse {
   public: boolean;
 }
 
-function OurTeams({ params }: { params: { locale: string } }) {
+function OurTeams(props: { params: Promise<{ locale: string }> }) {
+  const params = use(props.params);
   const {
     data: response,
     loading,

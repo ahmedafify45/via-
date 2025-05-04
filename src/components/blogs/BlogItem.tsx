@@ -36,8 +36,20 @@ interface ApiResponse {
   public: boolean;
 }
 
-function BlogItem({ locale }: { locale: string }) {
-  const [searchQuery, setSearchQuery] = useState("");
+interface BlogItemProps {
+  locale: string;
+  searchQuery?: string;
+  setSearchQuery?: (query: string) => void;
+}
+
+function BlogItem({
+  locale,
+  searchQuery: externalSearchQuery,
+  setSearchQuery: externalSetSearchQuery,
+}: BlogItemProps) {
+  const [internalSearchQuery, setInternalSearchQuery] = useState(
+    externalSearchQuery || ""
+  );
 
   const {
     data: response,
@@ -125,12 +137,30 @@ function BlogItem({ locale }: { locale: string }) {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/${locale}/blogs?q=${encodeURIComponent(
-        searchQuery
-      )}`;
+    const query = externalSearchQuery || internalSearchQuery;
+    if (query.trim()) {
+      if (externalSetSearchQuery) {
+        externalSetSearchQuery(query);
+      } else {
+        window.location.href = `/${locale}/blogs?q=${encodeURIComponent(
+          query
+        )}`;
+      }
     } else {
-      window.location.href = `/${locale}/blogs`;
+      if (externalSetSearchQuery) {
+        externalSetSearchQuery("");
+      } else {
+        window.location.href = `/${locale}/blogs`;
+      }
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    if (externalSetSearchQuery) {
+      externalSetSearchQuery(newValue);
+    } else {
+      setInternalSearchQuery(newValue);
     }
   };
 
@@ -143,8 +173,8 @@ function BlogItem({ locale }: { locale: string }) {
         <Input
           placeholder="Search Here"
           className="rounded-none border border-secondary text-white bg-[#161718] placeholder:text-[#808080] h-[56px]"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={externalSearchQuery || internalSearchQuery}
+          onChange={handleSearchChange}
         />
         <Button
           type="submit"

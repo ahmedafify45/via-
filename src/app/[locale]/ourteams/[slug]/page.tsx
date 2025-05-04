@@ -1,4 +1,5 @@
-"use client";
+"use client";;
+import { use } from "react";
 
 import { TeamMember } from "@/types/team";
 import Banner from "@/components/custom/banner";
@@ -17,14 +18,15 @@ import { useFetch } from "@/hooks/useFetch";
 import Loading from "@/components/Loading";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default function TeamMemberPage({ params }: PageProps) {
+export default function TeamMemberPage(props: PageProps) {
+  const params = use(props.params);
   const isEnglish = params.locale === Languages.ENGLISH;
   const {
     data: response,

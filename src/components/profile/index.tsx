@@ -7,7 +7,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from "@/hooks/useFetch";
 import { PortfolioItem } from "@/types/portfolio";
 
-function Portfolio() {
+interface PortfolioProps {
+  portfolio?: { title: string; slug: string }[];
+  limit?: number;
+}
+
+function Portfolio({
+  portfolio: initialPortfolio,
+  limit,
+}: PortfolioProps = {}) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
@@ -44,10 +52,12 @@ function Portfolio() {
   }
 
   // Get unique categories from portfolio items and ensure they are strings
-  const categories = [
-    "All",
-    ...new Set(portfolioData.data.map((item) => String(item.category))),
-  ];
+  const categories = initialPortfolio
+    ? ["All", ...initialPortfolio.map((item) => item.title)]
+    : [
+        "All",
+        ...new Set(portfolioData.data.map((item) => String(item.category))),
+      ];
 
   const filteredPortfolio =
     selectedCategory === "All"
@@ -55,6 +65,10 @@ function Portfolio() {
       : portfolioData.data.filter(
           (item) => String(item.category) === selectedCategory
         );
+
+  const limitedPortfolio = limit
+    ? filteredPortfolio.slice(0, limit)
+    : filteredPortfolio;
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mb-[24px]">
@@ -77,7 +91,7 @@ function Portfolio() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[24px]">
         <AnimatePresence mode="wait">
-          {filteredPortfolio.map((item, index) => (
+          {limitedPortfolio.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
