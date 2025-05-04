@@ -31,7 +31,7 @@ interface PortfolioDetailsProps {
 }
 
 function PortfolioDetails({ portfolio }: PortfolioDetailsProps) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  const thumbsSwiper: SwiperType | null = null;
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <main>
