@@ -4,15 +4,18 @@ import OurStory from "@/app/[locale]/_components/about/OurStory";
 import OurVision from "@/app/[locale]/_components/about/OurVision";
 import WhatChoose from "@/app/[locale]/_components/about/WhatChoose";
 import OurClients from "@/app/[locale]/_components/OurClients";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
 
-function AboutsSection() {
+async function AboutsSection() {
+  const locale = await getCurrentLocale();
+
   return (
     <section className="my-[220px] overflow-hidden">
       <OurStory />
       <OurMission />
       <OurVision />
       <WhatChoose />
-      <Force />
+      <Force locale={locale} />
       <div className="flex items-center justify-center">
         <OurClients />
       </div>

@@ -1,9 +1,10 @@
 "use client";
 
-import { BlogPost } from "@/types/api";
+import { Blog } from "@/types/Blogs";
+import Image from "next/image";
 
 interface OurBlogProps {
-  blogPosts: BlogPost[];
+  blogPosts: Blog[];
 }
 
 export default function OurBlog({ blogPosts }: OurBlogProps) {
@@ -19,18 +20,19 @@ export default function OurBlog({ blogPosts }: OurBlogProps) {
               key={post.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
-              <img
-                src={post.coverImage}
+              <Image
+                src={post.thumbnail.data.full_url}
                 alt={post.title}
                 className="w-full h-48 object-cover"
+                fill
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <p className="text-gray-600 mb-4">{post.description}</p>
                 <div className="flex items-center text-sm text-gray-500">
-                  <span>{post.author}</span>
+                  <span>{post.category.title}</span>
                   <span className="mx-2">•</span>
-                  <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                  <span>{new Date(post.created_on).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>

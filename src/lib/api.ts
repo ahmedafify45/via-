@@ -1,4 +1,4 @@
-const BASE_URL = "https://gmsapi.guessitt.com/public/gms";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE;
 
 export const api = {
   // Auth
@@ -60,6 +60,18 @@ export const api = {
         Authorization: `Bearer ${token}`,
       },
     });
+    return response.json();
+  },
+
+  getTeamMemberById: async (token: string, id: number) => {
+    const response = await fetch(`${BASE_URL}/items/team_members/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Team member not found");
+    }
     return response.json();
   },
 

@@ -24,49 +24,27 @@ import { Loader } from "lucide-react";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-interface KeyPoint {
-  title: string;
-  text: string;
-  icon: string;
-}
-
-interface SmallCard {
-  title: string;
-  number: string;
-  en: {
+interface AboutResponse {
+  data: {
     title: string;
-    sub_title: string;
-  };
-  ar: {
-    title: string;
-    sub_title: string;
+    text: string;
+    title_en: string;
+    text_en: string;
+    key_points: Array<{ text: string }>;
+    key_points_en: Array<{ text: string }>;
   };
 }
 
-interface AboutData {
+interface ClientData {
   id: number;
   sort: number | null;
-  title: string;
-  sub_title: string;
-  image: number;
-  video: string | null;
-  key_points: KeyPoint[];
-  small_card: SmallCard;
-  image2: number;
-  image3: number;
-  text: string;
-  title_en: string;
-  sub_title_en: string;
-  key_points_en: KeyPoint[];
-  small_card_en: {
-    title: string;
-    number: string;
-  };
-  text_en: string;
+  photo: { data: { full_url: string } };
+  url: string | null;
 }
 
-interface AboutResponse {
-  data: AboutData;
+interface ClientsResponse {
+  data: ClientData[];
+  public: boolean;
 }
 
 function AboutUs() {
@@ -74,9 +52,17 @@ function AboutUs() {
   const locale = params?.locale as string;
   const aboutImageRef = useRef<HTMLImageElement>(null);
 
-  const { data, loading, error } = useFetch<AboutResponse>(
-    "/items/about_section/1"
-  );
+  const {
+    data: aboutData,
+    loading: aboutLoading,
+    error: aboutError,
+  } = useFetch<AboutResponse>("/items/about_section/1", { fields: "*.*" });
+
+  const {
+    data: clientsData,
+    loading: clientsLoading,
+    error: clientsError,
+  } = useFetch<ClientsResponse>("/items/clients", { fields: "*.*" });
 
   useEffect(() => {
     if (aboutImageRef.current) {
@@ -99,15 +85,15 @@ function AboutUs() {
     }
   }, []);
 
-  if (loading)
+  if (aboutLoading || clientsLoading)
     return (
       <div>
         <Loader />
       </div>
     );
-  if (error) return <div>Error loading about section</div>;
+  if (aboutError || clientsError) return <div>Error loading data</div>;
 
-  const about = data?.data;
+  const about = aboutData?.data;
   const keyPoints =
     locale === Languages.ARABIC ? about?.key_points : about?.key_points_en;
 
@@ -116,65 +102,6 @@ function AboutUs() {
     { icon: faStar },
     { icon: faHandshake },
     { icon: faLightbulb },
-  ];
-
-  const imageData = [
-    {
-      id: 1,
-      group: "/images/sidebar/LogoSCE.png",
-      alt: "LogoSCE",
-      width: 51,
-      height: 51,
-    },
-    {
-      id: 2,
-      group: "/images/sidebar/Group.png",
-      alt: "Group",
-      width: 100,
-      height: 41,
-    },
-    {
-      id: 3,
-      group: "/images/sidebar/LogoFEG.png",
-      alt: "LogoFEG",
-      width: 157,
-      height: 76,
-    },
-    {
-      id: 4,
-      group: "/images/sidebar/Logodt_logo.png",
-      alt: "LogoBdC.png",
-      width: 140,
-      height: 59,
-    },
-    {
-      id: 5,
-      group: "/images/sidebar/LogoBdC.png",
-      alt: "LogoBdC.png",
-      width: 87,
-      height: 63,
-    },
-    {
-      id: 6,
-      group: "/images/sidebar/LogoBdC.png",
-      alt: "LogoBdC.png",
-      width: 87,
-      height: 63,
-    },
-    {
-      id: 7,
-      group: "/images/sidebar/LogoBdC.png",
-      alt: "LogoBdC.png",
-      width: 87,
-      height: 63,
-    },
-    {
-      id: 8,
-      group: "/images/sidebar/LogoBdC.png",
-      alt: "LogoBdC.png",
-      width: 87,
-      height: 63,
-    },
   ];
 
   return (
@@ -279,19 +206,26 @@ function AboutUs() {
           }}
           className="w-full h-full flex items-center"
         >
-          {imageData.map((item) => (
+          {clientsData?.data.map((client) => (
             <SwiperSlide
-              key={item.id}
+              key={client.id}
               className="flex items-center justify-center h-full"
             >
               <div className="flex items-center justify-center w-full h-full">
-                <Image
-                  src={item.group}
-                  alt={item.alt}
-                  width={item.width}
-                  height={item.height}
-                  className="w-auto h-auto object-contain max-w-[80%] md:max-w-[90%] lg:max-w-full"
-                />
+                <a
+                  href={client.url || "#"}
+                  target={client.url ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className="w-full h-full flex items-center justify-center"
+                >
+                  <Image
+                    src={client.photo?.data?.full_url || ""}
+                    alt={`Client ${client.id}`}
+                    width={100}
+                    height={50}
+                    className="w-auto h-auto object-contain max-w-[80%] md:max-w-[90%] lg:max-w-full"
+                  />
+                </a>
               </div>
             </SwiperSlide>
           ))}

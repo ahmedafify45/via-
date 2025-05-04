@@ -10,28 +10,30 @@ interface TeamCardProps {
 }
 
 function TeamCard({ team, locale }: TeamCardProps) {
+  const isEnglish = locale === Languages.ENGLISH;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {team.map((item) => (
         <Link
-          href={`/team/${item.id}`}
+          href={`/${locale}/ourteams/${item.id}`}
           key={item.id}
           className="flex flex-col items-center justify-center gap-1 mt-3 hover:opacity-80 transition-opacity"
         >
           <div>
             <Image
               src={item.avatar?.data?.full_url}
-              alt={Languages.ENGLISH ? item.name_en : item.name}
+              alt={isEnglish ? item.name_en : item.name}
               width={360}
               height={360}
               className="rounded-[8px]"
             />
           </div>
           <h5 className="text-[#D6D6D6] text-[24px] font-bold">
-            {Languages.ENGLISH ? item.name_en : item.name}
+            {isEnglish ? item.name_en : item.name}
           </h5>
           <p className="text-[#D6D6D6] text-[20px] font-medium">
-            {Languages.ENGLISH ? item.designation_en : item.designation}
+            {isEnglish ? item.designation_en : item.designation}
           </p>
         </Link>
       ))}

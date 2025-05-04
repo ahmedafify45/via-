@@ -18,7 +18,9 @@ function Force({ locale }: ForceProps) {
     data: response,
     loading,
     error,
-  } = useFetch<ApiResponse>("/items/team_members");
+  } = useFetch<ApiResponse>("/items/team_members", {
+    fields: "*.*",
+  });
 
   if (loading) {
     return (
@@ -28,16 +30,26 @@ function Force({ locale }: ForceProps) {
     );
   }
 
-  if (error || !response?.data) {
+  if (error) {
+    console.error("Error loading team members:", error);
     return (
       <div className="mx-[80px] mb-[80px] text-center text-red-500">
-        Failed to load team members
+        Failed to load team members. Please try again later.
+      </div>
+    );
+  }
+
+  if (!response?.data) {
+    console.error("No team members data received");
+    return (
+      <div className="mx-[80px] mb-[80px] text-center text-red-500">
+        No team members data available.
       </div>
     );
   }
 
   return (
-    <div className="mx-[80px] mb-[80px]">
+    <div className="my-[150px] mx-[80px]">
       <div className="flex flex-col items-center justify-center text-center">
         <h4 className="text-[24px] md:text-[32px] lg:text-[48px] font-bold text-primary max-w-[1006px]">
           The Force Behind

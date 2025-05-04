@@ -15,6 +15,7 @@ import { notFound } from "next/navigation";
 import { Languages } from "@/constants/enums";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "@/components/Loading";
+
 type PageProps = {
   params: {
     slug: string;
@@ -24,40 +25,72 @@ type PageProps = {
 };
 
 export default function TeamMemberPage({ params }: PageProps) {
+  const isEnglish = params.locale === Languages.ENGLISH;
   const {
-    data: team,
+    data: response,
     loading,
     error,
-  } = useFetch<TeamMember[]>("/items/team_members", {
+  } = useFetch<{ data: TeamMember }>(`/items/team_members/${params.slug}`, {
     fields: "*.*",
   });
+
   if (loading) {
     return (
-      <div>
+      <div className="min-h-screen flex items-center justify-center">
         <Loading />
       </div>
     );
   }
 
   if (error) {
-    return <div>Error loading team members</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-primary mb-4">Error</h2>
+          <p>Failed to load team member details. Please try again later.</p>
+        </div>
+      </div>
+    );
   }
 
-  const member = team?.find((m) => m.id.toString() === params.slug);
-
-  if (!member) {
+  if (!response?.data) {
     notFound();
   }
+
+  const member = response.data;
+
+  const socialMediaLinks = [
+    {
+      icon: faFacebookF,
+      url: member.social_media?.facebook,
+      label: "Facebook",
+    },
+    {
+      icon: faInstagram,
+      url: member.social_media?.instagram,
+      label: "Instagram",
+    },
+    {
+      icon: faTwitter,
+      url: member.social_media?.twitter,
+      label: "Twitter",
+    },
+    {
+      icon: faYoutube,
+      url: member.social_media?.youtube,
+      label: "YouTube",
+    },
+  ];
 
   return (
     <main className="mx-4 md:mx-[80px] my-[80px] md:my-[150px]">
       <div>
-        <Banner title="Our Teams" subtitle="Home / Our Teams /Team Details" />
+        <Banner title="Our Teams" subtitle="Home / Our Teams / Team Details" />
         <div className="flex flex-col md:flex-row gap-[24px] md:gap-[48px] bg-[#17181C] py-[16px] px-4 md:px-0">
           <div className="w-full md:w-auto">
             <Image
               src={member.avatar?.data?.full_url}
-              alt={Languages.ENGLISH ? member.name_en : member.name}
+              alt={isEnglish ? member.name_en : member.name}
               width={450}
               height={400}
               className="w-full h-auto object-cover"
@@ -65,13 +98,13 @@ export default function TeamMemberPage({ params }: PageProps) {
           </div>
           <div className="text-white flex flex-col gap-[12px] md:gap-[16px]">
             <h1 className="text-[28px] md:text-[38px] font-bold">
-              {Languages.ENGLISH ? member.name_en : member.name}
+              {isEnglish ? member.name_en : member.name}
             </h1>
             <p className="text-primary text-[16px] md:text-[20px] font-bold">
-              {Languages.ENGLISH ? member.designation_en : member.designation}
+              {isEnglish ? member.designation_en : member.designation}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
-              {Languages.ENGLISH ? member.tagline_en : member.tagline}
+              {isEnglish ? member.tagline_en : member.tagline}
             </p>
             <p className="text-[16px] md:text-[20px] font-medium">
               Email: {member.email}
@@ -93,53 +126,22 @@ export default function TeamMemberPage({ params }: PageProps) {
             )}
             {member.social_media && (
               <div className="flex items-center gap-[12px] md:gap-[16px]">
-                {member.social_media.facebook && (
-                  <Link
-                    target="_blank"
-                    href={member.social_media.facebook}
-                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faFacebookF}
-                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                    />
-                  </Link>
-                )}
-                {member.social_media.instagram && (
-                  <Link
-                    target="_blank"
-                    href={member.social_media.instagram}
-                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faInstagram}
-                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                    />
-                  </Link>
-                )}
-                {member.social_media.twitter && (
-                  <Link
-                    target="_blank"
-                    href={member.social_media.twitter}
-                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faTwitter}
-                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                    />
-                  </Link>
-                )}
-                {member.social_media.youtube && (
-                  <Link
-                    target="_blank"
-                    href={member.social_media.youtube}
-                    className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faYoutube}
-                      className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
-                    />
-                  </Link>
+                {socialMediaLinks.map(
+                  (social) =>
+                    social.url && (
+                      <Link
+                        key={social.label}
+                        target="_blank"
+                        href={social.url}
+                        className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                        aria-label={social.label}
+                      >
+                        <FontAwesomeIcon
+                          icon={social.icon}
+                          className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                        />
+                      </Link>
+                    )
                 )}
               </div>
             )}
@@ -151,7 +153,7 @@ export default function TeamMemberPage({ params }: PageProps) {
           Personal Experience
         </h2>
         <p className="text-[16px] md:text-[20px] font-medium text-[#FFFFFF] mt-4">
-          {Languages.ENGLISH ? member.tagline_en : member.tagline}
+          {isEnglish ? member.tagline_en : member.tagline}
         </p>
       </div>
     </main>
