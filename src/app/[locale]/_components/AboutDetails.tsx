@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useFetch } from "@/hooks/useFetch";
 import { useParams } from "next/navigation";
+import Loading from "@/components/Loading";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -91,7 +92,12 @@ function AboutDetails() {
     }
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error loading counters</div>;
   if (!data?.data) return null;
 

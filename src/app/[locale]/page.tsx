@@ -14,7 +14,7 @@ export default async function Home() {
       <AboutUs />
       <OurPortfolio />
       <OurService />
-      <div className="flex items-center justify-center">
+      <div className="mt-[50px] lg:flex justify-center items-center">
         <OurClients />
       </div>
       <div className="flex flex-col items-center mx-[20px] sm:mx-[40px] md:mx-[60px] lg:mx-[80px]">

@@ -6,7 +6,7 @@ import OurClients from "@/app/[locale]/_components/OurClients";
 
 function Contact() {
   return (
-    <section className="my-[220px] mx-[0px] md:my-[220px] md:mx-[80px] sm:my-[60px] sm:mx-[16px]">
+    <section className="my-[220px] mx-2 md:mx-[80px] sm:mx-[16px]">
       <Banner title="Contact Us" subtitle="Home / Contac Us" />
       <div className="flex flex-col lg:flex-row justify-between  gap-[20px]">
         <div className="w-full md:w-auto">
@@ -23,7 +23,7 @@ function Contact() {
         </div>
       </div>
       <InformationContact />
-      <div className="flex justify-center">
+      <div className="lg:flex justify-center items-center mt-[50px] md:mt-[100px]">
         <OurClients />
       </div>
     </section>

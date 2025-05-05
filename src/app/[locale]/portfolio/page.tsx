@@ -4,7 +4,7 @@ import Portfolio from "@/components/profile";
 
 function Portfoliopage() {
   return (
-    <main className="my-[220px] mx-[80px]">
+    <main className="my-[220px] mx-2 lg:mx-[80px]">
       <Banner title="Our Portfolio" />
       <Portfolio />
     </main>

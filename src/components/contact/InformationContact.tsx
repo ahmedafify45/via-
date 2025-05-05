@@ -1,3 +1,4 @@
+"use client";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
@@ -19,7 +20,10 @@ interface GeneralSettings {
 
 function InformationContact() {
   const { data, loading, error } = useFetch<GeneralSettings>(
-    "/items/general_settings/1"
+    "/items/general_settings/1",
+    {
+      fields: "*.*",
+    }
   );
 
   if (loading) return <div>Loading...</div>;

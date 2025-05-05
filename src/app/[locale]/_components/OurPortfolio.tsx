@@ -6,13 +6,6 @@ import PortfolioAds from "./PortfolioAds";
 import Link from "next/link";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 
-export const portfolio = [
-  { title: "All", slug: "all" },
-  { title: "Social Designs", slug: "social-designs" },
-  { title: "Photo shoot", slug: "photo-shoot" },
-  { title: "Branding", slug: "branding" },
-];
-
 async function OurPortfolio() {
   const locale = await getCurrentLocale();
   return (
@@ -27,7 +20,7 @@ async function OurPortfolio() {
             needs and goals.
           </p>
         </div>
-        <Portfolio portfolio={portfolio} limit={3} />
+        <Portfolio limit={3} />
         <div className="flex justify-center mb-[40px] md:mb-[60px] lg:mb-[80px]">
           <Button className="w-[140px] md:w-[160px] h-[48px] md:h-[56px]  text-sm md:text-base">
             <Link
@@ -49,4 +42,5 @@ async function OurPortfolio() {
     </section>
   );
 }
+
 export default OurPortfolio;

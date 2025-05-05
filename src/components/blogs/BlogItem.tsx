@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
+import { Blog } from "@/types/Blogs";
 
 interface Category {
   id?: number;
@@ -33,6 +34,11 @@ interface Category {
 
 interface ApiResponse {
   data: Category[];
+  public: boolean;
+}
+
+interface PostsResponse {
+  data: Blog[];
   public: boolean;
 }
 
@@ -58,40 +64,19 @@ function BlogItem({
   } = useFetch<ApiResponse>("/items/post_categories", {
     fields: "*.*",
   });
-  const isEnglish = locale === Languages.ENGLISH;
 
-  const recentPosts = [
-    {
-      id: 1,
-      title: "How to make a website",
-      image: "/images/blog.png",
-      date: "20 Feb 2025",
-    },
-    {
-      id: 2,
-      title: "How to make a website",
-      image: "/images/blog.png",
-      date: "20 Feb 2025",
-    },
-    {
-      id: 3,
-      title: "How to make a website",
-      image: "/images/blog.png",
-      date: "20 Feb 2025",
-    },
-    {
-      id: 4,
-      title: "How to make a website",
-      image: "/images/blog.png",
-      date: "20 Feb 2025",
-    },
-    {
-      id: 5,
-      title: "How to make a website",
-      image: "/images/blog.png",
-      date: "20 Feb 2025",
-    },
-  ];
+  const {
+    data: postsResponse,
+    loading: postsLoading,
+    error: postsError,
+  } = useFetch<PostsResponse>("/items/posts", {
+    fields:
+      "id,created_on,title,title_en,thumbnail.data.full_url,thumbnail_en.data.full_url,slug,tags,tags_en",
+    sort: "-created_on",
+    limit: 5,
+  });
+
+  const isEnglish = locale === Languages.ENGLISH;
 
   const followUs = [
     {
@@ -113,25 +98,6 @@ function BlogItem({
       id: 4,
       icon: <FontAwesomeIcon icon={faYoutube} />,
       link: "https://www.youtube.com",
-    },
-  ];
-
-  const tags = [
-    {
-      id: 1,
-      title: "Social Designs",
-    },
-    {
-      id: 2,
-      title: "Photo shoot",
-    },
-    {
-      id: 3,
-      title: "Social Designs",
-    },
-    {
-      id: 4,
-      title: "Photo shoot",
     },
   ];
 
@@ -188,24 +154,40 @@ function BlogItem({
           Recent Posts
         </h3>
         <div className="flex flex-col gap-[16px] ">
-          {recentPosts.map((post) => (
-            <div key={post.id} className="flex items-center gap-[16px]">
-              <Image
-                src={post.image}
-                alt={post.title}
-                width={100}
-                height={100}
-              />
-              <div className="flex-1">
-                <h4 className="text-[16px] font-medium text-white">
-                  {post.title}
-                </h4>
-                <p className="text-[14px] font-normal text-secondary text-right">
-                  {post.date}
-                </p>
+          {postsLoading ? (
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></div>
+          ) : postsError ? (
+            <p className="text-white">Error loading recent posts</p>
+          ) : (
+            postsResponse?.data.map((post) => (
+              <div key={post.id} className="flex items-center gap-[16px]">
+                <Image
+                  src={
+                    Languages.ENGLISH
+                      ? post.thumbnail_en?.data?.full_url ||
+                        "/placeholder-image.jpg"
+                      : post.thumbnail?.data?.full_url ||
+                        "/placeholder-image.jpg"
+                  }
+                  alt={Languages.ENGLISH ? post.title_en : post.title}
+                  width={100}
+                  height={100}
+                />
+                <div className="flex-1">
+                  <h4 className="text-[16px] font-medium text-white">
+                    {isEnglish ? post.title_en : post.title}
+                  </h4>
+                  <p className="text-[14px] font-normal text-secondary text-right">
+                    {new Date(post.created_on).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
@@ -254,14 +236,19 @@ function BlogItem({
           Tags
         </h3>
         <div className="grid grid-cols-2 gap-[16px]">
-          {tags.map((tag) => (
-            <div
-              key={tag.id}
-              className="text-[16px] font-medium text-white bg-[#FFFFFF1A] p-[16px] rounded-[4px]"
-            >
-              <p>{tag.title}</p>
-            </div>
-          ))}
+          {postsResponse?.data.map((post) => {
+            const tags = isEnglish
+              ? post.tags_en?.split(",")
+              : post.tags?.split(",");
+            return tags?.map((tag, index) => (
+              <div
+                key={`${post.id}-${index}`}
+                className="text-[16px] font-medium text-white bg-[#FFFFFF1A] p-[16px] rounded-[4px]"
+              >
+                <p>{tag.trim()}</p>
+              </div>
+            ));
+          })}
         </div>
       </div>
     </div>

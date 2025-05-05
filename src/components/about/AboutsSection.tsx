@@ -16,7 +16,7 @@ async function AboutsSection() {
       <OurVision />
       <WhatChoose />
       <Force locale={locale} />
-      <div className="flex items-center justify-center">
+      <div className="lg:flex items-center justify-center mt-[50px] md:mt-[100px]">
         <OurClients />
       </div>
     </section>

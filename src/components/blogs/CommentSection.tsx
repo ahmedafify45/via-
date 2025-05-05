@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -24,7 +24,9 @@ function CommentSection() {
 
   const countTotalComments = (comments: Comment[]): number => {
     return comments.reduce((total, comment) => {
-      return total + 1 + (comment.replies ? countTotalComments(comment.replies) : 0);
+      return (
+        total + 1 + (comment.replies ? countTotalComments(comment.replies) : 0)
+      );
     }, 0);
   };
 
@@ -51,7 +53,9 @@ function CommentSection() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -66,15 +70,43 @@ function CommentSection() {
     setComments(updatedComments);
   };
 
-  const renderComment = (comment: Comment, index: number, isReply = false, parentIndex?: number) => (
-    <div key={index} className={`p-4 border-b-1 bordr-[#EBEBEB80] ${!isReply ? 'border-b border-gray-200' : ''}`}>
-      <div className="flex items-center gap-4">
-        {!isReply && <Image src="/images/commintImage.png" alt="commentImage" width={80} height={80} className="rounded-full"/>}
-        <div className="flex-1">
-          <h3 className={`font-medium ${isReply ? 'text-[20px]' : 'text-[24px]'} text-white`}>{comment.name}</h3>
-          <p className="mt-2 text-white text-[14px] font-medium">{comment.comment}</p>
+  const renderComment = (
+    comment: Comment,
+    index: number,
+    isReply = false,
+    parentIndex?: number
+  ) => (
+    <div
+      key={index}
+      className={`p-4 border-b-1 bordr-[#EBEBEB80] ${
+        !isReply ? "border-b border-gray-200" : ""
+      }`}
+    >
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        {!isReply && (
+          <Image
+            src="/images/commintImage.png"
+            alt="commentImage"
+            width={80}
+            height={80}
+            className="rounded-full w-[60px] h-[60px] sm:w-[80px] sm:h-[80px]"
+          />
+        )}
+        <div className="flex-1 w-full">
+          <h3
+            className={`font-medium ${
+              isReply
+                ? "text-[16px] sm:text-[20px]"
+                : "text-[20px] sm:text-[24px]"
+            } text-white`}
+          >
+            {comment.name}
+          </h3>
+          <p className="mt-2 text-white text-[12px] sm:text-[14px] font-medium">
+            {comment.comment}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           {!isReply && (
             <button
               onClick={() => handleReply(index)}
@@ -94,8 +126,10 @@ function CommentSection() {
         </div>
       </div>
       {comment.replies && (
-        <div className="mt-4 space-y-2">
-          {comment.replies.map((reply, replyIndex) => renderComment(reply, replyIndex, true, index))}
+        <div className="mt-4 space-y-2 pl-4 sm:pl-8">
+          {comment.replies.map((reply, replyIndex) =>
+            renderComment(reply, replyIndex, true, index)
+          )}
         </div>
       )}
     </div>
@@ -110,62 +144,83 @@ function CommentSection() {
         >
           <span>Comments ({totalComments})</span>
           <svg
-            className={`w-4 h-4 transition-transform ${showComments ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform ${
+              showComments ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
       </div>
-      
+
       {showComments && (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mt-8 space-y-4">
             {comments.map((comment, index) => renderComment(comment, index))}
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="name" className="text-white text-[20px] font-medium">Full Name</label>
+            <label
+              htmlFor="name"
+              className="text-white text-[16px] sm:text-[20px] font-medium"
+            >
+              Full Name
+            </label>
             <Input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               placeholder="Your Name"
-                className="w-[1280px] h-[56px] border border-accent"
+              className="w-full h-[56px] border border-accent"
               required
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="email" className="text-white text-[20px] font-medium">Email Address</label>
+            <label
+              htmlFor="email"
+              className="text-white text-[16px] sm:text-[20px] font-medium"
+            >
+              Email Address
+            </label>
             <Input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="Your Email"
-              className="w-[1280px] h-[56px] border border-accent"
+              className="w-full h-[56px] border border-accent"
               required
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="comment" className="text-white text-[20px] font-medium">Comment</label>
+            <label
+              htmlFor="comment"
+              className="text-white text-[16px] sm:text-[20px] font-medium"
+            >
+              Comment
+            </label>
             <Textarea
               name="comment"
               value={formData.comment}
               onChange={handleChange}
               placeholder={replyingTo !== null ? "Your Reply" : "Your Comment"}
-              className="text-white w-[1280px] h-[56px] border border-accent"
+              className="text-white w-full h-[56px] border border-accent"
               rows={4}
               required
-              
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
             <Button
               type="submit"
-            className="bg-transparent text-primary border border-primary w-[129px] h-[50px] hover:text-black"
+              className="bg-transparent text-primary border border-primary w-full sm:w-[129px] h-[50px] hover:text-black"
             >
               {replyingTo !== null ? "Send Reply" : "Send Comment"}
             </Button>
@@ -173,7 +228,7 @@ function CommentSection() {
               <Button
                 type="button"
                 onClick={() => setReplyingTo(null)}
-                className="px-4 py-2 text-gray-500 hover:text-gray-700"
+                className="w-full sm:w-auto px-4 py-2 text-gray-500 hover:text-gray-700"
               >
                 Cancel Reply
               </Button>
