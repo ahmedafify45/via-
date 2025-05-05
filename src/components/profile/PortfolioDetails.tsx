@@ -13,6 +13,7 @@ import OurClients from "@/app/[locale]/_components/OurClients";
 import TransformBrand from "./TransformBrand";
 import { PortfolioItem } from "@/types/portfolio";
 import { useFetch } from "@/hooks/useFetch";
+import Link from "next/link";
 
 function PortfolioDetails() {
   const params = useParams();
@@ -45,7 +46,7 @@ function PortfolioDetails() {
 
   return (
     <main>
-      <div className="px-4 md:px-[80px] md:my-[220px]">
+      <div className="px-4 md:px-[80px] my-[220px]">
         <Banner
           title={"Our Portfolio"}
           subtitle="Home / Portfolio / Portfolio Details"
@@ -108,7 +109,7 @@ function PortfolioDetails() {
           </div>
         </div>
         <div className="mt-[50px] md:mt-[158px] flex flex-col md:flex-row justify-between gap-6">
-          <div className="bg-[#FFFFFF0D] py-[18px] px-[16px] rounded-[4px]">
+          <div className="bg-[#FFFFFF0D] rounded-[4px] lg:w-[738px]">
             <h2 className="text-[32px] md:text-[48px] font-medium text-primary">
               Project Details
             </h2>
@@ -116,7 +117,7 @@ function PortfolioDetails() {
               {portfolio.description}
             </p>
           </div>
-          <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px]">
+          <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] lg:w-[522px]">
             <div>
               <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
                 Client
@@ -145,9 +146,12 @@ function PortfolioDetails() {
               <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
                 Website
               </h4>
-              <p className="text-white text-[18px] md:text-[24px]">
+              <Link
+                href={portfolio.website}
+                className="text-white text-[18px] md:text-[24px] hover:text-primary transition-all duration-200"
+              >
                 {portfolio.website}
-              </p>
+              </Link>
             </div>
             <div>
               <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
@@ -159,10 +163,12 @@ function PortfolioDetails() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="mt-[50px] lg:flex justify-center items-center">
           <OurClients />
         </div>
-        <TransformBrand />
+        <div className="mt-[50px] md:mt-[100px]">
+          <TransformBrand />
+        </div>
       </div>
     </main>
   );
