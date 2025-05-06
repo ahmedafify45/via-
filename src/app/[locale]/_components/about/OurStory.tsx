@@ -2,8 +2,33 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import { useFetch } from "@/hooks/useFetch";
+import { AboutStoryResponse } from "@/types/about";
+import { useParams } from "next/navigation";
+import { Languages } from "@/constants/enums";
+import Loading from "@/components/Loading";
 
 function OurStory() {
+  const params = useParams();
+  const locale = params.locale as string;
+  const { data, loading, error } = useFetch<AboutStoryResponse>(
+    "/items/about_story",
+    {
+      fields: "*.*",
+    }
+  );
+
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error) return <div>Error loading story</div>;
+  if (!data?.data?.[0]) return null;
+
+  const story = data.data[0];
+
   return (
     <div className="w-full pb-[80px] overflow-hidden">
       <div className="flex flex-col lg:flex-row items-center justify-between mx-6 md:mx-[80px] gap-10">
@@ -15,15 +40,14 @@ function OurStory() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h1 className="text-[36px] md:text-[48px] font-bold text-primary">
-            Our Story
+            {locale === Languages.ARABIC ? story.title : story.title_en}
           </h1>
-          <p className="text-[20px] md:text-[24px] font-medium text-[#FFFFFF]">
-            Once upon a time in the vibrant city of Cairo, four visionaries came
-            together with a shared passion for transforming ideas into impactful
-            stories. Their collective dream was to establish a marketing and
-            media production agency that would redefine industry standards and
-            set new benchmarks for creativity.
-          </p>
+          <div
+            className="text-[20px] md:text-[24px] font-medium text-[#FFFFFF]"
+            dangerouslySetInnerHTML={{
+              __html: locale === "ar" ? story.text : story.text_en,
+            }}
+          />
         </motion.div>
         <motion.div
           className="relative w-full md:w-[500px] h-[300px] md:h-[450px]"
@@ -33,8 +57,8 @@ function OurStory() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <Image
-            src="/images/about/ourStory.png"
-            alt="about"
+            src={story.image.data.full_url}
+            alt={locale === Languages.ARABIC ? story.title : story.title_en}
             fill
             className="object-cover object-center rounded-lg"
             priority

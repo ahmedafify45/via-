@@ -1,8 +1,41 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useFetch } from "@/hooks/useFetch";
+import { MissionAndVisionResponse } from "@/types/about";
+import { useParams } from "next/navigation";
+import Loading from "@/components/Loading";
+import { Languages } from "@/constants/enums";
 
 function OurMission() {
+  const { locale } = useParams();
+  const { data, loading, error } = useFetch<MissionAndVisionResponse>(
+    "/items/mission_and_vision",
+    {
+      fields: "*.*",
+    }
+  );
+  const missionData = data?.data[0];
+
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error) return <div>Error loading mission data</div>;
+  if (!missionData) return null;
+
+  const title =
+    locale === Languages.ENGLISH ? missionData.title_en : missionData.title;
+  const text =
+    locale === Languages.ENGLISH ? missionData.text_en : missionData.text;
+
+  // Extract only the mission part from the HTML content
+  const missionText = text.split(
+    locale === Languages.ENGLISH ? "<h3>Our Vision</h3>" : "<h3>رؤيتنا</h3>"
+  )[0];
+
   return (
     <div className="w-full">
       <div className="relative">
@@ -36,8 +69,8 @@ function OurMission() {
             }}
           />
           <Image
-            src="/images/about/Our_Mission.png"
-            alt="ourMission"
+            src={missionData.image.data.full_url}
+            alt={title}
             width={200}
             height={320}
             className="w-[150px] sm:w-[180px] md:w-[200px] h-auto mx-auto md:mx-0 relative z-10"
@@ -56,15 +89,12 @@ function OurMission() {
           }}
         >
           <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold text-primary">
-            Our Mission
+            {title}
           </h2>
-          <p className="text-[16px] sm:text-[20px] md:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6">
-            Empowering Dreams, Guiding Paths: We are dedicated to assisting our
-            customers in navigating the smartest route towards their
-            aspirations. Through active participation and thoughtful guidance,
-            we provide the essential tools and resources for their journey,
-            ensuring every ambition is within reach.
-          </p>
+          <div
+            className="text-[16px] sm:text-[20px] md:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6"
+            dangerouslySetInnerHTML={{ __html: missionText }}
+          />
         </motion.div>
       </div>
     </div>

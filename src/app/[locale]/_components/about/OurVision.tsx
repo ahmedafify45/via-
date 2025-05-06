@@ -1,8 +1,40 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useFetch } from "@/hooks/useFetch";
+import { MissionAndVisionResponse } from "@/types/about";
+import { useParams } from "next/navigation";
+import Loading from "@/components/Loading";
+import { Languages } from "@/constants/enums";
 
 function OurVision() {
+  const { locale } = useParams();
+  const { data, loading, error } = useFetch<MissionAndVisionResponse>(
+    "/items/mission_and_vision",
+    {
+      fields: "*.*",
+    }
+  );
+  const visionData = data?.data[0];
+
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error) return <div>Error loading vision data</div>;
+  if (!visionData) return null;
+
+  const title = locale === Languages.ENGLISH ? "Our Vision" : "رؤيتنا";
+  const text =
+    locale === Languages.ENGLISH ? visionData.text_en : visionData.text;
+
+  // Extract only the vision part from the HTML content
+  const visionText = text.split(
+    locale === Languages.ENGLISH ? "<h3>Our Vision</h3>" : "<h3>رؤيتنا</h3>"
+  )[1];
+
   return (
     <div className="py-[80px]">
       <div className="flex flex-col lg:flex-row items-center justify-between mx-6 md:mx-[80px] gap-10">
@@ -14,14 +46,12 @@ function OurVision() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h3 className="text-[36px] md:text-[48px] font-bold text-primary">
-            Our Vision
+            {title}
           </h3>
-          <p className="text-[20px] md:text-[24px] font-medium text-[#FFFFFF]">
-            Embracing the spirit of collaboration, we envision a future where
-            every dream is realized and flourishes. And become the pioneer
-            gateway for unprecedented growth and influence in the MEA markets
-            over the next 10 years.
-          </p>
+          <div
+            className="text-[20px] md:text-[24px] font-medium text-[#FFFFFF]"
+            dangerouslySetInnerHTML={{ __html: visionText }}
+          />
         </motion.div>
         <motion.div
           className="relative"
@@ -31,8 +61,8 @@ function OurVision() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <Image
-            src="/images/about/eyes.png"
-            alt="about"
+            src={visionData.image2.data.full_url}
+            alt={title}
             width={200}
             height={210}
             className="md:w-[323px] md:h-[333px]"

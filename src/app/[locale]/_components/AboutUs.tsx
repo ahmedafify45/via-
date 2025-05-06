@@ -1,12 +1,7 @@
 "use client";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLightbulb,
-  faStar,
-  faHandshake,
-  faArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import AboutDetails from "./AboutDetails";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,19 +15,34 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useEffect } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { Loader } from "lucide-react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import * as RegularIcons from "@fortawesome/free-regular-svg-icons";
+import * as SolidIcons from "@fortawesome/free-solid-svg-icons";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 interface AboutResponse {
   data: {
+    id: number;
+    sort: number;
     title: string;
-    text: string;
     title_en: string;
+    sub_title: string;
+    sub_title_en: string;
+    text: string;
     text_en: string;
-    key_points: Array<{ text: string }>;
-    key_points_en: Array<{ text: string }>;
-  };
+    image: number;
+    video: number;
+    key_points: Array<{
+      title: string;
+      title_en: string;
+      text: string;
+      text_en: string;
+      icon: string;
+    }>;
+    public: boolean;
+  }[];
 }
 
 interface ClientData {
@@ -56,7 +66,7 @@ function AboutUs() {
     data: aboutData,
     loading: aboutLoading,
     error: aboutError,
-  } = useFetch<AboutResponse>("/items/about_section/1", { fields: "*.*" });
+  } = useFetch<AboutResponse>("/items/about_section", { fields: "*.*" });
 
   const {
     data: clientsData,
@@ -68,7 +78,6 @@ function AboutUs() {
     if (aboutImageRef.current) {
       const image = aboutImageRef.current;
 
-      // Create a trigger point for the final position
       ScrollTrigger.create({
         trigger: image,
         start: "top center",
@@ -85,24 +94,32 @@ function AboutUs() {
     }
   }, []);
 
-  if (aboutLoading || clientsLoading)
+  if (aboutLoading || clientsLoading) {
     return (
-      <div>
-        <Loader />
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Loader className="w-8 h-8 animate-spin" />
       </div>
     );
-  if (aboutError || clientsError) return <div>Error loading data</div>;
+  }
 
-  const about = aboutData?.data;
-  const keyPoints =
-    locale === Languages.ARABIC ? about?.key_points : about?.key_points_en;
+  if (aboutError || clientsError) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px] text-red-500">
+        Error loading data
+      </div>
+    );
+  }
 
-  const aboutUsIcon = [
-    { icon: faLightbulb },
-    { icon: faStar },
-    { icon: faHandshake },
-    { icon: faLightbulb },
-  ];
+  if (!aboutData?.data || aboutData.data.length === 0) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        No data available
+      </div>
+    );
+  }
+
+  const about = aboutData.data[0];
+  const keyPoints = about?.key_points || [];
 
   return (
     <section className="md:px-0">
@@ -117,11 +134,7 @@ function AboutUs() {
           <Image
             ref={aboutImageRef}
             src="/images/aboutus.png"
-            alt={
-              locale === Languages.ARABIC
-                ? about?.title || ""
-                : about?.title_en || ""
-            }
+            alt={locale === Languages.ENGLISH ? about?.title_en : about?.title}
             width={422}
             height={535}
             className={`w-full h-auto object-contain scale-90 md:scale-100 will-change-transform ${
@@ -139,27 +152,51 @@ function AboutUs() {
         >
           <div
             className="bg-cover w-full h-auto md:h-[612px] overflow-hidden [transform:scaleX(-1)] md:[transform:scaleX(1)]"
-            style={{ backgroundImage: "url('/images/aboutus_text.png')" }}
+            style={{
+              backgroundImage: `url(${
+                typeof window !== "undefined" && window.innerWidth >= 768
+                  ? "/images/aboutus_text.png"
+                  : "/images/about_usmobile.png"
+              })`,
+            }}
           >
             <div className="px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
               <h2 className="font-bold text-3xl md:text-[48px] text-black pt-8 md:pt-[92px]">
-                {locale === Languages.ARABIC ? about?.title : about?.title_en}
+                {locale === Languages.ENGLISH ? about?.title_en : about?.title}
               </h2>
               <p className="mb-4 md:mb-[16px] mt-4 md:mt-[24px] text-base md:text-lg">
-                {locale === Languages.ARABIC ? about?.text : about?.text_en}
+                {locale === Languages.ENGLISH ? about?.text_en : about?.text}
               </p>
               <div className="flex flex-col gap-4 md:gap-2">
-                {keyPoints?.map((item, index) => (
+                {keyPoints.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] bg-[#0C0D0F] rounded-tl-[16px] rounded-br-[16px] text-primary text-[18px] flex items-center justify-center">
-                      <FontAwesomeIcon
-                        icon={aboutUsIcon[index % aboutUsIcon.length].icon}
-                        className="w-[16px] md:w-[18px] h-[24px] md:h-[26px]"
-                      />
+                      {item.icon && (
+                        <FontAwesomeIcon
+                          icon={
+                            (RegularIcons[
+                              item.icon as keyof typeof RegularIcons
+                            ] ||
+                              SolidIcons[
+                                item.icon as keyof typeof SolidIcons
+                              ]) as IconProp
+                          }
+                          className="w-[16px] md:w-[18px] h-[24px] md:h-[26px]"
+                        />
+                      )}
                     </div>
-                    <p className="text-lg md:text-[24px] font-bold">
-                      {item.text}
-                    </p>
+                    <div className="flex flex-col">
+                      <p className="text-lg md:text-[24px] font-bold">
+                        {locale === Languages.ENGLISH
+                          ? item.title_en
+                          : item.title}
+                      </p>
+                      <p className="text-base font-normal mt-1">
+                        {locale === Languages.ENGLISH
+                          ? item.text_en
+                          : item.text}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -176,61 +213,63 @@ function AboutUs() {
           </div>
         </motion.div>
       </div>
-      <div className="bg-white rounded-tl-[16px] rounded-br-[16px] w-full md:w-[90%] lg:w-[1284px] h-auto md:h-[96px] mx-auto p-4 md:p-0">
-        <Swiper
-          modules={[Autoplay]}
-          spaceBetween={30}
-          slidesPerView={5}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          breakpoints={{
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-            480: {
-              slidesPerView: 3,
-              spaceBetween: 15,
-            },
-            768: {
-              slidesPerView: 4,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 5,
-              spaceBetween: 30,
-            },
-          }}
-          className="w-full h-full flex items-center"
-        >
-          {clientsData?.data.map((client) => (
-            <SwiperSlide
-              key={client.id}
-              className="flex items-center justify-center h-full"
-            >
-              <div className="flex items-center justify-center w-full h-full">
-                <a
-                  href={client.url || "#"}
-                  target={client.url ? "_blank" : "_self"}
-                  rel="noopener noreferrer"
-                  className="w-full h-full flex items-center justify-center"
-                >
-                  <Image
-                    src={client.photo?.data?.full_url || ""}
-                    alt={`Client ${client.id}`}
-                    width={100}
-                    height={50}
-                    className="w-auto h-auto object-contain max-w-[80%] md:max-w-[90%] lg:max-w-full"
-                  />
-                </a>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      {clientsData?.data && clientsData.data.length > 0 && (
+        <div className="bg-white rounded-tl-[16px] rounded-br-[16px] w-full md:w-[90%] lg:w-[1284px] h-auto md:h-[96px] mx-auto p-4 md:p-0">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={30}
+            slidesPerView={5}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            breakpoints={{
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              480: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              },
+            }}
+            className="w-full h-full flex items-center"
+          >
+            {clientsData.data.map((client) => (
+              <SwiperSlide
+                key={client.id}
+                className="flex items-center justify-center h-full"
+              >
+                <div className="flex items-center justify-center w-full h-full">
+                  <a
+                    href={client.url || "#"}
+                    target={client.url ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <Image
+                      src={client.photo?.data?.full_url || ""}
+                      alt={`Client ${client.id}`}
+                      width={100}
+                      height={50}
+                      className="w-auto h-auto object-contain max-w-[80%] md:max-w-[90%] lg:max-w-full"
+                    />
+                  </a>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
       <AboutDetails />
     </section>
   );
