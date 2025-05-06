@@ -31,26 +31,26 @@ function OurStory() {
 
   return (
     <div className="w-full pb-[80px] overflow-hidden">
-      <div className="flex flex-col lg:flex-row items-center justify-between mx-6 md:mx-[80px] gap-10">
+      <div className="flex flex-col  xl:flex-row items-center justify-between mx-6 xl:mx-[80px] gap-10">
         <motion.div
-          className="max-w-[676px] flex-1 text-center md:text-left"
+          className="max-w-[676px] flex-1 text-center xl:text-start order-2 xl:order-1"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-[36px] md:text-[48px] font-bold text-primary">
+          <h1 className="text-[36px] xl:text-[48px] font-bold text-primary ">
             {locale === Languages.ARABIC ? story.title : story.title_en}
           </h1>
           <div
-            className="text-[20px] md:text-[24px] font-medium text-[#FFFFFF]"
+            className="text-sm sm:text-[20px] xl:text-[24px] font-normal lg:font-medium text-[#FFFFFF]"
             dangerouslySetInnerHTML={{
               __html: locale === "ar" ? story.text : story.text_en,
             }}
           />
         </motion.div>
         <motion.div
-          className="relative w-full md:w-[500px] h-[300px] md:h-[450px]"
+          className="relative w-[250px] sm:w-[350px] xl:w-[500px] h-[250px] sm:h-[350px] xl:h-[450px] order-1 xl:order-2"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -65,7 +65,7 @@ function OurStory() {
           />
         </motion.div>
       </div>
-      <div className="relative">
+      <div className="relative ">
         <div className="absolute left-0 right-0 w-[60px] sm:w-[80px] md:w-[99px] h-[50px] sm:h-[65px] md:h-[80px] grid grid-cols-5 grid-rows-5 gap-[.12px]">
           {Array.from({ length: 25 }).map((_, i) => (
             <div

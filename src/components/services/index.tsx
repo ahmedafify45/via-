@@ -28,7 +28,7 @@ function Services() {
   return (
     <section className="my-[220px] lg:mx-[80px] ">
       <Banner subtitle="home/services" title="Our Services" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px] mx-4">
         {data?.data.map((service) => (
           <div key={service.id}>
             <ServicesCard service={service} />

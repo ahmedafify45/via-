@@ -81,7 +81,7 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
     <main className="mx-4 md:mx-[40px] lg:mx-[80px] my-[100px] md:my-[150px] lg:my-[220px]">
       <div>
         <Banner title="Our Blogs" subtitle="Home / Blogs" />
-        <div className="flex justify-between gap-[20px] lg:flex-row flex-col">
+        <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
           <div className="flex flex-col gap-[20px]">
             <div className="w-full">
               {blog.thumbnail && (

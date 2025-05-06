@@ -95,9 +95,9 @@ function Blogs({ locale }: BlogsProps) {
   }
 
   return (
-    <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] lg:mx-[80px]">
+    <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] xl:mx-[80px]">
       <Banner title="Blogs" subtitle="Home / Blogs" />
-      <div className="flex justify-between gap-[20px] lg:flex-row flex-col">
+      <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
         <BlogCard blogs={filteredBlogs} locale={locale} />
         <BlogItem locale={locale} />
       </div>

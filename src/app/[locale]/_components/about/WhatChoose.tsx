@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useFetch } from "@/hooks/useFetch";
 import { CoreValue } from "@/types/about";
@@ -31,12 +32,12 @@ function WhatChoose() {
   };
 
   return (
-    <div className="mx-4 md:mx-[40px] lg:mx-[80px] pb-[40px] md:pb-[60px] lg:pb-[75px]">
+    <div className="mx-4 xl:mx-[80px] pb-[40px] md:pb-[60px] lg:pb-[75px]">
       <div className="flex flex-col items-center justify-center text-center">
-        <h4 className="text-[24px] md:text-[32px] lg:text-[48px] font-bold text-primary">
+        <h4 className="text-[36px] xl:text-[48px] font-bold text-primary">
           Why Should Choose Us?
         </h4>
-        <p className="text-[#FFFFFF] max-w-[1006px] text-[14px] md:text-[18px] lg:text-[24px] font-medium px-2 md:px-4 lg:px-0">
+        <p className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6">
           Transform the way you work effortlessly track and complete tasks.
           Simplify your workflow, boost your productivity, and achieve more.
         </p>
@@ -53,13 +54,14 @@ function WhatChoose() {
           breakpoints={{
             640: {
               slidesPerView: 1,
-              spaceBetween: 20,
+              spaceBetween: 12,
             },
             768: {
               slidesPerView: 2,
-              spaceBetween: 24,
+              spaceBetween: 4,
             },
-            1024: {
+
+            1521: {
               slidesPerView: 3,
               spaceBetween: 24,
             },
@@ -68,7 +70,7 @@ function WhatChoose() {
         >
           {data.data.map((item) => (
             <SwiperSlide key={item.id}>
-              <div className="bg-white rounded-lg p-3 md:p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 h-auto md:h-[180px] lg:h-[193px] w-full md:w-[320px] lg:w-[389px]">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 h-[180px] xl:h-[193px] w-full  xl:w-[389px]">
                 <div className="flex justify-center mb-2 w-[32px] h-[32px] md:w-[36px] md:h-[36px] lg:w-[40px] lg:h-[40px] text-primary text-[32px] md:text-[36px] lg:text-[40px]">
                   <FontAwesomeIcon icon={getIconName(item.icon) as any} />
                 </div>

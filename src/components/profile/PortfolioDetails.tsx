@@ -14,9 +14,11 @@ import TransformBrand from "./TransformBrand";
 import { PortfolioItem } from "@/types/portfolio";
 import { useFetch } from "@/hooks/useFetch";
 import Link from "next/link";
+import { Languages } from "@/constants/enums";
 
 function PortfolioDetails() {
   const params = useParams();
+  const locale = params?.locale as string;
   const thumbsSwiper: SwiperType | null = null;
   const [activeIndex, setActiveIndex] = useState(0);
   const { data, loading, error } = useFetch<{ data: PortfolioItem[] }>(
@@ -44,16 +46,23 @@ function PortfolioDetails() {
     return <div className="w-full text-center">Portfolio not found</div>;
   }
 
+  const displayName =
+    locale === Languages.ARABIC ? portfolio.name : portfolio.name_en;
+  const displayDescription =
+    locale === Languages.ARABIC
+      ? portfolio.description
+      : portfolio.description_en;
+
   return (
     <main>
-      <div className="px-4 md:px-[80px] my-[220px]">
+      <div className="px-4 md:px-[80px] my-[220px] overflow-hidden">
         <Banner
           title={"Our Portfolio"}
           subtitle="Home / Portfolio / Portfolio Details"
         />
         <div className="mt-8">
           <h1 className="flex items-center justify-center text-primary text-[32px] md:text-[48px] font-bold mb-[24px]">
-            Project Gallery
+            {Languages.ARABIC ? "معرض المشروع" : "Project Gallery"}
           </h1>
 
           {/* Main Swiper */}
@@ -69,7 +78,7 @@ function PortfolioDetails() {
                 <div className="relative w-full h-full">
                   <Image
                     src={portfolio.thumbnail.data.full_url}
-                    alt={portfolio.name}
+                    alt={displayName}
                     fill
                     className="object-cover"
                   />
@@ -77,10 +86,10 @@ function PortfolioDetails() {
               </SwiperSlide>
               {portfolio.banner && portfolio.banner.data && (
                 <SwiperSlide>
-                  <div className="relative w-full h-full">
+                  <div className="relative ">
                     <Image
                       src={portfolio.banner.data.full_url}
-                      alt={portfolio.name}
+                      alt={displayName}
                       fill
                       className="object-cover"
                     />
@@ -109,61 +118,63 @@ function PortfolioDetails() {
           </div>
         </div>
         <div className="mt-[50px] md:mt-[158px] flex flex-col md:flex-row justify-between gap-6">
-          <div className="bg-[#FFFFFF0D] rounded-[4px] lg:w-[738px]">
-            <h2 className="text-[32px] md:text-[48px] font-medium text-primary">
-              Project Details
+          <div className="bg-[#FFFFFF0D] rounded-[4px] w-full p-4">
+            <h2 className="text-[32px] xl:text-[48px] font-bold text-primary">
+              {locale === Languages.ARABIC
+                ? "تفاصيل المشروع"
+                : "Project Details"}
             </h2>
-            <p className="text-white text-[14px] max-w-full md:max-w-[706px] max-h-[436px]">
-              {portfolio.description}
+            <p className="text-[16px] xl:text-[18px] text-white font-medium">
+              {displayDescription}
             </p>
           </div>
-          <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] lg:w-[522px]">
+          <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] w-full">
             <div>
-              <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
-                Client
+              <h4 className="text-primary text-[18px] md:text-[32px] font-bold">
+                {locale === Languages.ARABIC ? "العميل" : "Client"}
               </h4>
-              <p className="text-white text-[18px] md:text-[24px] font-medium">
+              <p className="text-white text-[14px] xl:text-[24px] font-medium">
                 {portfolio.client}
               </p>
             </div>
             <div>
-              <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
-                Location
+              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+                {locale === Languages.ARABIC ? "الموقع" : "Location"}
               </h4>
-              <p className="text-white text-[18px] md:text-[24px] font-medium">
+              <p className="text-white text-[14px] xl:text-[24px] font-medium">
                 {portfolio.location}
               </p>
             </div>
             <div>
-              <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
-                Status
+              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+                {locale === Languages.ARABIC ? "الحالة" : "Status"}
               </h4>
-              <p className="text-white text-[18px] md:text-[24px]">
+              <p className="text-white text-[14px] xl:text-[24px]">
                 {portfolio.status}
               </p>
             </div>
             <div>
-              <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
-                Website
+              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+                {locale === Languages.ARABIC ? "الموقع الإلكتروني" : "Website"}
               </h4>
               <Link
                 href={portfolio.website}
-                className="text-white text-[18px] md:text-[24px] hover:text-primary transition-all duration-200"
+                className="text-white text-[14px] xl:text-[24px] hover:text-primary transition-all duration-200"
               >
                 {portfolio.website}
               </Link>
             </div>
             <div>
-              <h4 className="text-primary text-[24px] md:text-[32px] font-bold">
-                Date
+              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+                {locale === Languages.ARABIC ? "التاريخ" : "Date"}
               </h4>
-              <p className="text-white text-[18px] md:text-[24px] font-medium">
+              <p className="text-white text-[14px] xl:text-[24px] font-medium">
                 {new Date(portfolio.date).toLocaleDateString()}
               </p>
             </div>
           </div>
         </div>
-        <div className="mt-[50px] lg:flex justify-center items-center">
+        <div className="mt-[50px] xl:flex justify-center items-center">
           <OurClients />
         </div>
         <div className="mt-[50px] md:mt-[100px]">

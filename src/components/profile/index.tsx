@@ -2,10 +2,11 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from "@/hooks/useFetch";
 import { PortfolioItem } from "@/types/portfolio";
+import { Languages } from "@/constants/enums";
 
 interface PortfolioProps {
   portfolio?: { title: string; slug: string }[];
@@ -17,6 +18,8 @@ function Portfolio({
   limit,
 }: PortfolioProps = {}) {
   const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale as string;
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
   const {
@@ -28,7 +31,7 @@ function Portfolio({
   });
 
   const handlePortfolioClick = (slug: string) => {
-    router.push(`/portfolio/${slug}`);
+    router.push(`/${locale}/portfolio/${slug}`);
   };
 
   if (loading) {
@@ -42,7 +45,9 @@ function Portfolio({
   if (error) {
     return (
       <div className="w-full text-center text-red-500 py-8">
-        Error loading portfolio
+        {locale === Languages.ARABIC
+          ? "خطأ في تحميل المحفظة"
+          : "Error loading portfolio"}
       </div>
     );
   }
@@ -50,7 +55,9 @@ function Portfolio({
   if (!portfolioData?.data || portfolioData.data.length === 0) {
     return (
       <div className="w-full text-center text-gray-500 py-8">
-        No portfolio items found
+        {locale === Languages.ARABIC
+          ? "لم يتم العثور على عناصر المحفظة"
+          : "No portfolio items found"}
       </div>
     );
   }
@@ -116,7 +123,7 @@ function Portfolio({
                   src={
                     item.thumbnail?.data?.full_url || "/images/placeholder.png"
                   }
-                  alt={item.name}
+                  alt={locale === Languages.ARABIC ? item.name : item.name_en}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
@@ -124,7 +131,7 @@ function Portfolio({
               <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <div className="flex h-full items-center justify-center">
                   <h3 className="text-xl font-semibold text-white">
-                    {item.name}
+                    {locale === Languages.ARABIC ? item.name : item.name_en}
                   </h3>
                 </div>
               </div>

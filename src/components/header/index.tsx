@@ -14,9 +14,15 @@ function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-black z-50 shadow-sm">
-      <div className="flex items-center justify-between my-[41px] mx-[38px]">
-        <Link href="">
-          <Image src="/images/logo.png" alt="logo" width={100} height={100} />
+      <div className="flex items-center justify-between xl:my-[41px] my-[30px] xl:mx-[38px] mx-[20px]">
+        <Link href={`/${locale}`}>
+          <Image
+            src="/images/logo.png"
+            alt="logo"
+            width={100}
+            height={100}
+            className="xl:w-[100px] w-[60px]"
+          />
         </Link>
 
         {/* Desktop Navigation */}

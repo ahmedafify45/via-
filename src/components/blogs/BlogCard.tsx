@@ -22,24 +22,24 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-6 w-full max-w-4xl">
         {currentBlogs.map((blog) => (
           <div
             key={blog.id}
-            className="flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full lg:w-[411px] h-[457px] p-[16px]"
+            className="flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full xl:w-[411px] h-[380px] p-[14px]"
           >
-            <div className="relative h-[250px] group">
+            <div className="relative h-[200px] group">
               <Image
                 src={
                   isEnglish
-                    ? blog.thumbnail_en?.data?.full_url ?? "/placeholder.jpg"
-                    : blog.thumbnail?.data?.full_url ?? "/placeholder.jpg"
+                    ? blog.thumbnail_en?.data?.full_url
+                    : blog.thumbnail?.data?.full_url
                 }
                 alt={isEnglish ? blog.title_en : blog.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-[8px]"
               />
-              <div className="absolute bottom-[-20] right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full lg:w-[338px] h-[42px]">
+              <div className="absolute bottom-[-20] right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full xl:w-[338px] h-[42px]">
                 <p className="text-[20px] font-medium flex items-center justify-between">
                   {blog.category
                     ? isEnglish

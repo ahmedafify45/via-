@@ -37,8 +37,10 @@ export interface PortfolioItem {
 export interface Portfolio {
   id: string;
   name: string;
+  name_en: string;
   slug: string;
   description: string;
+  description_en: string;
   thumbnail: string;
   banner: string;
   client: string;

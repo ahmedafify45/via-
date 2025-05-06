@@ -71,7 +71,7 @@ function Hero() {
           <SwiperSlide key={item.id}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-[24px]">
               <div className="text-white w-full md:w-[744px] text-center md:text-left">
-                <h1 className="font-bold text-[40px] md:text-[64px]">
+                <h1 className="font-bold text-[40px] xl:text-[64px]">
                   {locale === Languages.ARABIC ? item.title : item.title_en}
                   <span className="text-primary block">
                     {locale === Languages.ARABIC
@@ -79,7 +79,7 @@ function Hero() {
                       : item.sub_title_en}
                   </span>
                 </h1>
-                <p className="font-medium text-[18px] md:text-[24px] mt-4">
+                <p className="font-medium text-[18px] lg:text-[24px] mt-4">
                   {locale === Languages.ARABIC ? item.text : item.text_en}
                 </p>
                 <Button
@@ -113,11 +113,11 @@ function Hero() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex flex-col items-center gap-2 mt-8">
+      <div className="flex flex-col items-center gap-2 lg:mt-8">
         <div className="flex items-center gap-4 justify-center">
           <Button
             onClick={handlePrevSlide}
-            className="text-primary bg-transparent border border-primary w-[56px] h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
+            className="text-primary bg-transparent border border-primary w-[45px] h-[45px] lg:w-[56px] lg:h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
           >
             <FontAwesomeIcon
               icon={faArrowLeft}
@@ -126,7 +126,7 @@ function Hero() {
           </Button>
           <Button
             onClick={handleNextSlide}
-            className="rounded-tr-[16px] rounded-bl-[16px] rounded-tl-none rounded-br-none text-primary bg-transparent border border-primary w-[56px] h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
+            className="rounded-tr-[16px] rounded-bl-[16px] rounded-tl-none rounded-br-none text-primary bg-transparent border border-primary w-[45px] h-[45px] lg:w-[56px] lg:h-[56px] text-[28px] hover:bg-[#FFCD054D] hover:text-white cursor-pointer"
           >
             <FontAwesomeIcon
               icon={faArrowRight}
@@ -138,7 +138,7 @@ function Hero() {
           {heroItems.map((_, idx) => (
             <div
               key={idx}
-              className={`h-[10px] w-[48px] transition-all duration-200 ${
+              className={`h-[10px] w-[35px] lg:w-[48px] transition-all duration-200 ${
                 activeIndex === idx
                   ? "bg-[#FFD600]"
                   : "bg-[#4B3F13] border border-[#FFD600]"

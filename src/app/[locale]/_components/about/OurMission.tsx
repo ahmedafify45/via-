@@ -48,7 +48,7 @@ function OurMission() {
           ))}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-between mx-4 sm:mx-6 md:mx-[80px] gap-6 sm:gap-8 md:gap-10 pt-[40px] sm:pt-[60px] md:pt-[80px]">
+      <div className="flex flex-col xl:flex-row items-center justify-between mx-4 sm:mx-6 md:mx-[80px] gap-6 sm:gap-8 md:gap-10 pt-[40px] sm:pt-[60px] md:pt-[80px]">
         <motion.div
           className="w-full md:w-auto relative"
           initial={{ x: -100, opacity: 0 }}
@@ -62,7 +62,7 @@ function OurMission() {
           }}
         >
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[240px] md:w-[280px] h-[200px] sm:h-[240px] md:h-[280px] bg-primary -rotate-[15deg] transform-gpu"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[240px] xl:w-[280px] h-[200px] sm:h-[240px] xl:h-[280px] bg-primary -rotate-[15deg] transform-gpu"
             style={{
               clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
               zIndex: -1,
@@ -73,11 +73,11 @@ function OurMission() {
             alt={title}
             width={200}
             height={320}
-            className="w-[150px] sm:w-[180px] md:w-[200px] h-auto mx-auto md:mx-0 relative z-10"
+            className="w-[150px] sm:w-[180px] xl:w-[200px] h-auto mx-auto md:mx-0 relative z-10"
           />
         </motion.div>
         <motion.div
-          className="text-center md:text-left"
+          className="text-center xl:text-start"
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -88,11 +88,11 @@ function OurMission() {
             duration: 0.8,
           }}
         >
-          <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-bold text-primary">
+          <h2 className="text-[36px] xl:text-[48px] font-bold text-primary ">
             {title}
           </h2>
           <div
-            className="text-[16px] sm:text-[20px] md:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6"
+            className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6"
             dangerouslySetInnerHTML={{ __html: missionText }}
           />
         </motion.div>

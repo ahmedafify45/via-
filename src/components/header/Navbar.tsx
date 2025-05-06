@@ -61,7 +61,7 @@ function Navbar({ isMobile = false }: NavbarProps) {
             >
               <Link
                 href={`/${locale}${item.url}`}
-                className="w-full h-full flex items-center justify-center"
+                className="w-full h-full flex items-center justify-center text-[14px] xl:text-[16px]"
               >
                 {locale === "ar" ? item.name : item.name_en}
               </Link>

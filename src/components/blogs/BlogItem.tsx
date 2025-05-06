@@ -131,7 +131,7 @@ function BlogItem({
   };
 
   return (
-    <div className="lg:w-[413px] w-full">
+    <div className="xl:w-[313px] w-full">
       <form
         onSubmit={handleSearch}
         className="flex items-center bg-[#17181C] rounded-lg p-[16px] w-full h-[104px] border border-[#25231B]"
@@ -174,10 +174,10 @@ function BlogItem({
                   height={100}
                 />
                 <div className="flex-1">
-                  <h4 className="text-[16px] font-medium text-white">
+                  <h4 className="xl:text-[16px] text-[14px] font-medium text-white">
                     {isEnglish ? post.title_en : post.title}
                   </h4>
-                  <p className="text-[14px] font-normal text-secondary text-right">
+                  <p className="text-[12px] font-normal text-secondary text-right">
                     {new Date(post.created_on).toLocaleDateString("en-US", {
                       day: "numeric",
                       month: "short",
@@ -191,7 +191,7 @@ function BlogItem({
         </div>
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
-        <h3 className="text-[20px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
+        <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
           Our Categories
         </h3>
         <div className="flex flex-col gap-[16px] ">
@@ -205,7 +205,7 @@ function BlogItem({
                 <Link
                   // href={`/categories/${category.slug}`}
                   href={`/${locale}/blogs?category=${category.id}`}
-                  className="text-[18px] font-medium text-white hover:text-primary transition-all duration-300"
+                  className="text-[14px] font-medium text-white hover:text-primary transition-all duration-300"
                 >
                   {isEnglish ? category.title_en : category.title}
                 </Link>
@@ -215,7 +215,7 @@ function BlogItem({
         </div>
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
-        <h3 className="text-[20px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
+        <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
           Follow Us
         </h3>
         <div className="flex gap-[16px]">
@@ -232,7 +232,7 @@ function BlogItem({
         </div>
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
-        <h3 className="text-[20px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
+        <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
           Tags
         </h3>
         <div className="grid grid-cols-2 gap-[16px]">
@@ -245,7 +245,7 @@ function BlogItem({
                 key={`${post.id}-${index}`}
                 className="text-[16px] font-medium text-white bg-[#FFFFFF1A] p-[16px] rounded-[4px]"
               >
-                <p>{tag.trim()}</p>
+                <p className="xl:text-[16px] text-[14px]">{tag.trim()}</p>
               </div>
             ));
           })}

@@ -123,7 +123,7 @@ function AboutUs() {
 
   return (
     <section className="md:px-0">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <motion.div
           className="w-full md:w-1/2"
           initial={{ x: -100, opacity: 0 }}
@@ -137,7 +137,7 @@ function AboutUs() {
             alt={locale === Languages.ENGLISH ? about?.title_en : about?.title}
             width={422}
             height={535}
-            className={`w-full h-auto object-contain scale-90 md:scale-100 will-change-transform ${
+            className={`h-auto object-contain scale-90 md:scale-100 will-change-transform ${
               locale === Languages.ARABIC ? "rotate-y-180" : ""
             }`}
             priority
@@ -154,23 +154,23 @@ function AboutUs() {
             className="bg-cover w-full h-auto md:h-[612px] overflow-hidden [transform:scaleX(-1)] md:[transform:scaleX(1)]"
             style={{
               backgroundImage: `url(${
-                typeof window !== "undefined" && window.innerWidth >= 768
+                typeof window !== "undefined" && window.innerWidth >= 750
                   ? "/images/aboutus_text.png"
                   : "/images/about_usmobile.png"
               })`,
             }}
           >
-            <div className="px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
-              <h2 className="font-bold text-3xl md:text-[48px] text-black pt-8 md:pt-[92px]">
+            <div className="px-3 lg:px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
+              <h2 className="font-bold text-3xl xl:text-[48px] text-black pt-8 md:pt-[92px] 2xl:pt-[120px]">
                 {locale === Languages.ENGLISH ? about?.title_en : about?.title}
               </h2>
-              <p className="mb-4 md:mb-[16px] mt-4 md:mt-[24px] text-base md:text-lg">
+              <p className="mb-4 md:mb-[16px] mt-2 text-base md:text-sm xl:text-lg">
                 {locale === Languages.ENGLISH ? about?.text_en : about?.text}
               </p>
-              <div className="flex flex-col gap-4 md:gap-2">
+              <div className="flex flex-col gap-4 lg:gap-2">
                 {keyPoints.map((item, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <div className="w-[40px] md:w-[44px] h-[40px] md:h-[44px] bg-[#0C0D0F] rounded-tl-[16px] rounded-br-[16px] text-primary text-[18px] flex items-center justify-center">
+                    <div className="w-[40px] md:w-[44px] h-[40px] lg:h-[44px] bg-[#0C0D0F] rounded-tl-[16px] rounded-br-[16px] text-primary text-[18px] flex items-center justify-center">
                       {item.icon && (
                         <FontAwesomeIcon
                           icon={
@@ -186,7 +186,7 @@ function AboutUs() {
                       )}
                     </div>
                     <div className="flex flex-col">
-                      <p className="text-lg md:text-[24px] font-bold">
+                      <p className="text-[12px] xl:text-[24px] font-bold">
                         {locale === Languages.ENGLISH
                           ? item.title_en
                           : item.title}
@@ -200,7 +200,7 @@ function AboutUs() {
                   </div>
                 ))}
               </div>
-              <Button className="text-black w-full md:w-[220px] h-[50px] p-[16px] mt-6 md:mt-[24px]">
+              <Button className="text-black w-[150px] lg:w-[220px] h-[40px] xl:h-[50px] p-[16px] mt-6 md:mt-[24px]">
                 {locale === Languages.ARABIC
                   ? "المزيد من المعلومات"
                   : "More Info"}
