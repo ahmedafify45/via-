@@ -14,7 +14,7 @@ export default async function Home() {
       <AboutUs />
       <OurPortfolio />
       <OurService />
-      <div className="mt-[50px] lg:flex justify-center items-center">
+      <div className="mt-[50px] xl:flex justify-center items-center">
         <OurClients />
       </div>
       <div className="flex flex-col items-center mx-[20px] sm:mx-[40px] md:mx-[60px] lg:mx-[80px]">
@@ -23,8 +23,14 @@ export default async function Home() {
             <p className="text-white">Your Information</p>
             <BookingInput />
           </div>
-          <div className="w-full sm:w-[90%] lg:w-auto order-1 lg:order-2 flex items-center justify-center lg:block">
-            <Image src="/images/booking.png" alt="" width={450} height={600} />
+          <div className="w-full sm:w-[90%] xl:w-auto order-1 lg:order-2 flex items-center justify-center lg:block">
+            <Image
+              src="/images/booking.png"
+              alt=""
+              width={350}
+              height={500}
+              className="w-[350px] h-[500px] xl:w-[450px] xl:h-[600px]"
+            />
           </div>
         </div>
         <div className="mt-8">
