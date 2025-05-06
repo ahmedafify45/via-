@@ -5,8 +5,8 @@ export interface SeoMeta {
 
 export interface Category {
   id: number;
-  name: string;
-  name_en: string;
+  title: string;
+  title_en: string;
   slug: string;
 }
 
@@ -31,7 +31,7 @@ export interface PortfolioItem {
   seo_meta: SeoMeta;
   seo_meta_en: SeoMeta;
   description_en: string;
-  category: string;
+  category: Category;
 }
 
 export interface Portfolio {

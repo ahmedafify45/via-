@@ -13,14 +13,12 @@ interface PortfolioProps {
   limit?: number;
 }
 
-function Portfolio({
-  portfolio: initialPortfolio,
-  limit,
-}: PortfolioProps = {}) {
+function Portfolio({ limit }: PortfolioProps = {}) {
   const router = useRouter();
   const params = useParams();
   const locale = params?.locale as string;
   const [selectedCategory, setSelectedCategory] = React.useState("All");
+  const isEnglish = locale === Languages.ENGLISH;
 
   const {
     data: portfolioData,
@@ -63,28 +61,44 @@ function Portfolio({
   }
 
   // Get unique categories from portfolio items and ensure they are strings
-  const categories = initialPortfolio
-    ? ["All", ...initialPortfolio.map((item) => item.title)]
+  const filterdCategories = portfolioData?.data
+    ? [
+        "All",
+        ...portfolioData?.data.map((item) =>
+          isEnglish ? item.category?.title_en : item.category?.title
+        ),
+      ]
     : [
         "All",
         ...new Set(
           portfolioData.data
-            .map((item) => String(item.category))
+            .map((item) => String(item.category?.title))
             .filter(Boolean)
         ),
       ];
+
+  const categories = [...new Set(filterdCategories)];
+  // : [
+  //     "All",
+  //     ...new Set(
+  //       portfolioData.data
+  //         .map((item) => String(item.category?.title))
+  //         .filter(Boolean)
+  //     ),
+  //   ];
 
   const filteredPortfolio =
     selectedCategory === "All"
       ? portfolioData.data
       : portfolioData.data.filter(
-          (item) => String(item.category) === selectedCategory
+          (item) => String(item.category?.title) === selectedCategory
         );
 
   const limitedPortfolio = limit
     ? filteredPortfolio.slice(0, limit)
     : filteredPortfolio;
 
+  console.log(categories, portfolioData);
   return (
     <div className="w-full max-w-7xl mx-auto px-4 mb-[24px]">
       {categories.length > 1 && (

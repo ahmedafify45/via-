@@ -20,7 +20,7 @@ interface BlogsProps {
 function Blogs({ locale }: BlogsProps) {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
-  const categoryQuery = searchParams.get("c") || "";
+  const categoryQuery = searchParams.get("category") || "";
   const _fields =
     "id, title, title_en, slug, thumbnail.data.full_url, thumbnail_en.data.full_url, created_on, category.title, category.title_en, category.slug";
   const {
@@ -46,34 +46,46 @@ function Blogs({ locale }: BlogsProps) {
         fields: _fields,
       });
 
-  const filteredBlogs = React.useMemo(() => {
-    if (!response?.data) return [];
+  // get page Settings
+  const {
+    data: pageSettings,
+    loading: pageSettingsLoading,
+    error: pageSettingsError,
+  } = useFetch<ApiResponse>("/items/other_pages", {
+    fields: "*.*",
+    "filter[slug]": "blog",
+  });
 
-    return response.data.filter((blog) => {
-      // Handle category filter
-      if (categoryQuery && blog.category?.id?.toString() !== categoryQuery) {
-        return false;
-      }
+  console.log(pageSettings, pageSettingsLoading, pageSettingsError);
 
-      // Handle search filter
-      if (searchQuery) {
-        const searchLower = searchQuery.toLowerCase();
-        return (
-          blog.title.toLowerCase().includes(searchLower) ||
-          blog.title_en.toLowerCase().includes(searchLower) ||
-          blog.description.toLowerCase().includes(searchLower) ||
-          blog.description_en.toLowerCase().includes(searchLower)
-        );
-      }
+  // const filteredBlogs = React.useMemo(() => {
+  //   if (!response?.data) return [];
 
-      return true;
-    });
-  }, [response?.data, searchQuery, categoryQuery]);
+  //   return response.data.filter((blog) => {
+  //     // Handle category filter
+  //     if (categoryQuery && blog.category?.id?.toString() !== categoryQuery) {
+  //       return false;
+  //     }
+
+  //     // Handle search filter
+  //     if (searchQuery) {
+  //       const searchLower = searchQuery.toLowerCase();
+  //       return (
+  //         blog.title.toLowerCase().includes(searchLower) ||
+  //         blog.title_en.toLowerCase().includes(searchLower) ||
+  //         blog.description.toLowerCase().includes(searchLower) ||
+  //         blog.description_en.toLowerCase().includes(searchLower)
+  //       );
+  //     }
+
+  //     return true;
+  //   });
+  // }, [response?.data, searchQuery, categoryQuery]);
 
   if (loading) {
     return (
       <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] lg:mx-[80px]">
-        <Banner title="Blogs" subtitle="Home / Blogs" />
+        <Banner pageSettings={pageSettings?.data || []} locale={locale} />
         <div className="flex justify-center items-center h-[400px]">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
@@ -84,7 +96,8 @@ function Blogs({ locale }: BlogsProps) {
   if (error) {
     return (
       <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] lg:mx-[80px]">
-        <Banner title="Blogs" subtitle="Home / Blogs" />
+        <Banner pageSettings={pageSettings?.data || []} locale={locale} />
+
         <div className="flex justify-center items-center h-[400px]">
           <p className="text-white text-xl">
             Error loading blogs. Please try again later.
@@ -96,9 +109,9 @@ function Blogs({ locale }: BlogsProps) {
 
   return (
     <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] xl:mx-[80px]">
-      <Banner title="Blogs" subtitle="Home / Blogs" />
+      <Banner pageSettings={pageSettings?.data || []} locale={locale} />
       <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
-        <BlogCard blogs={filteredBlogs} locale={locale} />
+        <BlogCard blogs={response?.data || []} locale={locale} />
         <BlogItem locale={locale} />
       </div>
     </section>
