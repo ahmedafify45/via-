@@ -126,7 +126,7 @@ function Clients() {
                         {testimonial.company}
                       </p>
                       <div className="flex justify-center mb-2 md:mb-6">
-                        <StarRating rating={testimonial.rating.toString()} />
+                        <StarRating rating={testimonial.rating} />
                       </div>
                       <p className="text-gray-700 text-sm md:text-base leading-relaxed md:leading-loose max-w-2xl mx-auto line-clamp-3 md:line-clamp-none overflow-hidden">
                         {locale === Languages.ARABIC

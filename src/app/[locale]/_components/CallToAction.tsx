@@ -92,9 +92,15 @@ function CallToAction() {
     );
   }
 
-  // dubplicate portfolioAds 5 times
+  // Create unique IDs for duplicated items
+  const originalLength = portfolioAds.length;
   for (let i = 0; i < 5; i++) {
-    portfolioAds.push(...portfolioAds);
+    portfolioAds.push(
+      ...portfolioAds.slice(0, originalLength).map((item, index) => ({
+        ...item,
+        id: originalLength * (i + 1) + index,
+      }))
+    );
   }
 
   const title =

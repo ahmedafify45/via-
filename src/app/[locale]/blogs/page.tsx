@@ -8,10 +8,7 @@ interface PageProps {
 
 async function BlogsPage(props: PageProps) {
   const params = await props.params;
-
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
   return (
     <main>

@@ -14,7 +14,9 @@ interface ServicesResponse {
 }
 
 function Services() {
-  const locale = useParams();
+  const params = useParams();
+  const locale = params?.locale as string;
+
 
   const {
     data: pageSettings,
@@ -24,6 +26,7 @@ function Services() {
     fields: "*.*",
     "filter[slug]": "services",
   });
+  
 
   console.log(pageSettings, pageSettingsLoading, pageSettingsError);
 
@@ -41,12 +44,13 @@ function Services() {
 
   return (
     <section className="my-[220px] lg:mx-[80px] ">
-      <Banner
-        pageSettings={pageSettings?.data || []}
-        locale={locale.locale as string}
-      />{" "}
+      {/* <Banner
+        pageSettings={pageSettings.data}
+        locale={locale as string}
+      /> */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px] mx-4">
-        {data?.data.map((service) => (
+        {data?.data.map((service: Service) => (
           <div key={service.id}>
             <ServicesCard service={service} />
           </div>

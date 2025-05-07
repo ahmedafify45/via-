@@ -45,7 +45,7 @@ export function useFetch<T>(endpoint: string, queryParams?: QueryParams) {
 
   useEffect(() => {
     load();
-  }, [endpoint, queryParams]);
+  }, []);
 
   return { data, loading, error };
 }

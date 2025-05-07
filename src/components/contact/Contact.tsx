@@ -11,11 +11,15 @@ import { useParams } from "next/navigation";
 function Contact() {
   const locale = useParams();
 
+  interface PageSettings {
+    data: any[]; // Replace `any[]` with the actual type of `data` if known
+  }
+
   const {
     data: pageSettings,
     loading: pageSettingsLoading,
     error: pageSettingsError,
-  } = useFetch("/items/other_pages", {
+  } = useFetch<PageSettings>("/items/other_pages", {
     fields: "*.*",
     "filter[slug]": "contact-us",
   });
