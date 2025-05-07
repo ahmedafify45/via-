@@ -9,10 +9,28 @@ import { Languages } from "@/constants/enums";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import Loading from "@/components/Loading";
 
 // Add all solid icons to the library
 library.add(fas);
-
+interface HomePageSettingResponse {
+  data: Array<{
+    id: number;
+    sort: number;
+    title: string;
+    sub_title: string;
+    how_many: number;
+    is_active: boolean;
+    title_en: string;
+    sub_title_en: string;
+    button_text: string;
+    button_text_en: string;
+    button_url: string;
+    button_url_en: string;
+    slug: string;
+  }>;
+  public: boolean;
+}
 function WhatChoose() {
   const { data, loading, error } = useFetch<{ data: CoreValue[] }>(
     "/items/about_core_values",
@@ -20,8 +38,27 @@ function WhatChoose() {
       fields: "*.*",
     }
   );
+  const whyChooseUs = useFetch<HomePageSettingResponse>(
+    "/items/home_page_setting",
+    {
+      "filter[slug]": "core-values-area",
+    }
+  );
 
-  if (loading) return <div>Loading...</div>;
+  if (
+    !whyChooseUs?.data?.data?.[0] ||
+    whyChooseUs.data.data[0].is_active === false
+  ) {
+    return null;
+  }
+
+  const whyChooseUsData = whyChooseUs.data.data[0];
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error loading core values</div>;
   if (!data?.data) return null;
 
@@ -35,11 +72,10 @@ function WhatChoose() {
     <div className="mx-4 xl:mx-[80px] pb-[40px] md:pb-[60px] lg:pb-[75px]">
       <div className="flex flex-col items-center justify-center text-center">
         <h4 className="text-[36px] xl:text-[48px] font-bold text-primary">
-          Why Should Choose Us?
+          {whyChooseUsData.title}
         </h4>
         <p className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6">
-          Transform the way you work effortlessly track and complete tasks.
-          Simplify your workflow, boost your productivity, and achieve more.
+          {whyChooseUsData.sub_title}
         </p>
       </div>
       <div className="mt-[20px] md:mt-[30px]">

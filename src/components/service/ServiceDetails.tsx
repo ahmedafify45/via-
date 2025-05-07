@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import Banner from "../custom/banner";
+
 import Link from "next/link";
 import InformationContact from "../contact/InformationContact";
 import { Accordions } from "../faq/According";
@@ -51,11 +51,11 @@ function ServiceDetails() {
   return (
     <main className="py-[220px]">
       <div className="mx-4 xl:mx-[80px]">
-        <Banner
+        {/* <Banner
           title="Our Services"
           subtitle="home/services/details"
           image={service.banner?.data?.full_url}
-        />
+        /> */}
         <div className="relative w-full max-w-[1280px] aspect-[1280/472] mx-auto">
           <Image
             src={service.photo?.data?.full_url}

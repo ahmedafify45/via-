@@ -18,9 +18,9 @@ function TeamCard({ team, locale }: TeamCardProps) {
         <Link
           href={`/${locale}/ourteams/${item.id}`}
           key={item.id}
-          className="flex flex-col items-center justify-center gap-1 mt-3 hover:opacity-80 transition-opacity"
+          className=" flex flex-col items-center justify-center gap-1 mt-3 hover:opacity-80 transition-opacity"
         >
-          <div>
+          <div className="relative max-w-[360px] max-h-[360px] overflow-hidden">
             <Image
               src={item.avatar?.data?.full_url}
               alt={isEnglish ? item.name_en : item.name}

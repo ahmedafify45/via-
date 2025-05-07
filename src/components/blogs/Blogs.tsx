@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Banner from "../custom/banner";
 import BlogCard from "./BlogCard";
 import BlogItem from "./BlogItem";
@@ -10,6 +9,21 @@ import { useSearchParams } from "next/navigation";
 
 interface ApiResponse {
   data: Blog[];
+  public: boolean;
+}
+
+interface PageSettings {
+  title: string;
+  title_en: string;
+  banner: {
+    data: {
+      full_url: string;
+    };
+  };
+}
+
+interface PageSettingsResponse {
+  data: PageSettings[];
   public: boolean;
 }
 
@@ -23,64 +37,30 @@ function Blogs({ locale }: BlogsProps) {
   const categoryQuery = searchParams.get("category") || "";
   const _fields =
     "id, title, title_en, slug, thumbnail.data.full_url, thumbnail_en.data.full_url, created_on, category.title, category.title_en, category.slug";
+
+  const fetchParams = {
+    fields: _fields,
+    ...(searchQuery && { "filter[title][contains]": searchQuery }),
+    ...(categoryQuery && { "filter[category.id]": categoryQuery }),
+  };
+
   const {
     data: response,
     loading,
     error,
-  } = searchQuery
-    ? // eslint-disable-next-line react-hooks/rules-of-hooks
-      useFetch<ApiResponse>("/items/posts", {
-        fields: _fields, // "*.*"
-        "filter[title][contains]": searchQuery,
-
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-      })
-    : categoryQuery
-    ? // eslint-disable-next-line react-hooks/rules-of-hooks
-      useFetch<ApiResponse>("/items/posts", {
-        fields: _fields,
-        "filter[category.id]": categoryQuery,
-      })
-    : // eslint-disable-next-line react-hooks/rules-of-hooks
-      useFetch<ApiResponse>("/items/posts", {
-        fields: _fields,
-      });
+  } = useFetch<ApiResponse>("/items/posts", fetchParams);
 
   // get page Settings
   const {
     data: pageSettings,
     loading: pageSettingsLoading,
     error: pageSettingsError,
-  } = useFetch<ApiResponse>("/items/other_pages", {
+  } = useFetch<PageSettingsResponse>("/items/other_pages", {
     fields: "*.*",
     "filter[slug]": "blog",
   });
 
   console.log(pageSettings, pageSettingsLoading, pageSettingsError);
-
-  // const filteredBlogs = React.useMemo(() => {
-  //   if (!response?.data) return [];
-
-  //   return response.data.filter((blog) => {
-  //     // Handle category filter
-  //     if (categoryQuery && blog.category?.id?.toString() !== categoryQuery) {
-  //       return false;
-  //     }
-
-  //     // Handle search filter
-  //     if (searchQuery) {
-  //       const searchLower = searchQuery.toLowerCase();
-  //       return (
-  //         blog.title.toLowerCase().includes(searchLower) ||
-  //         blog.title_en.toLowerCase().includes(searchLower) ||
-  //         blog.description.toLowerCase().includes(searchLower) ||
-  //         blog.description_en.toLowerCase().includes(searchLower)
-  //       );
-  //     }
-
-  //     return true;
-  //   });
-  // }, [response?.data, searchQuery, categoryQuery]);
 
   if (loading) {
     return (
@@ -97,7 +77,6 @@ function Blogs({ locale }: BlogsProps) {
     return (
       <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] lg:mx-[80px]">
         <Banner pageSettings={pageSettings?.data || []} locale={locale} />
-
         <div className="flex justify-center items-center h-[400px]">
           <p className="text-white text-xl">
             Error loading blogs. Please try again later.

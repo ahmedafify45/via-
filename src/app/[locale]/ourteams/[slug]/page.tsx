@@ -2,7 +2,7 @@
 import { use } from "react";
 
 import { TeamMember } from "@/types/team";
-import Banner from "@/components/custom/banner";
+
 import {
   faYoutube,
   faInstagram,
@@ -87,7 +87,6 @@ export default function TeamMemberPage(props: PageProps) {
   return (
     <main className="mx-4 md:mx-[80px] my-[80px] md:my-[150px]">
       <div>
-        <Banner title="Our Teams" subtitle="Home / Our Teams / Team Details" />
         <div className="flex flex-col md:flex-row gap-[24px] md:gap-[48px] bg-[#17181C] py-[16px] px-4 md:px-0">
           <div className="">
             <Image

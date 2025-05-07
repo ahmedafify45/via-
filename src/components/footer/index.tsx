@@ -10,75 +10,60 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { useFetch } from "@/hooks/useFetch";
 import { useParams } from "next/navigation";
 import { Languages } from "@/constants/enums";
 import { Loader } from "lucide-react";
+import { serverFetcher } from "@/lib/serverFetcher";
+import { Service } from "@/types/services";
 
-interface MenuItem {
-  id: number;
-  sort: number;
+interface FooterMenuItem {
   name: string;
-  name_en: string;
   url: string;
-  icon: string | null;
-  is_parent: boolean;
-  parent: number | null;
+}
+
+interface FooterMenuSection {
+  title: string;
+  items: FooterMenuItem[];
+}
+
+interface FooterSection {
+  id: number;
+  copyright: string;
+  copyright_en: string;
+  footer_menu: FooterMenuSection[];
+  footer_menu_en: FooterMenuSection[];
+  newsletter_active: boolean;
 }
 
 function Footer() {
   const params = useParams();
   const locale = params?.locale as string;
   const isEnglish = locale === Languages.ENGLISH;
-  const { data, loading, error } = useFetch<{ data: MenuItem[] }>(
-    "/items/menus"
-  );
+  const [data, setData] = React.useState<FooterSection | null>(null);
+  const [services, setServices] = React.useState<Service[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const services = [
-    {
-      id: 1,
-      name: "Social Media Marketing",
-    },
-    {
-      id: 2,
-      name: "E-commerce Platform Management",
-    },
-    {
-      id: 3,
-      name: "Influencer Marketing",
-    },
-    {
-      id: 4,
-      name: "SEO & SEM",
-    },
-    {
-      id: 5,
-      name: "Media Production",
-    },
-  ];
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [footerResponse, servicesResponse] = await Promise.all([
+          serverFetcher<{ data: FooterSection[] }>("/items/footer_section"),
+          serverFetcher<{ data: Service[] }>("/items/services", {
+            fields: "*.*",
+          }),
+        ]);
+        setData(footerResponse.data[0]);
+        setServices(servicesResponse.data);
+        setLoading(false);
+      } catch {
+        setError("Error loading footer data");
+        setLoading(false);
+      }
+    };
 
-  const ContactUs = [
-    {
-      id: 1,
-      name: "About Us",
-    },
-    {
-      id: 2,
-      name: "Portfolio",
-    },
-    {
-      id: 3,
-      name: "Blog",
-    },
-    {
-      id: 4,
-      name: "Contact Us",
-    },
-    {
-      id: 5,
-      name: "Privacy Policy",
-    },
-  ];
+    fetchData();
+  }, []);
 
   if (loading) {
     return (
@@ -88,11 +73,11 @@ function Footer() {
     );
   }
 
-  if (error) {
-    return <div>Error loading menus</div>;
+  if (error || !data) {
+    return <div>Error loading footer data</div>;
   }
 
-  const menus = data?.data.sort((a, b) => a.sort - b.sort) || [];
+  const footerMenu = isEnglish ? data.footer_menu_en : data.footer_menu;
 
   return (
     <footer className="bg-white">
@@ -111,49 +96,49 @@ function Footer() {
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-[24px] font-bold">Services</p>
-          {services.map((service) => (
-            <p key={service.id} className="text-[14px]">
-              {service.name}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4">
-          <p className="text-[24px] font-bold">Quick Links</p>
-          {menus.map((menu) => (
-            <Link
-              href={`/${locale}${menu.url}`}
-              key={menu.id}
-              className="text-[14px]"
-            >
-              {isEnglish ? menu.name_en : menu.name}
-            </Link>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4">
-          <p className="text-[24px] font-bold">Contact Us</p>
-          {ContactUs.map((contact) => (
-            <p key={contact.id} className="text-[14px]">
-              {contact.name}
-            </p>
-          ))}
-          <div className="flex items-center justify-center">
-            <input
-              className=" h-[44px] p-3 outline-none border border-accent w-[150px] lg:w-[200px]"
-              type="email"
-              placeholder="Enter your email"
-            />
-            <Button className="rounded-none h-[44px]">Subscribe</Button>
+          <div className="space-y-3">
+            {services.map((service) => (
+              <Link
+                href={`/${locale}/services/${service.slug}`}
+                key={service.id}
+                className="block text-[14px] hover:text-primary transition-colors"
+              >
+                {locale === Languages.ARABIC ? service.name : service.name_en}
+              </Link>
+            ))}
           </div>
         </div>
+        {footerMenu.map((section, index) => (
+          <div key={index} className="flex flex-col gap-4">
+            <p className="text-[24px] font-bold">{section.title}</p>
+            {section.items.map((item, itemIndex) => (
+              <Link
+                href={`/${locale}${item.url}`}
+                key={itemIndex}
+                className="text-[14px]"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        ))}
+        {data.newsletter_active && (
+          <div className="flex flex-col gap-4">
+            <p className="text-[24px] font-bold">Newsletter</p>
+            <div className="flex items-center justify-center">
+              <input
+                className="h-[44px] p-3 outline-none border border-accent w-[150px] lg:w-[200px]"
+                type="email"
+                placeholder="Enter your email"
+              />
+              <Button className="rounded-none h-[44px]">Subscribe</Button>
+            </div>
+          </div>
+        )}
       </div>
       <hr className="mb-[16px]" />
       <div className="flex justify-between items-center mx-[60px] text-[#B3B3B3] pb-[36px] text-[14px]">
-        <p>© 2025 via Marketing Agency. All rights reserved.</p>
-        <div className="flex gap-4 ">
-          <p>Terms of Service</p>
-          <p>Privacy Policy</p>
-          <p>Cookie Policy</p>
-        </div>
+        <p>{isEnglish ? data.copyright_en : data.copyright}</p>
       </div>
     </footer>
   );

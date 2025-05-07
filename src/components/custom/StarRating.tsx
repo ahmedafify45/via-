@@ -1,6 +1,10 @@
 import { Star } from "lucide-react";
 
-function StarRating({ rating }: any) {
+interface StarRatingProps {
+  rating: number;
+}
+
+function StarRating({ rating }: StarRatingProps) {
   const maxStars = 5; // عدد النجوم الثابتة
 
   return (

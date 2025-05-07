@@ -70,8 +70,8 @@ function Hero() {
         {heroItems.map((item) => (
           <SwiperSlide key={item.id}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-[24px]">
-              <div className="text-white w-full md:w-[744px] text-center md:text-left">
-                <h1 className="font-bold text-[40px] xl:text-[64px]">
+              <div className="text-white w-full md:w-[744px] text-center xl:text-start">
+                <h1 className="font-bold text-[36px] xl:text-[48px]">
                   {locale === Languages.ARABIC ? item.title : item.title_en}
                   <span className="text-primary block">
                     {locale === Languages.ARABIC
@@ -83,7 +83,7 @@ function Hero() {
                   {locale === Languages.ARABIC ? item.text : item.text_en}
                 </p>
                 <Button
-                  className="mt-[24px] rounded-tl-[16px] rounded-br-[16px] rounded-bl-none rounded-tr-none"
+                  className="mt-[24px] rounded-tl-[16px] rounded-br-[16px] rounded-bl-none rounded-tr-none text-black"
                   onClick={() =>
                     (window.location.href =
                       locale === Languages.ARABIC

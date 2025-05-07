@@ -45,6 +45,23 @@ interface AboutResponse {
   }[];
 }
 
+interface HomePageSettingResponse {
+  data: {
+    id: number;
+    sort: number | null;
+    title: string | null;
+    is_active: boolean;
+    title_en: string | null;
+    button_text: string;
+    button_text_en: string;
+    button_url: string;
+    button_url_en: string;
+    slug: string;
+    image: { data: { full_url: string } };
+  }[];
+  public: boolean;
+}
+
 interface ClientData {
   id: number;
   sort: number | null;
@@ -67,6 +84,15 @@ function AboutUs() {
     loading: aboutLoading,
     error: aboutError,
   } = useFetch<AboutResponse>("/items/about_section", { fields: "*.*" });
+
+  const {
+    data: homePageSettingData,
+    loading: homePageSettingLoading,
+    error: homePageSettingError,
+  } = useFetch<HomePageSettingResponse>("/items/home_page_setting", {
+    fields: "*.*",
+    "filter[slug]": "about-area",
+  });
 
   const {
     data: clientsData,
@@ -94,7 +120,7 @@ function AboutUs() {
     }
   }, []);
 
-  if (aboutLoading || clientsLoading) {
+  if (aboutLoading || homePageSettingLoading || clientsLoading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
         <Loader className="w-8 h-8 animate-spin" />
@@ -102,7 +128,7 @@ function AboutUs() {
     );
   }
 
-  if (aboutError || clientsError) {
+  if (aboutError || homePageSettingError || clientsError) {
     return (
       <div className="flex justify-center items-center min-h-[400px] text-red-500">
         Error loading data
@@ -110,7 +136,12 @@ function AboutUs() {
     );
   }
 
-  if (!aboutData?.data || aboutData.data.length === 0) {
+  if (
+    !aboutData?.data ||
+    aboutData.data.length === 0 ||
+    !homePageSettingData?.data ||
+    homePageSettingData.data.length === 0
+  ) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
         No data available
@@ -119,10 +150,11 @@ function AboutUs() {
   }
 
   const about = aboutData.data[0];
+  const homePageSetting = homePageSettingData.data[0];
   const keyPoints = about?.key_points || [];
 
   return (
-    <section className="md:px-0">
+    <section className="md:px-0" dir="ltr">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <motion.div
           className="w-full md:w-1/2"
@@ -135,11 +167,9 @@ function AboutUs() {
             ref={aboutImageRef}
             src="/images/aboutus.png"
             alt={locale === Languages.ENGLISH ? about?.title_en : about?.title}
-            width={422}
+            width={800}
             height={535}
-            className={`h-auto object-contain scale-90 md:scale-100 will-change-transform ${
-              locale === Languages.ARABIC ? "rotate-y-180" : ""
-            }`}
+            className={`h-auto object-contain scale-90 md:scale-100 will-change-transform `}
             priority
           />
         </motion.div>
@@ -160,7 +190,10 @@ function AboutUs() {
               })`,
             }}
           >
-            <div className="px-3 lg:px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]">
+            <div
+              className="px-3 lg:px-4 md:ml-[155px] py-8 md:py-0 [transform:scaleX(-1)] md:[transform:scaleX(1)]"
+              dir={locale === Languages.ENGLISH ? "ltr" : "rtl"}
+            >
               <h2 className="font-bold text-3xl xl:text-[48px] text-black pt-8 md:pt-[92px] 2xl:pt-[120px]">
                 {locale === Languages.ENGLISH ? about?.title_en : about?.title}
               </h2>
@@ -200,10 +233,18 @@ function AboutUs() {
                   </div>
                 ))}
               </div>
-              <Button className="text-black w-[150px] lg:w-[220px] h-[40px] xl:h-[50px] p-[16px] mt-6 md:mt-[24px]">
-                {locale === Languages.ARABIC
-                  ? "المزيد من المعلومات"
-                  : "More Info"}
+              <Button
+                className="text-black w-[150px] lg:w-[220px] h-[40px] xl:h-[50px] p-[16px] mt-6 md:mt-[24px]"
+                onClick={() =>
+                  (window.location.href =
+                    locale === Languages.ENGLISH
+                      ? homePageSetting.button_url_en
+                      : homePageSetting.button_url)
+                }
+              >
+                {locale === Languages.ENGLISH
+                  ? homePageSetting.button_text_en
+                  : homePageSetting.button_text}
                 <FontAwesomeIcon
                   icon={faArrowRight}
                   className={locale === Languages.ARABIC ? "rotate-180" : ""}

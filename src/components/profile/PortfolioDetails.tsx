@@ -8,13 +8,15 @@ import "swiper/css";
 import "swiper/css/thumbs";
 import { useParams } from "next/navigation";
 
-import Banner from "../custom/banner";
+// import Banner from "../custom/banner";
 import OurClients from "@/app/[locale]/_components/OurClients";
-import TransformBrand from "./TransformBrand";
+
 import { PortfolioItem } from "@/types/portfolio";
 import { useFetch } from "@/hooks/useFetch";
 import Link from "next/link";
 import { Languages } from "@/constants/enums";
+import DOMPurify from "dompurify";
+import CallToAction from "@/app/[locale]/_components/CallToAction";
 
 function PortfolioDetails() {
   const params = useParams();
@@ -53,13 +55,15 @@ function PortfolioDetails() {
       ? portfolio.description
       : portfolio.description_en;
 
+  const sanitizedContent = DOMPurify.sanitize(displayDescription);
+
   return (
     <main>
       <div className="px-4 md:px-[80px] my-[220px] overflow-hidden">
-        <Banner
+        {/* <Banner
           title={"Our Portfolio"}
           subtitle="Home / Portfolio / Portfolio Details"
-        />
+        /> */}
         <div className="mt-8">
           <h1 className="flex items-center justify-center text-primary text-[32px] md:text-[48px] font-bold mb-[24px]">
             {Languages.ARABIC ? "معرض المشروع" : "Project Gallery"}
@@ -124,9 +128,10 @@ function PortfolioDetails() {
                 ? "تفاصيل المشروع"
                 : "Project Details"}
             </h2>
-            <p className="text-[16px] xl:text-[18px] text-white font-medium">
-              {displayDescription}
-            </p>
+            <div
+              className="text-[16px] xl:text-[18px] text-white font-medium"
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            ></div>
           </div>
           <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] w-full">
             <div>
@@ -177,10 +182,8 @@ function PortfolioDetails() {
         <div className="mt-[50px] xl:flex justify-center items-center">
           <OurClients />
         </div>
-        <div className="mt-[50px] md:mt-[100px]">
-          <TransformBrand />
-        </div>
       </div>
+      <CallToAction />
     </main>
   );
 }

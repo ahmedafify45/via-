@@ -1,4 +1,4 @@
-import { Directions, Languages } from "@/constants/enums";
+import { Languages, Directions } from "@/constants/enums";
 import { Locale } from "@/i8n.config";
 import { Be_Vietnam_Pro, Cairo } from "next/font/google";
 import "./globals.css";
@@ -16,6 +16,13 @@ const cairo = Cairo({
   subsets: ["arabic"],
 });
 
+export async function generateMetadata() {
+  return {
+    title: "Default Title",
+    description: "Default description",
+  };
+}
+
 export default async function LocaleLayout({
   children,
   params,
@@ -28,7 +35,10 @@ export default async function LocaleLayout({
     locale === Languages.ARABIC ? cairo.className : Vietnam.className;
 
   return (
-    <html dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}>
+    <html
+      lang={locale}
+      dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}
+    >
       <body className={fontClass}>
         <Header />
         {children}

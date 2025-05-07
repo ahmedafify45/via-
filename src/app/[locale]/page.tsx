@@ -4,9 +4,9 @@ import OurClients from "./_components/OurClients";
 import OurPortfolio from "./_components/OurPortfolio";
 import OurService from "./_components/OurService";
 import Image from "next/image";
-import BookingInput from "@/components/booking/BookingInput";
-import BookingButton from "@/components/booking/BookingButton";
+
 import BookingForm from "@/components/booking/BookingForm";
+import CallToAction from "./_components/CallToAction";
 
 export default async function Home() {
   return (
@@ -14,6 +14,7 @@ export default async function Home() {
       <Hero />
       <AboutUs />
       <OurPortfolio />
+      <CallToAction />
       <OurService />
       <div className="mt-[50px] xl:flex justify-center items-center">
         <OurClients />

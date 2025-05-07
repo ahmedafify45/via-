@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { useParams } from "next/navigation";
 import { Service } from "@/types/services";
+import { Languages } from "@/constants/enums";
 
 function ServicesCard({ service }: { service: Service }) {
   const params = useParams();
@@ -23,9 +24,13 @@ function ServicesCard({ service }: { service: Service }) {
         <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div className="flex h-full flex-col items-center justify-center p-6 text-center">
             <h3 className="text-xl font-semibold text-white mb-2">
-              {service.name_en}
+              {locale === Languages.ARABIC ? service.name : service.name_en}
             </h3>
-            <p className="text-white/90 text-sm">{service.summary_en}</p>
+            <p className="text-white/90 text-sm">
+              {locale === Languages.ARABIC
+                ? service.summary
+                : service.summary_en}
+            </p>
           </div>
         </div>
       </div>

@@ -17,9 +17,10 @@ function Portfolio({ limit }: PortfolioProps = {}) {
   const router = useRouter();
   const params = useParams();
   const locale = params?.locale as string;
-  const [selectedCategory, setSelectedCategory] = React.useState("All");
-  const isEnglish = locale === Languages.ENGLISH;
+  const all_Name = locale === Languages.ARABIC ? "الكل" : "All";
 
+  const [selectedCategory, setSelectedCategory] = React.useState(all_Name);
+  const isEnglish = locale === Languages.ENGLISH;
   const {
     data: portfolioData,
     loading,
@@ -63,16 +64,18 @@ function Portfolio({ limit }: PortfolioProps = {}) {
   // Get unique categories from portfolio items and ensure they are strings
   const filterdCategories = portfolioData?.data
     ? [
-        "All",
+        all_Name,
         ...portfolioData?.data.map((item) =>
           isEnglish ? item.category?.title_en : item.category?.title
         ),
       ]
     : [
-        "All",
+        all_Name,
         ...new Set(
           portfolioData.data
-            .map((item) => String(item.category?.title))
+            .map((item) =>
+              String(isEnglish ? item.category?.title_en : item.category?.title)
+            )
             .filter(Boolean)
         ),
       ];
@@ -88,10 +91,13 @@ function Portfolio({ limit }: PortfolioProps = {}) {
   //   ];
 
   const filteredPortfolio =
-    selectedCategory === "All"
+    selectedCategory === all_Name
       ? portfolioData.data
       : portfolioData.data.filter(
-          (item) => String(item.category?.title) === selectedCategory
+          (item) =>
+            String(
+              isEnglish ? item.category?.title_en : item.category?.title
+            ) === selectedCategory
         );
 
   const limitedPortfolio = limit

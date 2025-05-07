@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Banner from "../custom/banner";
+
 import BlogItem from "./BlogItem";
 import CommentSection from "./CommentSection";
 import { useFetch } from "@/hooks/useFetch";
@@ -80,7 +80,7 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
   return (
     <main className="mx-4 md:mx-[40px] lg:mx-[80px] my-[100px] md:my-[150px] lg:my-[220px]">
       <div>
-        <Banner title="Our Blogs" subtitle="Home / Blogs" />
+        {/* <Banner title="Our Blogs" subtitle="Home / Blogs" /> */}
         <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
           <div className="flex flex-col gap-[20px]">
             <div className="w-full">
