@@ -6,8 +6,7 @@ const nextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
-  output: 'standalone',
-
+  output: "export",
 };
 
 export default nextConfig;
