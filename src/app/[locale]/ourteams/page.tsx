@@ -7,8 +7,16 @@ interface ApiResponse {
   public: boolean;
 }
 
-export default async function OurTeams(props: { params: { locale: string } }) {
-  const { params } = props;
+interface PageProps {
+  params: Promise<{
+    locale: string;
+  }>;
+}
+
+export default async function OurTeams(props: PageProps) {
+  const params = await props.params;
+  const { locale } = params;
+
   try {
     const response = await serverFetcher<ApiResponse>("/items/team_members", {
       fields: "*.*",
@@ -20,7 +28,7 @@ export default async function OurTeams(props: { params: { locale: string } }) {
 
     return (
       <main className="my-[150px] mx-[80px]">
-        <TeamCard team={response.data} locale={params.locale} />
+        <TeamCard team={response.data} locale={locale} />
       </main>
     );
   } catch (error) {

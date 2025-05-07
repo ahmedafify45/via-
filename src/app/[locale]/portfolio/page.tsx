@@ -27,11 +27,20 @@ interface ApiResponse {
   public: boolean;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
+
+interface PageProps {
+  params: Promise<{
+    locale: string;
+  }>;
+}
+
+/**
+ * 
+
+ */
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
+  const { locale } = params;
   const pageSettings = await serverFetcher<ApiResponse>("/items/other_pages", {
     fields: "*.*",
     "filter[slug]": "portfolio",
@@ -40,13 +49,13 @@ export async function generateMetadata({
   console.log("pageSettings", pageSettings);
 
   const seoData =
-    params.locale === Languages.ARABIC
+    locale === Languages.ARABIC
       ? pageSettings.data[0]?.seo_meta
       : pageSettings.data[0]?.seo_meta_en;
 
   const title =
     seoData?.title ||
-    (params.locale === Languages.ARABIC
+    (locale === Languages.ARABIC
       ? pageSettings.data[0]?.title
       : pageSettings.data[0]?.title_en);
 
@@ -67,13 +76,16 @@ export async function generateMetadata({
           url: pageSettings.data[0]?.banner?.data?.full_url,
         },
       ],
-      locale: params.locale === "ar" ? "ar_SA" : "en_US",
+      locale: locale === "ar" ? "ar_SA" : "en_US",
       type: "website",
     },
   };
 }
 
-async function Portfoliopage({ params }: { params: { locale: string } }) {
+async function Portfoliopage(props: PageProps) {
+  const params = await props.params;
+  const { locale } = params;
+
   try {
     const pageSettings = await serverFetcher<ApiResponse>(
       "/items/other_pages",
@@ -89,7 +101,7 @@ async function Portfoliopage({ params }: { params: { locale: string } }) {
 
     return (
       <main className="my-[220px] mx-2 lg:mx-[80px]">
-        <Banner pageSettings={pageSettings.data} locale={params.locale} />
+        <Banner pageSettings={pageSettings.data} locale={locale} />
         <Portfolio />
       </main>
     );
