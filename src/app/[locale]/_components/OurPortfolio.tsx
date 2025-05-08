@@ -27,8 +27,19 @@ interface HomePageSettingResponse {
   public: boolean;
 }
 
-async function OurPortfolio() {
-  const locale = await getCurrentLocale();
+interface OurPortfolioProps {
+  params: {
+    locale: string;
+  };
+}
+
+async function OurPortfolio({ params }: OurPortfolioProps) {
+  // Skip rendering for favicon.ico
+  if (params.locale === "favicon.ico") {
+    return null;
+  }
+
+  const locale = getCurrentLocale(params.locale);
 
   const portfolioData = await serverFetcher<HomePageSettingResponse>(
     "/items/home_page_setting",

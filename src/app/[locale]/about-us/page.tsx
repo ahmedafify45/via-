@@ -1,4 +1,7 @@
 import AboutsSection from "@/components/about/AboutsSection";
+import { generateStaticParams } from "@/lib/generateStaticParams";
+
+export { generateStaticParams };
 
 function AboutUs() {
   return (

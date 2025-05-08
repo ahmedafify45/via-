@@ -1,4 +1,4 @@
-import { Languages } from "@/constants/enums";
+import { Languages } from "./constants/enums";
 
 export type LanguageType = `${Languages}`; // دا بيعني أي قيمة string من enum
 

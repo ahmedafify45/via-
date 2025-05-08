@@ -2,10 +2,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import { i18n } from "@/i18n.config";
 
 export default async function NotFound() {
-  const locale = await getCurrentLocale();
   return (
     <main className="my-[210px]">
       <div className="flex items-center justify-between ">
@@ -20,7 +19,7 @@ export default async function NotFound() {
           <p className="text-white text-[24px] font-normal">
             We Can&apos;t Seem To Find The Page You&apos;re Looking For.
           </p>
-          <Link href={`/${locale}`}>
+          <Link href={`/${i18n.defaultLocale}`}>
             <Button className="text-black h-[50px] w-[174px]">
               Back to Home
             </Button>

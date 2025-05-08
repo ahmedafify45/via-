@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetcher } from "@/lib/fetcher";
 
 export interface QueryParams {
@@ -13,7 +13,7 @@ export function useFetch<T>(endpoint: string, queryParams?: QueryParams) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const queryString = new URLSearchParams();
 
@@ -41,7 +41,7 @@ export function useFetch<T>(endpoint: string, queryParams?: QueryParams) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [endpoint, queryParams]);
 
   useEffect(() => {
     load();

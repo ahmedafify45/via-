@@ -1,12 +1,12 @@
-// next.config.js or next.config.ts
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  images: {
-    remotePatterns: [{ protocol: "https", hostname: "**" }],
-  },
+// next.config.js
+
+const config = {
   output: "export",
+  // i18n config is not supported with static exports
+  // We'll handle internationalization through our own routing
+  images: {
+    unoptimized: true,
+  },
 };
 
-export default nextConfig;
+export default config;

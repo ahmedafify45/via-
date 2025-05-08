@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import Banner from "../custom/banner";
 import ServicesCard from "../service/ServicesCard";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "../Loading";
 import { Service } from "@/types/services";
-import { useParams } from "next/navigation";
 
 interface ServicesResponse {
   data: Service[];
@@ -14,10 +12,6 @@ interface ServicesResponse {
 }
 
 function Services() {
-  const params = useParams();
-  const locale = params?.locale as string;
-
-
   const {
     data: pageSettings,
     loading: pageSettingsLoading,
@@ -26,7 +20,6 @@ function Services() {
     fields: "*.*",
     "filter[slug]": "services",
   });
-  
 
   console.log(pageSettings, pageSettingsLoading, pageSettingsError);
 
@@ -44,11 +37,6 @@ function Services() {
 
   return (
     <section className="my-[220px] lg:mx-[80px] ">
-      {/* <Banner
-        pageSettings={pageSettings.data}
-        locale={locale as string}
-      /> */}
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[80px] mx-4">
         {data?.data.map((service: Service) => (
           <div key={service.id}>

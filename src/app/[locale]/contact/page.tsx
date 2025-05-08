@@ -1,4 +1,7 @@
 import Contact from "@/components/contact/Contact";
+import { generateStaticParams } from "@/lib/generateStaticParams";
+
+export { generateStaticParams };
 
 function Contactpage() {
   return (

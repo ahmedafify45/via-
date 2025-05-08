@@ -1,4 +1,7 @@
 import Blogs from "@/components/blogs/Blogs";
+import { generateStaticParams } from "@/lib/generateStaticParams";
+
+export { generateStaticParams };
 
 interface PageProps {
   params: Promise<{

@@ -3,6 +3,9 @@ import Portfolio from "@/components/profile";
 import { Languages } from "@/constants/enums";
 import { serverFetcher } from "@/lib/serverFetcher";
 import { Metadata } from "next";
+import { generateStaticParams } from "@/lib/generateStaticParams";
+
+export { generateStaticParams };
 
 interface PageSettings {
   title: string;
@@ -26,7 +29,6 @@ interface ApiResponse {
   data: PageSettings[];
   public: boolean;
 }
-
 
 interface PageProps {
   params: Promise<{

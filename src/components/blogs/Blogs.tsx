@@ -6,6 +6,7 @@ import BlogItem from "./BlogItem";
 import { useFetch } from "@/hooks/useFetch";
 import { Blog } from "@/types/Blogs";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface ApiResponse {
   data: Blog[];
@@ -31,7 +32,7 @@ interface BlogsProps {
   locale: string;
 }
 
-function Blogs({ locale }: BlogsProps) {
+function BlogsContent({ locale }: BlogsProps) {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
   const categoryQuery = searchParams.get("category") || "";
@@ -94,6 +95,22 @@ function Blogs({ locale }: BlogsProps) {
         <BlogItem locale={locale} />
       </div>
     </section>
+  );
+}
+
+function Blogs(props: BlogsProps) {
+  return (
+    <Suspense
+      fallback={
+        <section className="my-[220px] mx-[10px] md:mx-[40px] sm:mx-[20px] lg:mx-[80px]">
+          <div className="flex justify-center items-center h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        </section>
+      }
+    >
+      <BlogsContent {...props} />
+    </Suspense>
   );
 }
 

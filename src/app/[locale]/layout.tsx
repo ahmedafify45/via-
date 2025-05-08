@@ -1,5 +1,5 @@
 import { Languages, Directions } from "@/constants/enums";
-import { Locale } from "@/i8n.config";
+import { Locale } from "@/i18n.config";
 import { Be_Vietnam_Pro, Cairo } from "next/font/google";
 import "./globals.css";
 import "../[locale]/fontawesome";

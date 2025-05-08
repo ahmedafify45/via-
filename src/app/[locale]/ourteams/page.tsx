@@ -1,6 +1,9 @@
 import TeamCard from "@/components/team/TeamCard";
 import { TeamMember } from "@/types/team";
 import { serverFetcher } from "@/lib/serverFetcher";
+import { generateStaticParams } from "@/lib/generateStaticParams";
+
+export { generateStaticParams };
 
 interface ApiResponse {
   data: TeamMember[];

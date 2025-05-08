@@ -8,12 +8,30 @@ import OurClients from "@/app/[locale]/_components/OurClients";
 import { useFetch } from "@/hooks/useFetch";
 import { useParams } from "next/navigation";
 
+interface BannerImage {
+  data: {
+    full_url: string;
+  };
+}
+
+interface PageSetting {
+  id: number;
+  sort: number;
+  title: string;
+  sub_title: string;
+  is_active: boolean;
+  title_en: string;
+  sub_title_en: string;
+  slug: string;
+  banner: BannerImage;
+}
+
+interface PageSettings {
+  data: PageSetting[];
+}
+
 function Contact() {
   const locale = useParams();
-
-  interface PageSettings {
-    data: any[]; // Replace `any[]` with the actual type of `data` if known
-  }
 
   const {
     data: pageSettings,

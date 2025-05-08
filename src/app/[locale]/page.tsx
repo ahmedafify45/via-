@@ -4,16 +4,35 @@ import OurClients from "./_components/OurClients";
 import OurPortfolio from "./_components/OurPortfolio";
 import OurService from "./_components/OurService";
 import Image from "next/image";
+import { generateStaticParams } from "@/lib/generateStaticParams";
 
 import BookingForm from "@/components/booking/BookingForm";
 import CallToAction from "./_components/CallToAction";
 
-export default async function Home() {
+export { generateStaticParams };
+
+interface PageProps {
+  params: Promise<{
+    locale: string;
+  }>;
+}
+
+export default async function Home({ params }: PageProps) {
+  const resolvedParams = await params;
+
+  // Skip rendering for favicon.ico and placeholder image
+  if (
+    resolvedParams.locale === "favicon.ico" ||
+    resolvedParams.locale === "placeholder-image.jpg"
+  ) {
+    return null;
+  }
+
   return (
     <main className="my-[220px] overflow-x-hidden">
       <Hero />
       <AboutUs />
-      <OurPortfolio />
+      <OurPortfolio params={resolvedParams} />
       <CallToAction />
       <OurService />
       <div className="mt-[50px] xl:flex justify-center items-center">

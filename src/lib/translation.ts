@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Locale } from "@/i8n.config";
+import { Locale } from "@/i18n.config";
 
 const getTrans = async (locale: Locale) => {
   try {
