@@ -6,6 +6,7 @@ import "./globals.css";
 import "../[locale]/fontawesome";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import WhatsAppButton from "./_components/WhatApp";
 
 const Vietnam = Be_Vietnam_Pro({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,11 +24,11 @@ export async function generateMetadata({
   params: { locale: Locale };
 }): Promise<Metadata> {
   return {
-    title: "Guessitt",
-    description: "Your gaming platform",
+    title: "via",
+    description: "via",
     openGraph: {
-      title: "Guessitt",
-      description: "Your gaming platform",
+      title: "via",
+      description: "via",
       locale: params.locale,
       type: "website",
     },
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
       <Header />
       {children}
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }

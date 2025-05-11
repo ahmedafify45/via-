@@ -116,8 +116,7 @@ export default async function Home({ params }: PageProps) {
 
       <div className="flex flex-col items-center mx-[20px] sm:mx-[40px] md:mx-[60px] lg:mx-[80px]">
         <div className="flex flex-col lg:flex-row items-center justify-between w-full gap-8">
-          <div className="w-full sm:w-[90%] md:w-[809px] bg-[#17181C] border border-[#25231B] rounded-[2px] p-[24px] order-2 lg:order-1">
-            <p className="text-white">Your Information</p>
+          <div className="bg-[#17181C] border border-[#25231B] rounded-[2px] order-2 lg:order-1">
             <BookingForm />
           </div>
           <div className="w-full sm:w-[90%] xl:w-auto order-1 lg:order-2 flex items-center justify-center lg:block">

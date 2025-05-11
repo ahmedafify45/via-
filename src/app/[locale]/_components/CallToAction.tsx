@@ -107,7 +107,7 @@ function CallToAction() {
             {buttonText}
           </Button>
         </div>
-        <div className="w-full h-auto mt-8 lg:mt-0">
+        <div className="w-full h-auto mt-14 lg:mt-0">
           <Image
             src={callToActionData.image?.data?.full_url}
             alt={title}
