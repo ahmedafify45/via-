@@ -31,10 +31,10 @@ function Calendar({
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse",
-        head_row: "flex gap-x-2 md:gap-x-5 xl:gap-x-10",
+        head_row: "flex gap-x-2 xl:gap-x-10",
         head_cell:
           "text-white rounded-md w-10 h-10 font-normal text-[0.8rem] text-center",
-        row: "flex w-full mt-2 gap-x-2 md:gap-x-5 xl:gap-x-10",
+        row: "flex w-full mt-2 gap-x-2 xl:gap-x-10",
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-range-end)]:rounded-r-md",
           props.mode === "range"
