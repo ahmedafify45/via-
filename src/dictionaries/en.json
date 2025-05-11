@@ -1,8 +1,88 @@
 {
-    "home":{
-  "about":{
-     "title":"About Us",
-     "discription":"Once upon a time in the vibrant city of Cairo, four visionaries came together with a shared passion for transforming ideas into impactful stories."
-  }
+  "home": {
+    "about": {
+      "title": "About Us",
+      "discription": "Once upon a time in the vibrant city of Cairo, four visionaries came together with a shared passion for transforming ideas into impactful stories."
     }
- }
+  },
+  "blog": {
+    "recentPosts": "Recent Posts",
+    "followUs": "Follow Us",
+    "tags": "Tags",
+    "ourCategories": "Our Categories"
+  },
+  "booking": {
+    "form": {
+      "title": "Your Information",
+      "fields": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Enter Your Name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "debra.holt@example.com"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "319.555.0115"
+        },
+        "company": {
+          "label": "Company Name",
+          "placeholder": "Enter Your Company Name"
+        },
+        "date": {
+          "label": "Date",
+          "placeholder": "Enter Your Date"
+        },
+        "time": {
+          "label": "Select Time"
+        }
+      },
+      "message": {
+        "label": "Enter your Message",
+        "placeholder": "What Would You Like To Discuss?"
+      },
+      "submit": "Book Consultation"
+    }
+  },
+  "contact": {
+    "liveSupport": "Live support",
+    "whatsapp": "Whatsapp",
+    "emailSupport": "Email Support",
+    "ourAddress": "Our Address",
+    "addressNotAvailable": "Address not available",
+    "form": {
+      "title": "Let's talk about your project.",
+      "description": "Please give us a call, drop us an email or fill out the contact form and we'll get back to you.",
+      "fields": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Enter Your Name"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "debra.holt@example.com"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "319.555.0115"
+        },
+        "subject": {
+          "label": "Your Subject",
+          "placeholder": "NAW"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Write your message here..."
+      },
+      "submit": "Send Message",
+      "status": {
+        "success": "Message sent successfully!",
+        "error": "Failed to send message. Please try again.",
+        "loading": "Sending message..."
+      }
+    }
+  }
+}

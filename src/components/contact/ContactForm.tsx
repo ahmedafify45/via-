@@ -3,23 +3,42 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import en from "@/dictionaries/en.json";
+import ar from "@/dictionaries/ar.json";
+
+const dictionaries = { en, ar };
 
 function ContactForm() {
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = dictionaries[locale as keyof typeof dictionaries].contact.form;
+
   const bookingForm = [
-    { id: 1, name: "name", label: "Full Name", placeholder: "Enter Your Name" },
+    {
+      id: 1,
+      name: "name",
+      label: t.fields.name.label,
+      placeholder: t.fields.name.placeholder,
+    },
     {
       id: 2,
       name: "email",
-      label: "Email Address ",
-      placeholder: "debra.holt@example.com",
+      label: t.fields.email.label,
+      placeholder: t.fields.email.placeholder,
     },
     {
       id: 3,
       name: "phone",
-      label: "Phone Number",
-      placeholder: "319.555.0115",
+      label: t.fields.phone.label,
+      placeholder: t.fields.phone.placeholder,
     },
-    { id: 4, name: "subject", label: "Your Subject", placeholder: "NAW" },
+    {
+      id: 4,
+      name: "subject",
+      label: t.fields.subject.label,
+      placeholder: t.fields.subject.placeholder,
+    },
   ];
 
   const [form, setForm] = useState({
@@ -41,6 +60,7 @@ function ContactForm() {
 
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus(t.status.loading);
 
     try {
       const response = await fetch(`${API_BASE_URL}/items/contact_form`, {
@@ -50,7 +70,7 @@ function ContactForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        setStatus("success");
+        setStatus(t.status.success);
         setForm({
           name: "",
           email: "",
@@ -59,12 +79,12 @@ function ContactForm() {
           message: "",
         });
       } else {
-        setStatus("error");
+        setStatus(t.status.error);
       }
       console.log(data);
     } catch (error) {
       console.error(error);
-      setStatus("Something went wrong. Please try again later.");
+      setStatus(t.status.error);
     }
   };
 
@@ -72,15 +92,15 @@ function ContactForm() {
     <form
       onSubmit={handelSubmit}
       className="bg-[#17181C] p-[32px] md:p-[24px] sm:p-[16px] rounded-[2px]"
+      dir={locale === "ar" ? "rtl" : "ltr"}
     >
       {status && <p className="text-green-500">{status}</p>}
       <div>
         <h2 className="text-primary text-[24px] md:text-[20px] sm:text-[18px] font-bold">
-          Let&apos;s talk about your project.
+          {t.title}
         </h2>
         <p className="text-[14px] font-medium text-white mb-[34px] mt-[8px]">
-          Please give us a call, drop us an email or fill out the contact form
-          and we&apos;ll get back to you.
+          {t.description}
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[27px] md:gap-[20px] sm:gap-[16px]">
@@ -102,12 +122,12 @@ function ContactForm() {
       </div>
       <div className="mt-[34px] md:mt-[24px] sm:mt-[20px]">
         <label className="text-[16px] md:text-[14px] font-medium text-white mb-[8px] block">
-          Message
+          {t.message.label}
         </label>
         <div>
           <Textarea
             className="w-full md:w-[561px] h-[104px] border-secondary bg-[#161718] placeholder:text-[#808080] resize-none overflow-y-auto text-white whitespace-pre-wrap"
-            placeholder="Write your message here..."
+            placeholder={t.message.placeholder}
             name="message"
             value={form.message}
             onChange={handelChange}
@@ -116,7 +136,7 @@ function ContactForm() {
         </div>
       </div>
       <Button className="mt-[34px] md:mt-[24px] sm:mt-[20px] h-[48px] w-full md:w-[269px]">
-        Send Message
+        {t.submit}
       </Button>
     </form>
   );

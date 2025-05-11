@@ -8,6 +8,22 @@ import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
 import { Blog } from "@/types/Blogs";
 import { useState } from "react";
+import Banner from "../custom/banner";
+
+interface PageSettings {
+  title: string;
+  title_en: string;
+  banner: {
+    data: {
+      full_url: string;
+    };
+  };
+}
+
+interface PageSettingsResponse {
+  data: PageSettings[];
+  public: boolean;
+}
 
 interface ApiResponse {
   data: Blog[];
@@ -16,6 +32,16 @@ interface ApiResponse {
 
 function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const {
+    data: pageSettings,
+    loading: pageSettingsLoading,
+    error: pageSettingsError,
+  } = useFetch<PageSettingsResponse>("/items/other_pages", {
+    fields: "*.*",
+    "filter[slug]": "blog",
+  });
+
   const {
     data: response,
     loading,
@@ -24,6 +50,8 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
     fields: "*.*",
   });
   const isEnglish = locale === Languages.ENGLISH;
+
+  console.log(pageSettings, pageSettingsLoading, pageSettingsError);
 
   if (loading) {
     return (
@@ -79,8 +107,8 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
 
   return (
     <main className="mx-4 md:mx-[40px] lg:mx-[80px] my-[100px] md:my-[150px] lg:my-[220px]">
+      <Banner pageSettings={pageSettings?.data || []} locale={locale} />
       <div>
-        {/* <Banner title="Our Blogs" subtitle="Home / Blogs" /> */}
         <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
           <div className="flex flex-col gap-[20px]">
             <div className="w-full">

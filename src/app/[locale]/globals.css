@@ -200,3 +200,36 @@ body {
   opacity: 1;
   background: #fff;
 }
+
+.success-toast {
+  --toast-bg: #17181c;
+  --toast-border: #2a2b2f;
+  --toast-text: #fff;
+}
+
+.success-toast [data-title] {
+  color: #22c55e !important;
+  font-weight: 600;
+}
+
+.warning-toast {
+  --toast-bg: #17181c;
+  --toast-border: #2a2b2f;
+  --toast-text: #fff;
+}
+
+.warning-toast [data-title] {
+  color: #f59e0b !important; /* Amber-500 color for warnings */
+  font-weight: 600;
+}
+
+.error-toast {
+  --toast-bg: #17181c;
+  --toast-border: #2a2b2f;
+  --toast-text: #fff;
+}
+
+.error-toast [data-title] {
+  color: #ef4444 !important; /* Red-500 color for errors */
+  font-weight: 600;
+}

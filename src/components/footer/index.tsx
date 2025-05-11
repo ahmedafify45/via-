@@ -35,26 +35,53 @@ interface FooterSection {
   newsletter_active: boolean;
 }
 
+interface GeneralSettings {
+  site_description: string;
+  site_description_en: string;
+  light_logo: {
+    data: {
+      full_url: string;
+    };
+  };
+  social_links: {
+    instagram: string;
+    twitter: string;
+    youtube: string;
+  };
+}
+
 function Footer() {
   const params = useParams();
   const locale = params?.locale as string;
   const isEnglish = locale === Languages.ENGLISH;
   const [data, setData] = React.useState<FooterSection | null>(null);
   const [services, setServices] = React.useState<Service[]>([]);
+  const [generalSettings, setGeneralSettings] =
+    React.useState<GeneralSettings | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const [footerResponse, servicesResponse] = await Promise.all([
-          serverFetcher<{ data: FooterSection[] }>("/items/footer_section"),
-          serverFetcher<{ data: Service[] }>("/items/services", {
-            fields: "*.*",
-          }),
-        ]);
+        const [footerResponse, servicesResponse, generalSettingsResponse] =
+          await Promise.all([
+            serverFetcher<{ data: FooterSection[] }>("/items/footer_section", {
+              fields: "*.*",
+            }),
+            serverFetcher<{ data: Service[] }>("/items/services", {
+              fields: "*.*",
+            }),
+            serverFetcher<{ data: GeneralSettings[] }>(
+              "/items/general_settings",
+              {
+                fields: "*.*,social_links",
+              }
+            ),
+          ]);
         setData(footerResponse.data[0]);
         setServices(servicesResponse.data);
+        setGeneralSettings(generalSettingsResponse.data[0]);
         setLoading(false);
       } catch {
         setError("Error loading footer data");
@@ -83,15 +110,44 @@ function Footer() {
     <footer className="bg-white">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[63px] px-[60px] py-[56px]">
         <div className="flex flex-col gap-4">
-          <Image src="/images/logo.png" alt="logo" width={100} height={100} />
+          {generalSettings?.light_logo && (
+            <Image
+              src={generalSettings.light_logo.data.full_url}
+              alt="logo"
+              width={100}
+              height={100}
+            />
+          )}
           <p className="text-[14px] xl:text-[16px]">
-            Innovative marketing solutions that drive growth and create
-            meaningful connections between brands and their audiences.
+            {locale === Languages.ARABIC
+              ? generalSettings?.site_description
+              : generalSettings?.site_description_en}
           </p>
           <div className="flex gap-4 ">
-            <FontAwesomeIcon icon={faYoutube} className="w-[32px] h-[24px]" />
-            <FontAwesomeIcon icon={faTwitter} className="w-[32px] h-[24px]" />
-            <FontAwesomeIcon icon={faInstagram} className="w-[32px] h-[24px]" />
+            <a
+              href={generalSettings?.social_links?.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faYoutube} className="w-[32px] h-[24px]" />
+            </a>
+            <a
+              href={generalSettings?.social_links?.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faTwitter} className="w-[32px] h-[24px]" />
+            </a>
+            <a
+              href={generalSettings?.social_links?.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon
+                icon={faInstagram}
+                className="w-[32px] h-[24px]"
+              />
+            </a>
           </div>
         </div>
         <div className="flex flex-col gap-4">

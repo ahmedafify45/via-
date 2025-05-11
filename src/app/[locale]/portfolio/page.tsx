@@ -71,8 +71,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     openGraph: {
       title: title || "Portfolio",
       description: description,
-      url: "https://example.com/portfolio",
-      siteName: "My Website",
+
+      siteName: "Via",
       images: [
         {
           url: pageSettings.data[0]?.banner?.data?.full_url,

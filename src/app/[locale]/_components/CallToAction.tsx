@@ -8,6 +8,7 @@ import "swiper/css";
 import { useFetch } from "@/hooks/useFetch";
 import { useParams } from "next/navigation";
 import { Languages } from "@/constants/enums";
+import Loading from "@/components/Loading";
 
 interface CallToActionData {
   id: number;
@@ -37,44 +38,13 @@ function CallToAction() {
   );
 
   const portfolioAds: { id: number; title: string; image: string }[] = [];
-  // {
-  //   id: 1,
-  //   title: "Vision",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 2,
-  //   title: "Innovation",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 3,
-  //   title: "Action",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 4,
-  //   title: "Action",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 5,
-  //   title: "Excellence",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 6,
-  //   title: "Action",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // {
-  //   id: 7,
-  //   title: "Action",
-  //   image: "/images/iconPortflio.png",
-  // },
-  // ];
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error loading data</div>;
   if (!data?.data?.[0]) return null;
 

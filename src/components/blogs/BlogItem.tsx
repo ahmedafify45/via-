@@ -16,6 +16,8 @@ import {
 import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
 import { Blog } from "@/types/Blogs";
+import enTranslations from "@/dictionaries/en.json";
+import arTranslations from "@/dictionaries/ar.json";
 
 interface Category {
   id?: number;
@@ -42,6 +44,15 @@ interface PostsResponse {
   public: boolean;
 }
 
+interface GeneralSettings {
+  social_links: {
+    instagram: string;
+    twitter: string;
+    youtube: string;
+    facebook: string;
+  };
+}
+
 interface BlogItemProps {
   locale: string;
   searchQuery?: string;
@@ -53,6 +64,8 @@ function BlogItem({
   searchQuery: externalSearchQuery,
   setSearchQuery: externalSetSearchQuery,
 }: BlogItemProps) {
+  const translations =
+    locale === Languages.ENGLISH ? enTranslations : arTranslations;
   const [internalSearchQuery, setInternalSearchQuery] = useState(
     externalSearchQuery || ""
   );
@@ -76,28 +89,35 @@ function BlogItem({
     limit: 5,
   });
 
+  const { data: generalSettings } = useFetch<{ data: GeneralSettings[] }>(
+    "/items/general_settings",
+    {
+      fields: "social_links",
+    }
+  );
+
   const isEnglish = locale === Languages.ENGLISH;
 
   const followUs = [
     {
       id: 1,
       icon: <FontAwesomeIcon icon={faFacebook} />,
-      link: "https://www.facebook.com",
+      link: generalSettings?.data[0]?.social_links?.facebook || "#",
     },
     {
       id: 2,
       icon: <FontAwesomeIcon icon={faInstagram} />,
-      link: "https://www.instagram.com",
+      link: generalSettings?.data[0]?.social_links?.instagram || "#",
     },
     {
       id: 3,
       icon: <FontAwesomeIcon icon={faTwitter} />,
-      link: "https://www.twitter.com",
+      link: generalSettings?.data[0]?.social_links?.twitter || "#",
     },
     {
       id: 4,
       icon: <FontAwesomeIcon icon={faYoutube} />,
-      link: "https://www.youtube.com",
+      link: generalSettings?.data[0]?.social_links?.youtube || "#",
     },
   ];
 
@@ -151,7 +171,7 @@ function BlogItem({
       </form>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
         <h3 className="text-[20px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
-          Recent Posts
+          {translations.blog.recentPosts}
         </h3>
         <div className="flex flex-col gap-[16px] ">
           {postsLoading ? (
@@ -192,7 +212,7 @@ function BlogItem({
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
         <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
-          Our Categories
+          {translations.blog.ourCategories}
         </h3>
         <div className="flex flex-col gap-[16px] ">
           {loading ? (
@@ -216,7 +236,7 @@ function BlogItem({
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
         <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
-          Follow Us
+          {translations.blog.followUs}
         </h3>
         <div className="flex gap-[16px]">
           {followUs.map((follow) => (
@@ -224,7 +244,11 @@ function BlogItem({
               key={follow.id}
               className="w-[40px] h-[40px] text-[#FCFCFC] bg-[#787878] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
             >
-              <Link href={follow.link} className="text-[20px] w-[20px]">
+              <Link
+                target="_blank"
+                href={follow.link}
+                className="text-[20px] w-[20px]"
+              >
                 {follow.icon}
               </Link>
             </div>
@@ -233,7 +257,7 @@ function BlogItem({
       </div>
       <div className="my-[20px] bg-[#17181C] p-[20px] rounded-[16px] border border-[#25231B] ">
         <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
-          Tags
+          {translations.blog.tags}
         </h3>
         <div className="grid grid-cols-2 gap-[16px]">
           {postsResponse?.data.map((post) => {

@@ -1,12 +1,12 @@
 import React from "react";
-import Banner from "../custom/banner";
 import AskQushions from "./AskQushions";
+import FaqBanner from "../service/FaqBanner";
 
-function FaqSection() {
+function FaqSection({ locale }: { locale: string }) {
   return (
-    <section className="my-[220px] mx-[80px]">
-      <Banner title="FAQ" subtitle="home/faq" pageSettings={[]} />
-      <AskQushions />
+    <section className="my-[220px] mx-4 xl:mx-[80px]">
+      <FaqBanner locale={locale} />
+      <AskQushions locale={locale} />
     </section>
   );
 }

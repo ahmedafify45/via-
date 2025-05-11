@@ -17,9 +17,10 @@ interface MenuItem {
 
 interface NavbarProps {
   isMobile?: boolean;
+  onLinkClick?: () => void;
 }
 
-function Navbar({ isMobile = false }: NavbarProps) {
+function Navbar({ isMobile = false, onLinkClick }: NavbarProps) {
   const params = useParams();
   const locale = params?.locale as string;
   const pathname = usePathname();
@@ -62,6 +63,7 @@ function Navbar({ isMobile = false }: NavbarProps) {
               <Link
                 href={`/${locale}${item.url}`}
                 className="w-full h-full flex items-center justify-center text-[14px] xl:text-[16px]"
+                onClick={isMobile ? onLinkClick : undefined}
               >
                 {locale === "ar" ? item.name : item.name_en}
               </Link>

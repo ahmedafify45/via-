@@ -8,6 +8,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useFetch } from "@/hooks/useFetch";
+import { useParams } from "next/navigation";
+import en from "@/dictionaries/en.json";
+import ar from "@/dictionaries/ar.json";
+import Loading from "../Loading";
+
+const dictionaries = { en, ar };
 
 interface GeneralSettings {
   data: {
@@ -19,6 +25,10 @@ interface GeneralSettings {
 }
 
 function InformationContact() {
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = dictionaries[locale as keyof typeof dictionaries].contact;
+
   const { data, loading, error } = useFetch<GeneralSettings>(
     "/items/general_settings/1",
     {
@@ -26,7 +36,12 @@ function InformationContact() {
     }
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loading />
+      </div>
+    );
   if (error) return <div>Error loading contact information</div>;
   if (!data) return null;
 
@@ -34,29 +49,29 @@ function InformationContact() {
     {
       id: 1,
       icon: <FontAwesomeIcon icon={faPhone} />,
-      title: "Live support",
+      title: t.liveSupport,
       description: data.data.phone_number,
       link: `tel:${data.data.phone_number}`,
     },
     {
       id: 2,
       icon: <FontAwesomeIcon icon={faWhatsapp} />,
-      title: "Whatsapp",
+      title: t.whatsapp,
       description: data.data.whatsapp_number,
       link: `https://wa.me/${data.data.whatsapp_number}`,
     },
     {
       id: 3,
       icon: <FontAwesomeIcon icon={faEnvelope} />,
-      title: "Email Support",
+      title: t.emailSupport,
       description: data.data.email_address,
       link: `mailto:${data.data.email_address}`,
     },
     {
       id: 4,
       icon: <FontAwesomeIcon icon={faLocation} />,
-      title: "Our Address",
-      description: data.data.address || "Address not available",
+      title: t.ourAddress,
+      description: data.data.address || t.addressNotAvailable,
       link: "#",
     },
   ];

@@ -1,8 +1,82 @@
 {
-   "home":{
- "about":{
-    "title":"معلومات عنا",
-    "discription":"ذات مرة في مدينة القاهرة النابضة بالحياة، اجتمع أربعة من أصحاب الرؤى معًا بشغف مشترك لتحويل الأفكار إلى قصص مؤثرة."
- }
-   }
+  "booking": {
+    "form": {
+      "title": "معلوماتك",
+      "fields": {
+        "name": {
+          "label": "الاسم الكامل",
+          "placeholder": "أدخل اسمك"
+        },
+        "email": {
+          "label": "البريد الإلكتروني",
+          "placeholder": "debra.holt@example.com"
+        },
+        "phone": {
+          "label": "رقم الهاتف",
+          "placeholder": "319.555.0115"
+        },
+        "company": {
+          "label": "اسم الشركة",
+          "placeholder": "أدخل اسم شركتك"
+        },
+        "date": {
+          "label": "التاريخ",
+          "placeholder": "أدخل التاريخ"
+        },
+        "time": {
+          "label": "حدد الفتره الزمنيه"
+        }
+      },
+      "message": {
+        "label": "أدخل رسالتك",
+        "placeholder": "ما الذي تود مناقشته؟"
+      },
+      "submit": "حجز استشارة"
+    }
+  },
+  "contact": {
+    "liveSupport": "الدعم المباشر",
+    "whatsapp": "واتساب",
+    "emailSupport": "دعم البريد الإلكتروني",
+    "ourAddress": "عنواننا",
+    "addressNotAvailable": "العنوان غير متوفر",
+    "form": {
+      "title": "دعنا نتحدث عن مشروعك.",
+      "description": "يرجى الاتصال بنا، أو إرسال بريد إلكتروني أو ملء نموذج الاتصال وسنعاود الاتصال بك.",
+      "fields": {
+        "name": {
+          "label": "الاسم الكامل",
+          "placeholder": "أدخل اسمك"
+        },
+        "email": {
+          "label": "البريد الإلكتروني",
+          "placeholder": "debra.holt@example.com"
+        },
+        "phone": {
+          "label": "رقم الهاتف",
+          "placeholder": "319.555.0115"
+        },
+        "subject": {
+          "label": "الموضوع",
+          "placeholder": "NAW"
+        }
+      },
+      "message": {
+        "label": "الرسالة",
+        "placeholder": "اكتب رسالتك هنا..."
+      },
+      "submit": "إرسال الرسالة",
+      "status": {
+        "success": "تم إرسال الرسالة بنجاح!",
+        "error": "فشل في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
+        "loading": "جاري إرسال الرسالة..."
+      }
+    }
+  },
+  "blog": {
+    "recentPosts": "المنشورات الأخيرة",
+    "followUs": "تابعنا",
+    "tags": "الوسوم",
+    "ourCategories": "تصنيفاتنا"
+  }
 }

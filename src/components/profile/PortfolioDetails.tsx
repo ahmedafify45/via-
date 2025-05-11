@@ -7,6 +7,9 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/thumbs";
 import { useParams } from "next/navigation";
+import { Metadata } from "next";
+import { PageProps } from "@/types/page";
+import { ApiResponse } from "@/types/api";
 
 // import Banner from "../custom/banner";
 import OurClients from "@/app/[locale]/_components/OurClients";
@@ -17,12 +20,74 @@ import Link from "next/link";
 import { Languages } from "@/constants/enums";
 import DOMPurify from "dompurify";
 import CallToAction from "@/app/[locale]/_components/CallToAction";
+import Loading from "../Loading";
+import Banner from "../custom/banner";
+import { serverFetcher } from "@/lib/serverFetcher";
+
+interface PageSettings {
+  title: string;
+  title_en: string;
+  banner: {
+    data: {
+      full_url: string;
+    };
+  };
+}
+
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
+  const { locale } = params;
+  const pageSettings = await serverFetcher<ApiResponse>("/items/portfolios", {
+    fields: "*.*",
+  });
+
+  const seoData =
+    locale === Languages.ARABIC
+      ? pageSettings.data[0]?.seo_meta
+      : pageSettings.data[0]?.seo_meta_en;
+
+  const title =
+    seoData?.title ||
+    (locale === Languages.ARABIC
+      ? pageSettings.data[0]?.title
+      : pageSettings.data[0]?.title_en);
+
+  const description =
+    seoData?.description || "Explore our professional services and solutions";
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: `/services`,
+      siteName: "My Website",
+      images: [
+        {
+          url: pageSettings.data[0]?.banner?.data?.full_url || "",
+        },
+      ],
+      locale: locale === "ar" ? "ar_SA" : "en_US",
+      type: "website",
+    },
+  };
+}
 
 function PortfolioDetails() {
   const params = useParams();
   const locale = params?.locale as string;
   const thumbsSwiper: SwiperType | null = null;
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const { data: pageSettings } = useFetch<{ data: PageSettings[] }>(
+    "/items/other_pages",
+    {
+      fields: "*.*",
+      "filter[slug]": "portfolio",
+    }
+  );
+
   const { data, loading, error } = useFetch<{ data: PortfolioItem[] }>(
     "/items/portfolios",
     {
@@ -31,7 +96,11 @@ function PortfolioDetails() {
   );
 
   if (loading) {
-    return <div className="w-full text-center">Loading...</div>;
+    return (
+      <div className="w-full text-center">
+        <Loading />
+      </div>
+    );
   }
 
   if (error) {
@@ -58,15 +127,12 @@ function PortfolioDetails() {
   const sanitizedContent = DOMPurify.sanitize(displayDescription);
 
   return (
-    <main>
+    <main className="overflow-hidden ">
       <div className="px-4 md:px-[80px] my-[220px] overflow-hidden">
-        {/* <Banner
-          title={"Our Portfolio"}
-          subtitle="Home / Portfolio / Portfolio Details"
-        /> */}
+        <Banner pageSettings={pageSettings?.data || []} locale={locale} />
         <div className="mt-8">
           <h1 className="flex items-center justify-center text-primary text-[32px] md:text-[48px] font-bold mb-[24px]">
-            {Languages.ARABIC ? "معرض المشروع" : "Project Gallery"}
+            {locale === Languages.ARABIC ? "معرض المشروع" : "Project Gallery"}
           </h1>
 
           {/* Main Swiper */}
@@ -77,43 +143,29 @@ function PortfolioDetails() {
               modules={[Thumbs]}
               className="h-[300px] md:h-[500px] rounded-lg"
               onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+              navigation
+              pagination={{ clickable: true }}
             >
-              <SwiperSlide>
-                <div className="relative w-full h-full">
-                  <Image
-                    src={portfolio.thumbnail.data.full_url}
-                    alt={displayName}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </SwiperSlide>
               {portfolio.banner && portfolio.banner.data && (
                 <SwiperSlide>
-                  <div className="relative ">
+                  <div className="relative w-full h-full">
                     <Image
                       src={portfolio.banner.data.full_url}
                       alt={displayName}
                       fill
                       className="object-cover"
+                      priority
                     />
                   </div>
                 </SwiperSlide>
               )}
             </Swiper>
             <div className="flex gap-4 mt-4 items-center justify-center">
-              <div
-                className={`h-[10px] w-[48px] transition-all duration-200 ${
-                  activeIndex === 0
-                    ? "bg-[#FFD600]" // yellow
-                    : "bg-[#4B3F13] border border-[#FFD600]"
-                }`}
-              />
               {portfolio.banner && portfolio.banner.data && (
                 <div
                   className={`h-[10px] w-[48px] transition-all duration-200 ${
-                    activeIndex === 1
-                      ? "bg-[#FFD600]" // yellow
+                    activeIndex === 0
+                      ? "bg-[#FFD600]"
                       : "bg-[#4B3F13] border border-[#FFD600]"
                   }`}
                 />
@@ -179,11 +231,13 @@ function PortfolioDetails() {
             </div>
           </div>
         </div>
-        <div className="mt-[50px] xl:flex justify-center items-center">
+        <div className="">
           <OurClients />
         </div>
       </div>
-      <CallToAction />
+      <div className="mb-10">
+        <CallToAction />
+      </div>
     </main>
   );
 }

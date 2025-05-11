@@ -10,6 +10,22 @@ import { Languages } from "@/constants/enums";
 import { useFetch } from "@/hooks/useFetch";
 import { Service } from "@/types/services";
 import Loading from "../Loading";
+import Banner from "../custom/banner";
+
+interface PageSettings {
+  title: string;
+  title_en: string;
+  banner: {
+    data: {
+      full_url: string;
+    };
+  };
+}
+
+interface PageSettingsResponse {
+  data: PageSettings[];
+  public: boolean;
+}
 
 interface ServicesResponse {
   data: Service[];
@@ -19,6 +35,15 @@ interface ServicesResponse {
 function ServiceDetails() {
   const params = useParams();
   const locale = params?.locale as string;
+
+  const { data: pageSettings } = useFetch<PageSettingsResponse>(
+    "/items/other_pages",
+    {
+      fields: "*.*",
+      "filter[slug]": "services",
+    }
+  );
+
   const { data: servicesData, loading } = useFetch<ServicesResponse>(
     "/items/services",
     {
@@ -51,11 +76,7 @@ function ServiceDetails() {
   return (
     <main className="py-[220px]">
       <div className="mx-4 xl:mx-[80px]">
-        {/* <Banner
-          title="Our Services"
-          subtitle="home/services/details"
-          image={service.banner?.data?.full_url}
-        /> */}
+        <Banner pageSettings={pageSettings?.data || []} locale={locale} />
         <div className="relative w-full max-w-[1280px] aspect-[1280/472] mx-auto">
           <Image
             src={service.photo?.data?.full_url}

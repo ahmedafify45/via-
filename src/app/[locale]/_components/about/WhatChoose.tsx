@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/Loading";
+import { useParams } from "next/navigation";
 
 // Add all solid icons to the library
 library.add(fas);
@@ -32,6 +33,8 @@ interface HomePageSettingResponse {
   public: boolean;
 }
 function WhatChoose() {
+  const params = useParams();
+  const locale = params.locale as string;
   const { data, loading, error } = useFetch<{ data: CoreValue[] }>(
     "/items/about_core_values",
     {
@@ -69,13 +72,17 @@ function WhatChoose() {
   };
 
   return (
-    <div className="mx-4 xl:mx-[80px] pb-[40px] md:pb-[60px] lg:pb-[75px]">
+    <div className="mx-4 xl:mx-[80px] h-[450px] ">
       <div className="flex flex-col items-center justify-center text-center">
         <h4 className="text-[36px] xl:text-[48px] font-bold text-primary">
-          {whyChooseUsData.title}
+          {locale === Languages.ARABIC
+            ? whyChooseUsData.title
+            : whyChooseUsData.title_en}
         </h4>
         <p className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6">
-          {whyChooseUsData.sub_title}
+          {locale === Languages.ARABIC
+            ? whyChooseUsData.sub_title
+            : whyChooseUsData.sub_title_en}
         </p>
       </div>
       <div className="mt-[20px] md:mt-[30px]">
@@ -111,10 +118,10 @@ function WhatChoose() {
                   <FontAwesomeIcon icon={getIconName(item.icon) as any} />
                 </div>
                 <h4 className="text-[16px] md:text-[18px] lg:text-[20px] font-medium mb-[12px] md:mb-[14px] lg:mb-[16px]">
-                  {Languages.ARABIC ? item.title : item.title_en}
+                  {locale === Languages.ARABIC ? item.title : item.title_en}
                 </h4>
-                <p className="text-[#0C0D0F] text-center text-[12px] md:text-[13px] lg:text-[14px] pb-[12px] md:pb-[14px] lg:pb-[16px]">
-                  {Languages.ARABIC ? item.text : item.text_en}
+                <p className="text-[#0C0D0F] text-center text-[12px] mdP:text-[13px] lg:text-[14px] pb-[12px] md:pb-[14px] lg:pb-[16px]">
+                  {locale === Languages.ARABIC ? item.text : item.text_en}
                 </p>
               </div>
             </SwiperSlide>

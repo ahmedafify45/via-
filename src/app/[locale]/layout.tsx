@@ -1,6 +1,7 @@
 import { Languages, Directions } from "@/constants/enums";
 import { Locale } from "@/i18n.config";
 import { Be_Vietnam_Pro, Cairo } from "next/font/google";
+import { Metadata } from "next";
 import "./globals.css";
 import "../[locale]/fontawesome";
 import Header from "@/components/header";
@@ -16,10 +17,20 @@ const cairo = Cairo({
   subsets: ["arabic"],
 });
 
-export async function generateMetadata() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: Locale };
+}): Promise<Metadata> {
   return {
-    title: "Default Title",
-    description: "Default description",
+    title: "Guessitt",
+    description: "Your gaming platform",
+    openGraph: {
+      title: "Guessitt",
+      description: "Your gaming platform",
+      locale: params.locale,
+      type: "website",
+    },
   };
 }
 
@@ -35,15 +46,14 @@ export default async function LocaleLayout({
     locale === Languages.ARABIC ? cairo.className : Vietnam.className;
 
   return (
-    <html
+    <div
       lang={locale}
       dir={locale === Languages.ARABIC ? Directions.RTL : Directions.LTR}
+      className={fontClass}
     >
-      <body className={fontClass}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
-    </html>
+      <Header />
+      {children}
+      <Footer />
+    </div>
   );
 }
