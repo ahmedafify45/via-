@@ -4,6 +4,11 @@ import {
   faInstagram,
   faTwitter,
   faYoutube,
+  faFacebook,
+  faLinkedin,
+  faTiktok,
+  faTelegram,
+  faPinterest,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -15,6 +20,7 @@ import { Languages } from "@/constants/enums";
 import { Loader } from "lucide-react";
 import { serverFetcher } from "@/lib/serverFetcher";
 import { Service } from "@/types/services";
+import { toast } from "sonner";
 
 interface FooterMenuItem {
   name: string;
@@ -44,10 +50,25 @@ interface GeneralSettings {
     };
   };
   social_links: {
-    instagram: string;
-    twitter: string;
-    youtube: string;
+    instagram?: string;
+    twitter?: string;
+    youtube?: string;
+    facebook?: string;
+    linkedin?: string;
+    tiktok?: string;
+    telegram?: string;
+    pinterest?: string;
   };
+}
+
+interface NewsletterData {
+  title: string;
+  title_en: string;
+  button_text: string;
+  button_text_en: string;
+  button_url: string;
+  button_url_en: string;
+  is_active: boolean;
 }
 
 function Footer() {
@@ -60,25 +81,104 @@ function Footer() {
     React.useState<GeneralSettings | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [newsletterData, setNewsletterData] =
+    React.useState<NewsletterData | null>(null);
+  const [subscriberEmail, setSubscriberEmail] = React.useState("");
+  const [subscribing, setSubscribing] = React.useState(false);
+
+  const handleSubscribe = async () => {
+    if (!subscriberEmail) {
+      toast.error(
+        isEnglish
+          ? "Please enter your email."
+          : "يرجى إدخال البريد الإلكتروني.",
+        {
+          style: {
+            color: "#DC2626", // red-600
+            backgroundColor: "#FEF2F2", // red-50
+            border: "1px solid #EF4444", // red-500
+          },
+        }
+      );
+      return;
+    }
+
+    setSubscribing(true);
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE}/items/subscribers`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: subscriberEmail }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to subscribe");
+      }
+
+      toast.success(
+        isEnglish ? "Subscribed successfully!" : "تم الاشتراك بنجاح!",
+        {
+          style: {
+            color: "#059669", // emerald-600
+            backgroundColor: "#ECFDF5", // emerald-50
+            border: "1px solid #10B981", // emerald-500
+          },
+          className: "success-toast",
+        }
+      );
+      setSubscriberEmail(""); // Clear input
+    } catch {
+      toast.error(
+        isEnglish
+          ? "Subscription failed. Try again."
+          : "فشل الاشتراك. حاول مرة أخرى.",
+        {
+          style: {
+            background: "#17181C",
+            color: "#fff",
+            border: "1px solid #2A2B2F",
+          },
+          className: "error-toast",
+        }
+      );
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const [footerResponse, servicesResponse, generalSettingsResponse] =
-          await Promise.all([
-            serverFetcher<{ data: FooterSection[] }>("/items/footer_section", {
-              fields: "*.*",
-            }),
-            serverFetcher<{ data: Service[] }>("/items/services", {
-              fields: "*.*",
-            }),
-            serverFetcher<{ data: GeneralSettings[] }>(
-              "/items/general_settings",
-              {
-                fields: "*.*,social_links",
-              }
-            ),
-          ]);
+        const [
+          footerResponse,
+          servicesResponse,
+          generalSettingsResponse,
+          newsletterResponse,
+        ] = await Promise.all([
+          serverFetcher<{ data: FooterSection[] }>("/items/footer_section", {
+            fields: "*.*",
+          }),
+          serverFetcher<{ data: Service[] }>("/items/services", {
+            fields: "*.*",
+          }),
+          serverFetcher<{ data: GeneralSettings[] }>(
+            "/items/general_settings",
+            {
+              fields: "*.*,social_links",
+            }
+          ),
+          serverFetcher<{ data: NewsletterData[] }>(
+            "/items/home_page_setting?filter[slug]=newsletter-area"
+          ),
+        ]);
+
+        setNewsletterData(newsletterResponse.data[0]);
         setData(footerResponse.data[0]);
         setServices(servicesResponse.data);
         setGeneralSettings(generalSettingsResponse.data[0]);
@@ -124,34 +224,108 @@ function Footer() {
               : generalSettings?.site_description_en}
           </p>
           <div className="flex gap-4 ">
-            <a
-              href={generalSettings?.social_links?.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faYoutube} className="w-[32px] h-[24px]" />
-            </a>
-            <a
-              href={generalSettings?.social_links?.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faTwitter} className="w-[32px] h-[24px]" />
-            </a>
-            <a
-              href={generalSettings?.social_links?.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon
-                icon={faInstagram}
-                className="w-[32px] h-[24px]"
-              />
-            </a>
+            {generalSettings?.social_links?.youtube && (
+              <Link
+                href={generalSettings.social_links.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faYoutube}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.twitter && (
+              <Link
+                href={generalSettings.social_links.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faTwitter}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.instagram && (
+              <Link
+                href={generalSettings.social_links.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.facebook && (
+              <Link
+                href={generalSettings.social_links.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faFacebook}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.linkedin && (
+              <Link
+                href={generalSettings.social_links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faLinkedin}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.tiktok && (
+              <Link
+                href={generalSettings.social_links.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faTiktok}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.telegram && (
+              <Link
+                href={generalSettings.social_links.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faTelegram}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
+            {generalSettings?.social_links?.pinterest && (
+              <Link
+                href={generalSettings.social_links.pinterest}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon
+                  icon={faPinterest}
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                />
+              </Link>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <p className="text-[24px] font-bold">Services</p>
+          <p className="text-[24px] font-bold">
+            {isEnglish ? "Services" : "الخدمات"}
+          </p>
           <div className="space-y-3">
             {services.map((service) => (
               <Link
@@ -178,16 +352,34 @@ function Footer() {
             ))}
           </div>
         ))}
-        {data.newsletter_active && (
+        {newsletterData?.is_active && (
           <div className="flex flex-col gap-4">
-            <p className="text-[24px] font-bold">Newsletter</p>
+            <p className="text-[24px] font-bold">
+              {isEnglish ? newsletterData.title_en : newsletterData.title}
+            </p>
             <div className="flex items-center justify-center">
               <input
-                className="h-[44px] p-3 outline-none border border-accent w-[150px] lg:w-[200px]"
                 type="email"
-                placeholder="Enter your email"
+                value={subscriberEmail}
+                onChange={(e) => setSubscriberEmail(e.target.value)}
+                placeholder={
+                  isEnglish ? "Enter your email" : "أدخل بريدك الإلكتروني"
+                }
+                className="h-[44px] p-3 outline-none border border-accent w-[150px] lg:w-[200px]"
               />
-              <Button className="rounded-none h-[44px]">Subscribe</Button>
+              <Button
+                className="rounded-none h-[44px]"
+                onClick={handleSubscribe}
+                disabled={subscribing}
+              >
+                {subscribing
+                  ? isEnglish
+                    ? "Subscribing..."
+                    : "جارٍ الاشتراك..."
+                  : isEnglish
+                  ? newsletterData.button_text_en
+                  : newsletterData.button_text}
+              </Button>
             </div>
           </div>
         )}

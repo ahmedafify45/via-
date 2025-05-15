@@ -6,7 +6,7 @@ export { generateStaticParams };
 
 function Bookingpage() {
   return (
-    <main className="my-[220px] lg:mx-[300px]">
+    <main className="my-[220px] mx-10">
       <Booking />
     </main>
   );

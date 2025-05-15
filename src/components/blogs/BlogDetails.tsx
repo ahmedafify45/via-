@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import BlogItem from "./BlogItem";
-import CommentSection from "./CommentSection";
+
 import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
 import { Blog } from "@/types/Blogs";
@@ -122,7 +122,7 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
                       : blog.thumbnail?.data?.full_url
                   }
                   alt={isEnglish ? blog.title_en : blog.title}
-                  className="rounded-[4px] w-full h-auto object-cover"
+                  className="rounded-[4px] md:max-w-[847px] h-auto object-cover"
                 />
               )}
             </div>
@@ -143,7 +143,6 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
             setSearchQuery={setSearchQuery}
           />
         </div>
-        <CommentSection />
       </div>
     </main>
   );

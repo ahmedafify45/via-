@@ -3,15 +3,20 @@ import {
   faLinkedin,
   faTwitter,
   faFacebook,
+  faInstagram,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
 import { serverFetcher } from "@/lib/serverFetcher";
 import { Languages } from "@/constants/enums";
 import { redirect } from "next/navigation";
 import { i18n } from "@/i18n.config";
-import { generateTeamMemberParams } from "@/lib/generateTeamMemberParams";
 import Banner from "@/components/custom/banner";
 import { Metadata } from "next";
+
+// Add dynamic configuration
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface TeamMember {
   id: number;
@@ -25,6 +30,8 @@ interface TeamMember {
   linkedin?: string;
   twitter?: string;
   facebook?: string;
+  instagram?: string;
+  youtube?: string;
   avatar?: {
     id: string;
     data: {
@@ -62,8 +69,6 @@ interface PageSettingsResponse {
   data: PageSettings[];
   public: boolean;
 }
-
-export const generateStaticParams = generateTeamMemberParams;
 
 export async function generateMetadata({
   params,
@@ -220,37 +225,79 @@ export default async function TeamMemberPage({ params }: PageProps) {
                   </p>
                 )}
               </div>
-              <div className="flex gap-4">
-                {member.linkedin && (
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary"
-                  >
-                    <FontAwesomeIcon icon={faLinkedin} className="w-6 h-6" />
-                  </a>
-                )}
-                {member.twitter && (
-                  <a
-                    href={member.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary"
-                  >
-                    <FontAwesomeIcon icon={faTwitter} className="w-6 h-6" />
-                  </a>
-                )}
-                {member.facebook && (
-                  <a
-                    href={member.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary"
-                  >
-                    <FontAwesomeIcon icon={faFacebook} className="w-6 h-6" />
-                  </a>
-                )}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-[12px] md:gap-[16px]">
+                  {member.facebook && (
+                    <a
+                      href={member.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                      aria-label="Facebook"
+                    >
+                      <FontAwesomeIcon
+                        icon={faFacebook}
+                        className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                      />
+                    </a>
+                  )}
+                  {member.instagram && (
+                    <a
+                      href={member.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                      aria-label="Instagram"
+                    >
+                      <FontAwesomeIcon
+                        icon={faInstagram}
+                        className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                      />
+                    </a>
+                  )}
+                  {member.twitter && (
+                    <a
+                      href={member.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                      aria-label="Twitter"
+                    >
+                      <FontAwesomeIcon
+                        icon={faTwitter}
+                        className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                      />
+                    </a>
+                  )}
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                      aria-label="LinkedIn"
+                    >
+                      <FontAwesomeIcon
+                        icon={faLinkedin}
+                        className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                      />
+                    </a>
+                  )}
+                  {member.youtube && (
+                    <a
+                      href={member.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#787878] text-white py-[4px] px-[2px] w-[28px] h-[28px] md:w-[32px] md:h-[32px] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
+                      aria-label="YouTube"
+                    >
+                      <FontAwesomeIcon
+                        icon={faYoutube}
+                        className="w-[12px] h-[10px] md:w-[14px] md:h-[12px]"
+                      />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>

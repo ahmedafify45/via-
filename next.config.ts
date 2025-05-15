@@ -1,9 +1,7 @@
 // next.config.js
 
 const config = {
-  output: "export",
-  // i18n config is not supported with static exports
-  // We'll handle internationalization through our own routing
+  // Removed static export configuration to enable dynamic rendering
   images: {
     unoptimized: true,
   },

@@ -12,6 +12,10 @@ import {
   faInstagram,
   faTwitter,
   faYoutube,
+  faLinkedin,
+  faTiktok,
+  faTelegram,
+  faPinterest,
 } from "@fortawesome/free-brands-svg-icons";
 import { useFetch } from "@/hooks/useFetch";
 import { Languages } from "@/constants/enums";
@@ -46,10 +50,14 @@ interface PostsResponse {
 
 interface GeneralSettings {
   social_links: {
-    instagram: string;
-    twitter: string;
-    youtube: string;
-    facebook: string;
+    instagram?: string;
+    twitter?: string;
+    youtube?: string;
+    facebook?: string;
+    linkedin?: string;
+    tiktok?: string;
+    telegram?: string;
+    pinterest?: string;
   };
 }
 
@@ -102,24 +110,44 @@ function BlogItem({
     {
       id: 1,
       icon: <FontAwesomeIcon icon={faFacebook} />,
-      link: generalSettings?.data[0]?.social_links?.facebook || "#",
+      link: generalSettings?.data[0]?.social_links?.facebook,
     },
     {
       id: 2,
       icon: <FontAwesomeIcon icon={faInstagram} />,
-      link: generalSettings?.data[0]?.social_links?.instagram || "#",
+      link: generalSettings?.data[0]?.social_links?.instagram,
     },
     {
       id: 3,
       icon: <FontAwesomeIcon icon={faTwitter} />,
-      link: generalSettings?.data[0]?.social_links?.twitter || "#",
+      link: generalSettings?.data[0]?.social_links?.twitter,
     },
     {
       id: 4,
       icon: <FontAwesomeIcon icon={faYoutube} />,
-      link: generalSettings?.data[0]?.social_links?.youtube || "#",
+      link: generalSettings?.data[0]?.social_links?.youtube,
     },
-  ];
+    {
+      id: 5,
+      icon: <FontAwesomeIcon icon={faLinkedin} />,
+      link: generalSettings?.data[0]?.social_links?.linkedin,
+    },
+    {
+      id: 6,
+      icon: <FontAwesomeIcon icon={faTiktok} />,
+      link: generalSettings?.data[0]?.social_links?.tiktok,
+    },
+    {
+      id: 7,
+      icon: <FontAwesomeIcon icon={faTelegram} />,
+      link: generalSettings?.data[0]?.social_links?.telegram,
+    },
+    {
+      id: 8,
+      icon: <FontAwesomeIcon icon={faPinterest} />,
+      link: generalSettings?.data[0]?.social_links?.pinterest,
+    },
+  ].filter((item) => item.link);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -238,19 +266,20 @@ function BlogItem({
         <h3 className="xl:text-[20px] text-[16px] font-medium text-white border-t border-b border-r border-primary rounded-br-[16px] inline-block px-4 py-2 mb-[24px]">
           {translations.blog.followUs}
         </h3>
-        <div className="flex gap-[16px]">
+        <div className="flex flex-wrap gap-[16px]">
           {followUs.map((follow) => (
             <div
               key={follow.id}
               className="w-[40px] h-[40px] text-[#FCFCFC] bg-[#787878] rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300"
             >
-              <Link
+              <a
                 target="_blank"
-                href={follow.link}
+                href={follow.link || "#"}
+                rel="noopener noreferrer"
                 className="text-[20px] w-[20px]"
               >
                 {follow.icon}
-              </Link>
+              </a>
             </div>
           ))}
         </div>

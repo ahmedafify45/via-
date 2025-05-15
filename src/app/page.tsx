@@ -1,20 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { i18n, LanguageType } from "@/i18n.config";
 
 export default function RootPage() {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    const userLocale = navigator.language.split("-")[0] as LanguageType;
-    const supportedLocale = i18n.locales.includes(userLocale)
-      ? userLocale
+    const browserLang = navigator.language
+      ?.split("-")[0]
+      ?.toLowerCase() as LanguageType;
+    const supportedLocale = i18n.locales.includes(browserLang)
+      ? browserLang
       : i18n.defaultLocale;
 
-    router.replace(`/${supportedLocale}`);
-  }, [router]);
+    if (pathname !== `/${supportedLocale}`) {
+      router.replace(`/${supportedLocale}`);
+    }
+  }, [router, pathname]);
 
-  return null; // This page will redirect immediately
+  return null;
 }

@@ -121,14 +121,14 @@ function CallToAction() {
         <Swiper
           modules={[Autoplay, FreeMode]}
           spaceBetween={2}
-          slidesPerView={3}
+          slidesPerView={1}
           breakpoints={{
             640: {
-              slidesPerView: 5,
+              slidesPerView: 2,
               spaceBetween: 2,
             },
             768: {
-              slidesPerView: 8,
+              slidesPerView: 3,
               spaceBetween: 2,
             },
           }}

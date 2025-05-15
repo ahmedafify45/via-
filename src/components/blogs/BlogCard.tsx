@@ -1,6 +1,8 @@
 "use client";
 import { Languages } from "@/constants/enums";
 import { Blog } from "@/types/Blogs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -8,11 +10,12 @@ import React, { useState } from "react";
 interface BlogCardProps {
   blogs: Blog[];
   locale: string;
+  columns?: 2 | 3;
 }
 
-function BlogCard({ blogs, locale }: BlogCardProps) {
+function BlogCard({ blogs, locale, columns = 2 }: BlogCardProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 6;
+  const blogsPerPage = columns === 2 ? 6 : 9;
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
   const isEnglish = locale === Languages.ENGLISH;
 
@@ -21,11 +24,17 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
   const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
   return (
     <div className="flex flex-col items-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-6 w-full max-w-4xl">
+      <div
+        className={`grid grid-cols-1 sm:grid-cols-2 ${
+          columns === 3 ? "xl:grid-cols-3" : "xl:grid-cols-2"
+        } gap-6 w-full max-w-${columns === 3 ? "6xl" : "4xl"}`}
+      >
         {currentBlogs.map((blog) => (
           <div
             key={blog.id}
-            className="flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full xl:w-[411px] h-[380px] p-[14px]"
+            className={`flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full ${
+              columns === 3 ? "xl:w-[350px]" : "xl:w-[411px]"
+            } h-[380px] p-[14px]`}
           >
             <div className="relative h-[200px] group">
               {isEnglish ? (
@@ -78,9 +87,13 @@ function BlogCard({ blogs, locale }: BlogCardProps) {
               </h3>
               <Link
                 href={`/${locale}/blogs/${blog.slug}`}
-                className="text-white text-[18px] font-bold hover:text-primary transition-all duration-300"
+                className="text-white text-[18px] font-bold hover:text-primary transition-all duration-300 flex items-center gap-4"
               >
-                Read More →
+                {isEnglish ? "Read More" : "اعرض المزيد"}{" "}
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className={!isEnglish ? "rotate-180" : ""}
+                />
               </Link>
             </div>
           </div>

@@ -36,29 +36,6 @@ function BookingForm() {
     "4:00PM - 5:00PM",
   ];
 
-  const bookingForm = [
-    {
-      name: "name",
-      label: t.fields.name.label,
-      placeholder: t.fields.name.placeholder,
-    },
-    {
-      name: "email",
-      label: t.fields.email.label,
-      placeholder: t.fields.email.placeholder,
-    },
-    {
-      name: "phone_number",
-      label: t.fields.phone.label,
-      placeholder: t.fields.phone.placeholder,
-    },
-    {
-      name: "company",
-      label: t.fields.company.label,
-      placeholder: t.fields.company.placeholder,
-    },
-  ];
-
   const [form, setForm] = useState({
     status: "published",
     name: "",
@@ -159,37 +136,95 @@ function BookingForm() {
   return (
     <form
       onSubmit={handelSubmit}
-      className="mt-[30px] bg-[#17181C] py-[20px] md:py-[30px] px-[16px] md:px-[24px] rounded-[4px] max-w-[839px] mx-auto w-full"
+      className="mt-[30px] bg-[#17181C] py-[40px] md:py-[50px] md:px-[50px] rounded-[4px] max-w-[1500px] w-full"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      <h2 className="text-white text-[20px] md:text-[24px] font-bold ">
+      <h2 className="text-white text-[20px] md:text-[24px] font-bold mb-6">
         {t.title}
       </h2>
-      <div className="w-full">
-        <div className="flex flex-col gap-[24px] md:gap-[34px] mt-[20px] md:mt-[25px] w-full">
-          {bookingForm.map((item) => (
-            <div key={item.label} className="w-full">
-              <label
-                htmlFor={item.label}
-                className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block"
-              >
-                {item.label}
-              </label>
-              <Input
-                className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
-                type="text"
-                id={item.label}
-                placeholder={item.placeholder}
-                name={item.name}
-                value={form[item.name as keyof typeof form]}
-                onChange={handelChange}
-                required
-              />
-            </div>
-          ))}
 
-          <div className="w-full">
-            <label className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left side - Form fields */}
+        <div className="space-y-6">
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
+              {t.fields.name.label}
+            </label>
+            <Input
+              className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              type="text"
+              placeholder={t.fields.name.placeholder}
+              name="name"
+              value={form.name}
+              onChange={handelChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
+              {t.fields.email.label}
+            </label>
+            <Input
+              className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              type="email"
+              placeholder={t.fields.email.placeholder}
+              name="email"
+              value={form.email}
+              onChange={handelChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
+              {t.fields.phone.label}
+            </label>
+            <Input
+              className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              type="tel"
+              placeholder={t.fields.phone.placeholder}
+              name="phone_number"
+              value={form.phone_number}
+              onChange={handelChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
+              {t.fields.company.label}
+            </label>
+            <Input
+              className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              type="text"
+              placeholder={t.fields.company.placeholder}
+              name="company"
+              value={form.company}
+              onChange={handelChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
+              {t.message.label}
+            </label>
+            <Textarea
+              className="w-full h-[120px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              placeholder={t.message.placeholder}
+              name="message"
+              value={form.message}
+              onChange={handelChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Right side - Calendar and Time selection */}
+        <div className="space-y-6">
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
               {t.fields.date.label}
             </label>
             <Calendar
@@ -201,8 +236,8 @@ function BookingForm() {
             />
           </div>
 
-          <div className="w-full">
-            <label className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block">
+          <div>
+            <label className="text-[16px] font-medium text-white mb-2 block">
               {t.fields.time.label}
             </label>
             <Select onValueChange={handleTimeSelect} value={form.time_slot}>
@@ -218,23 +253,10 @@ function BookingForm() {
               </SelectContent>
             </Select>
           </div>
-
-          <div className="w-full">
-            <label className="text-[16px] md:text-[20px] font-medium text-white mb-[8px] block">
-              {t.message.label}
-            </label>
-            <Textarea
-              className="w-full h-[120px] md:h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080]"
-              placeholder={t.message.placeholder}
-              name="message"
-              value={form.message}
-              onChange={handelChange}
-              required
-            />
-          </div>
         </div>
       </div>
-      <div className="flex justify-center mt-[24px]">
+
+      <div className="flex justify-center mt-8">
         <Button
           type="submit"
           className="w-[326px] h-[56px] p-[16px] text-[#0C0D0F]"

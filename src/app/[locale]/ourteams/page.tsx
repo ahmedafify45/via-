@@ -1,12 +1,13 @@
 import TeamCard from "@/components/team/TeamCard";
 import { TeamMember } from "@/types/team";
 import { serverFetcher } from "@/lib/serverFetcher";
-import { generateStaticParams } from "@/lib/generateStaticParams";
 import Banner from "@/components/custom/banner";
 import { Metadata } from "next";
 import { Languages } from "@/constants/enums";
 
-export { generateStaticParams };
+// Add dynamic configuration
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface PageSettings {
   title: string;
@@ -96,21 +97,37 @@ export default async function OurTeams({ params }: PageProps) {
   const { locale } = await params;
 
   try {
-    const response = await serverFetcher<ApiResponse>("/items/team_members", {
-      fields: "*.*",
-    });
-
-    if (!response?.data) {
-      throw new Error("No team members data available");
-    }
-
-    const pageSettingsResponse = await serverFetcher<PageSettingsResponse>(
-      "/items/other_pages",
-      {
+    console.log("Fetching team members...");
+    const [teamResponse, pageSettingsResponse] = await Promise.all([
+      serverFetcher<ApiResponse>("/items/team_members", {
+        fields: "*.*",
+        limit: -1, // Get all team members
+      }),
+      serverFetcher<PageSettingsResponse>("/items/other_pages", {
         fields: "*.*",
         "filter[slug]": "team-members",
-      }
-    );
+      }),
+    ]);
+
+    console.log("Team members response:", teamResponse);
+
+    if (!teamResponse?.data || teamResponse.data.length === 0) {
+      console.log("No team members found");
+      return (
+        <main className="my-[150px] xl:mx-[80px] mx-4 text-center">
+          <Banner
+            pageSettings={pageSettingsResponse?.data || []}
+            locale={locale}
+          />
+          <h2 className="text-2xl font-bold text-primary mb-4">
+            No Team Members
+          </h2>
+          <p className="text-white">
+            No team members are available at the moment.
+          </p>
+        </main>
+      );
+    }
 
     return (
       <main className="my-[150px] xl:mx-[80px] mx-4">
@@ -118,7 +135,7 @@ export default async function OurTeams({ params }: PageProps) {
           pageSettings={pageSettingsResponse?.data || []}
           locale={locale}
         />
-        <TeamCard team={response.data} locale={locale} />
+        <TeamCard team={teamResponse.data} locale={locale} />
       </main>
     );
   } catch (error) {

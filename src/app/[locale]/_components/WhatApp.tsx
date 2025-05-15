@@ -37,10 +37,10 @@ const WhatsAppButton = () => {
     >
       <button
         onClick={handleWhatsAppClick}
-        className="bg-black text-primary p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center w-14 h-14"
+        className="bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center w-16 h-16"
         aria-label="تواصل عبر واتساب"
       >
-        <FontAwesomeIcon icon={faWhatsapp} className="size-6" />
+        <FontAwesomeIcon icon={faWhatsapp} className="size-10 text-5xl" />
       </button>
     </motion.div>
   );

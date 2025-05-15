@@ -4,6 +4,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import { toast } from "sonner";
 import en from "@/dictionaries/en.json";
 import ar from "@/dictionaries/ar.json";
 
@@ -49,7 +50,6 @@ function ContactForm() {
     message: "",
   });
 
-  const [status, setStatus] = useState("");
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE as string;
 
   const handelChange = (
@@ -60,7 +60,6 @@ function ContactForm() {
 
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus(t.status.loading);
 
     try {
       const response = await fetch(`${API_BASE_URL}/items/contact_form`, {
@@ -70,7 +69,14 @@ function ContactForm() {
       });
       const data = await response.json();
       if (response.ok) {
-        setStatus(t.status.success);
+        toast.success(t.status.success, {
+          style: {
+            background: "#17181C",
+            color: "#fff",
+            border: "1px solid #2A2B2F",
+          },
+          className: "success-toast",
+        });
         setForm({
           name: "",
           email: "",
@@ -79,12 +85,19 @@ function ContactForm() {
           message: "",
         });
       } else {
-        setStatus(t.status.error);
+        toast.error(t.status.error, {
+          style: {
+            background: "#17181C",
+            color: "#fff",
+            border: "1px solid #2A2B2F",
+          },
+          className: "error-toast",
+        });
       }
       console.log(data);
     } catch (error) {
       console.error(error);
-      setStatus(t.status.error);
+      toast.error(t.status.error);
     }
   };
 
@@ -94,7 +107,6 @@ function ContactForm() {
       className="bg-[#17181C] p-[32px] md:p-[24px] sm:p-[16px] rounded-[2px]"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      {status && <p className="text-green-500">{status}</p>}
       <div>
         <h2 className="text-primary text-[24px] md:text-[20px] sm:text-[18px] font-bold">
           {t.title}

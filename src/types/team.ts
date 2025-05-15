@@ -16,5 +16,22 @@ export interface TeamMember {
   tagline_en: string;
   email: string;
   website: string;
-  social_media: Record<string, string> | null;
+  social_media?: {
+    facebook?: string;
+    twitter?: string;
+    linkedin?: string;
+    instagram?: string;
+    youtube?: string;
+    pinterest?: string;
+    behance?: string;
+    github?: string;
+  };
+  seo_meta?: {
+    title: string;
+    description: string;
+  };
+  seo_meta_en?: {
+    title: string;
+    description: string;
+  };
 }

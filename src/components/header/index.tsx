@@ -110,7 +110,7 @@ function Header() {
             <Menu size={24} />
           </button>
           {/* Desktop Book Now Button */}
-          <Button className="hidden xl:flex w-[133px] h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
+          <Button className="hidden xl:flex w-[160px] h-[48px] rounded-tl-[16px] rounded-br-[16px] bg-transparent border border-primary">
             <Link href={`/${locale}${buttonUrl}`}>{buttonText}</Link>
           </Button>
         </div>
