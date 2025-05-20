@@ -32,8 +32,6 @@ export async function serverFetcher<T>(
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-store", // Disable caching
-    next: { revalidate: 0 }, // Disable revalidation
   });
 
   if (!res.ok) {

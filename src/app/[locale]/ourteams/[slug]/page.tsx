@@ -14,10 +14,6 @@ import { i18n } from "@/i18n.config";
 import Banner from "@/components/custom/banner";
 import { Metadata } from "next";
 
-// Add dynamic configuration
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 interface TeamMember {
   id: number;
   name: string;
@@ -142,6 +138,32 @@ export async function generateMetadata({
   };
 
   return metadata;
+}
+
+export async function generateStaticParams() {
+  try {
+    const response = await serverFetcher<{
+      data: { id: number; name_en: string }[];
+    }>("/items/team_members", {
+      fields: "id,name_en",
+      limit: -1,
+    });
+
+    const slugs = response.data.map((member) => ({
+      id: member.id.toString(),
+      name_en: member.name_en,
+    }));
+
+    return i18n.locales.flatMap((locale) =>
+      slugs.map(({ id }) => ({
+        locale,
+        slug: id,
+      }))
+    );
+  } catch (error) {
+    console.error("Failed to fetch team members for static params:", error);
+    return [];
+  }
 }
 
 export default async function TeamMemberPage({ params }: PageProps) {
@@ -306,6 +328,7 @@ export default async function TeamMemberPage({ params }: PageProps) {
     );
   } catch (error) {
     console.error("Error fetching team member:", error);
+    console.error("Error details:", JSON.stringify(error, null, 2));
     redirect(`/${locale}/ourteams`);
   }
 }

@@ -106,10 +106,10 @@ function Portfolio({ limit }: PortfolioProps = {}) {
 
   console.log(categories, portfolioData);
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 mb-[24px]">
+    <div className="w-full">
       {categories.length > 1 && (
-        <div className="flex items-center justify-center gap-4 mt-[40px] overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          <div className="flex items-center gap-4 bg-[#FFFFFF1A] px-6 py-3 rounded-tl-[24px] rounded-br-[24px] backdrop-blur-sm">
+        <div className="flex items-center justify-center gap-4 mt-12 mb-8">
+          <div className="flex items-center gap-4 bg-[#FFFFFF1A] px-6 py-3 rounded-tl-[24px] rounded-br-[24px] backdrop-blur-sm overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {categories.map((category) => (
               <Button
                 key={category}
@@ -118,7 +118,7 @@ function Portfolio({ limit }: PortfolioProps = {}) {
                   selectedCategory === category
                     ? "bg-primary text-black shadow-lg"
                     : "bg-secondary hover:bg-primary hover:text-black"
-                } transition-all duration-300 snap-center h-[40px] px-6 rounded-full text-sm font-medium`}
+                } transition-all duration-300 snap-center h-[40px] px-6 rounded-full text-sm font-medium whitespace-nowrap`}
               >
                 {category}
               </Button>
@@ -126,7 +126,7 @@ function Portfolio({ limit }: PortfolioProps = {}) {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[24px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence mode="wait">
           {limitedPortfolio.map((item, index) => (
             <motion.div
@@ -136,9 +136,9 @@ function Portfolio({ limit }: PortfolioProps = {}) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
               onClick={() => handlePortfolioClick(item.slug)}
-              className="group relative overflow-hidden rounded-[20px] bg-white shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+              className="group relative overflow-hidden rounded-[20px] bg-white shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer aspect-[4/3]"
             >
-              <div className="relative aspect-[4/3] w-full">
+              <div className="relative w-full h-full">
                 <Image
                   src={
                     item.thumbnail?.data?.full_url || "/images/placeholder.png"
@@ -148,12 +148,10 @@ function Portfolio({ limit }: PortfolioProps = {}) {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="flex h-full items-center justify-center">
-                  <h3 className="text-xl font-semibold text-white">
-                    {locale === Languages.ARABIC ? item.name : item.name_en}
-                  </h3>
-                </div>
+              <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center p-6">
+                <h3 className="text-xl font-semibold text-white text-center">
+                  {locale === Languages.ARABIC ? item.name : item.name_en}
+                </h3>
               </div>
             </motion.div>
           ))}

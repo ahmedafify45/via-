@@ -232,7 +232,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faYoutube}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[40px] h-[40px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -244,7 +244,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faTwitter}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -256,7 +256,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faInstagram}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -268,7 +268,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faFacebook}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -280,7 +280,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faLinkedin}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -292,7 +292,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faTiktok}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -304,7 +304,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faTelegram}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}
@@ -316,7 +316,7 @@ function Footer() {
               >
                 <FontAwesomeIcon
                   icon={faPinterest}
-                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300"
+                  className="w-[32px] h-[24px] hover:text-primary transition-all duration-300 text-[20px]"
                 />
               </Link>
             )}

@@ -23,11 +23,10 @@ interface ApiResponse {
       title: string;
       description: string;
       keywords: string;
-    };
-    seo_meta_en?: {
-      title: string;
-      description: string;
-      keywords: string;
+      title_en: string;
+      description_en: string;
+      keywords_en: string;
+      meta_image: string;
     };
     banner?: {
       data?: {
@@ -46,52 +45,73 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { locale } = await params;
-  const pageSettings = await serverFetcher<ApiResponse>(
-    "/items/general_settings",
-    {
-      fields: "*.*",
+  try {
+    const { locale } = await params;
+    const pageSettings = await serverFetcher<ApiResponse>(
+      "/items/general_settings",
+      {
+        fields: "*.*",
+      }
+    );
+
+    // Validate the response structure
+    if (!pageSettings?.data?.[0]) {
+      console.error("Invalid page settings response:", pageSettings);
+      return {
+        title: "VIA",
+        description: "",
+      };
     }
-  );
 
-  const seoData =
-    locale === Languages.ARABIC
-      ? pageSettings.data[0]?.seo_meta
-      : pageSettings.data[0]?.seo_meta_en;
+    const seoData = pageSettings.data[0]?.seo_meta;
 
-  const title =
-    seoData?.title ||
-    (locale === Languages.ARABIC
-      ? pageSettings.data[0]?.title
-      : pageSettings.data[0]?.title_en);
+    // Ensure we have valid strings for all fields
+    const title =
+      locale === Languages.ARABIC
+        ? String(seoData?.title || pageSettings.data[0]?.title || "VIA")
+        : String(seoData?.title_en || pageSettings.data[0]?.title_en || "VIA");
 
-  const description = seoData?.description;
-  const keywords = seoData?.keywords;
+    const description =
+      locale === Languages.ARABIC
+        ? String(seoData?.description || "")
+        : String(seoData?.description_en || "");
 
-  return {
-    title: title,
-    description: description,
-    keywords: keywords,
-    openGraph: {
-      title: title,
-      description: description,
-      url: `/`,
-      siteName: title,
-      images: [
-        {
-          url: pageSettings.data[0]?.banner?.data?.full_url || "",
-        },
-      ],
-      locale: locale === "ar" ? "ar_SA" : "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: title,
-      description: description,
-      images: [pageSettings.data[0]?.banner?.data?.full_url || ""],
-    },
-  };
+    const keywords =
+      locale === Languages.ARABIC
+        ? String(seoData?.keywords || "")
+        : String(seoData?.keywords_en || "");
+
+    const imageUrl = String(
+      seoData?.meta_image || pageSettings.data[0]?.banner?.data?.full_url || ""
+    );
+
+    return {
+      title,
+      description,
+      keywords,
+      openGraph: {
+        title,
+        description,
+        url: "/",
+        siteName: title,
+        images: imageUrl ? [{ url: imageUrl }] : [],
+        locale: locale === "ar" ? "ar_SA" : "en_US",
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: imageUrl ? [imageUrl] : [],
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "VIA",
+      description: "",
+    };
+  }
 }
 
 export default async function Home({ params }: PageProps) {
@@ -112,7 +132,9 @@ export default async function Home({ params }: PageProps) {
       <CallToAction />
       <OurService />
       <TeammemberSection locale={resolvedParams.locale} />
+
       <BlogHome locale={resolvedParams.locale} />
+
       <div className="mt-[50px] xl:flex justify-center items-center">
         <OurClients />
       </div>

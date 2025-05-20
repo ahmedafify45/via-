@@ -1,7 +1,7 @@
 // next.config.js
 
 const config = {
-  // Removed static export configuration to enable dynamic rendering
+  output: "export",
   images: {
     unoptimized: true,
   },

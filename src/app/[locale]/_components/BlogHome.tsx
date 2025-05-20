@@ -49,39 +49,41 @@ async function BlogHome({ locale }: BlogHomeProps) {
   const limitedBlogs = blogPosts.data.slice(0, blogArea.how_many);
 
   return (
-    <section className="mt-[100px] mx-4 lg:mx-[80px]">
-      <div className="flex flex-col justify-center">
-        <div className="flex flex-col gap-[20px] items-center justify-center">
-          <h5 className="text-primary text-[32px] md:text-[40px] lg:text-[48px] font-bold text-center">
+    <section className=" flex items-center justify-center py-30 px-2">
+      <div className="container px-4">
+        <div className="flex flex-col items-center justify-center text-center mb-12">
+          <h5 className="text-primary text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             {title}
           </h5>
-          <p className="text-white text-center max-w-[600px] mt-2 mb-5 text-sm md:text-base">
+          <p className="text-white max-w-2xl text-sm md:text-base">
             {subtitle}
           </p>
         </div>
-        <BlogCard blogs={limitedBlogs} locale={locale} columns={3} />
-      </div>
-      <div className="flex justify-center mb-[40px] md:mb-[60px] lg:mb-[80px] mt-[20px]">
-        <Button className="w-[140px] md:w-[160px] h-[48px] md:h-[56px] text-sm md:text-base text-black">
-          <Link
-            href={`/${locale}${
-              locale === Languages.ENGLISH
-                ? blogArea.button_url_en
-                : blogArea.button_url
-            }`}
-            className="flex items-center justify-center gap-2"
-          >
-            {locale === Languages.ENGLISH
-              ? blogArea.button_text_en
-              : blogArea.button_text}
-            <span className="bg-white text-black w-[40px] md:w-[48px] h-[40px] md:h-[48px] flex items-center justify-center rounded-tl-[12px] md:rounded-tl-[16px] rounded-br-[12px] md:rounded-br-[16px]">
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                className={locale === Languages.ARABIC ? "rotate-180" : ""}
-              />
-            </span>
-          </Link>
-        </Button>
+        <div className="w-full">
+          <BlogCard blogs={limitedBlogs} locale={locale} columns={3} />
+        </div>
+        <div className="flex justify-center mt-12">
+          <Button className="w-[140px] md:w-[160px] h-[48px] md:h-[56px] text-sm md:text-base text-black">
+            <Link
+              href={`/${locale}${
+                locale === Languages.ENGLISH
+                  ? blogArea.button_url_en
+                  : blogArea.button_url
+              }`}
+              className="flex items-center justify-center gap-2"
+            >
+              {locale === Languages.ENGLISH
+                ? blogArea.button_text_en
+                : blogArea.button_text}
+              <span className="bg-white text-black w-[40px] md:w-[48px] h-[40px] md:h-[48px] flex items-center justify-center rounded-tl-[12px] md:rounded-tl-[16px] rounded-br-[12px] md:rounded-br-[16px]">
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className={locale === Languages.ARABIC ? "rotate-180" : ""}
+                />
+              </span>
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

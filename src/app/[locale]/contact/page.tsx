@@ -75,7 +75,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 function ContactPage() {
   return (
-    <main>
+    <main className="px-[80px]">
       <Contact />
     </main>
   );

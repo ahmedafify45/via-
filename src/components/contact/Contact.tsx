@@ -86,35 +86,42 @@ function Contact() {
   )}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
 
   return (
-    <section className="my-[220px] mx-2 md:mx-[80px] sm:mx-[16px]">
-      <Banner
-        pageSettings={pageSettings?.data || []}
-        locale={locale.locale as string}
-      />
-      <div className="flex flex-col lg:flex-row justify-between  gap-[20px]">
-        <div className="w-full md:w-auto">
-          <ContactForm />
+    <section className=" py-20 my-[220px]">
+      <div className=" px-4">
+        <Banner
+          pageSettings={pageSettings?.data || []}
+          locale={locale.locale as string}
+        />
+
+        <div className="flex flex-col lg:flex-row gap-8 mt-12">
+          <div className="w-full">
+            <ContactForm />
+          </div>
+          <div className="w-full h-[400px] lg:h-[500px] relative">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full h-full rounded-lg overflow-hidden border hover:shadow-lg transition-all duration-300"
+            >
+              <iframe
+                src={embedUrl}
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              ></iframe>
+            </a>
+          </div>
         </div>
-        <div className="w-full md:w-[629px] h-[629px] relative">
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full h-full rounded-lg overflow-hidden border hover:shadow-lg transition"
-          >
-            <iframe
-              src={embedUrl}
-              className="w-full h-full border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            ></iframe>
-          </a>
+
+        <div className="mt-16">
+          <InformationContact />
         </div>
-      </div>
-      <InformationContact />
-      <div className="lg:flex justify-center items-center mt-[50px] md:mt-[100px]">
-        <OurClients />
+
+        <div className="mt-16">
+          <OurClients />
+        </div>
       </div>
     </section>
   );

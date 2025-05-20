@@ -83,5 +83,4 @@ async function BlogsPage(props: PageProps) {
     </main>
   );
 }
-
 export default BlogsPage;

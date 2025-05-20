@@ -109,8 +109,8 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
     <main className="mx-4 md:mx-[40px] lg:mx-[80px] my-[100px] md:my-[150px] lg:my-[220px]">
       <Banner pageSettings={pageSettings?.data || []} locale={locale} />
       <div>
-        <div className="flex justify-between gap-[20px] xl:flex-row flex-col">
-          <div className="flex flex-col gap-[20px]">
+        <div className="flex justify-between gap-10 xl:flex-row flex-col">
+          <div className="w-full flex flex-col gap-[20px]">
             <div className="w-full">
               {blog.thumbnail && (
                 <Image
@@ -122,7 +122,7 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
                       : blog.thumbnail?.data?.full_url
                   }
                   alt={isEnglish ? blog.title_en : blog.title}
-                  className="rounded-[4px] md:max-w-[847px] h-auto object-cover"
+                  className="rounded-[4px] w-full h-auto object-cover"
                 />
               )}
             </div>
@@ -131,7 +131,7 @@ function BlogDetails({ slug, locale }: { slug: string; locale: string }) {
               {new Date(blog.created_on).toLocaleDateString()}
             </h1>
             <div
-              className="text-white max-w-[847px] text-[14px] md:text-[16px] leading-relaxed"
+              className="text-white w-full text-[14px] md:text-[16px] leading-relaxed"
               dangerouslySetInnerHTML={{
                 __html: isEnglish ? blog.description_en : blog.description,
               }}

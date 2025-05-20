@@ -23,18 +23,16 @@ function BlogCard({ blogs, locale, columns = 2 }: BlogCardProps) {
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full">
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 ${
-          columns === 3 ? "xl:grid-cols-3" : "xl:grid-cols-2"
-        } gap-6 w-full max-w-${columns === 3 ? "6xl" : "4xl"}`}
+          columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
+        } gap-6 w-full`}
       >
         {currentBlogs.map((blog) => (
           <div
             key={blog.id}
-            className={`flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full ${
-              columns === 3 ? "xl:w-[350px]" : "xl:w-[411px]"
-            } h-[380px] p-[14px]`}
+            className="flex flex-col bg-[#17181C] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-[380px] p-4"
           >
             <div className="relative h-[200px] group">
               {isEnglish ? (
@@ -59,14 +57,8 @@ function BlogCard({ blogs, locale, columns = 2 }: BlogCardProps) {
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-[8px]"
                 />
-                // <Image
-                //   src="https://placehold.co/600x400.png"
-                //   alt="placeholder"
-                //   fill
-                //   className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-[8px]"
-                // />
               )}
-              <div className="absolute bottom-[-20] right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full xl:w-[338px] h-[42px]">
+              <div className="absolute bottom-0 right-0 bg-primary px-4 py-2 rounded-tl-[16px] rounded-br-[16px] w-full">
                 <p className="text-[20px] font-medium flex items-center justify-between">
                   {blog.category
                     ? isEnglish
@@ -81,7 +73,7 @@ function BlogCard({ blogs, locale, columns = 2 }: BlogCardProps) {
                 </p>
               </div>
             </div>
-            <div className="p-6 flex flex-col items-center justify-center gap-[16px] mt-[20px]">
+            <div className="p-6 flex flex-col items-center justify-center gap-4 mt-4">
               <h3 className="text-xl font-semibold text-white mb-4 line-clamp-2 text-center">
                 {isEnglish ? blog.title_en : blog.title}
               </h3>

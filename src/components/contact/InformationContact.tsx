@@ -31,6 +31,7 @@ interface GeneralSettings {
     phone_number?: string;
     whatsapp_number?: string;
     address?: string;
+    address_en?: string;
     instagram?: string;
     twitter?: string;
     youtube?: string;
@@ -92,7 +93,7 @@ function InformationContact() {
       id: 4,
       icon: <FontAwesomeIcon icon={faLocation} />,
       title: t.ourAddress,
-      description: data.data.address || t.addressNotAvailable,
+      description: locale === "ar" ? data.data.address : data.data.address_en,
       link: "#",
       isAvailable: !!data.data.address,
     },

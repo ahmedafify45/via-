@@ -47,12 +47,16 @@ function OurClients() {
   }
 
   return (
-    <section className="mt-[80px]">
-      <div className="xl:flex flex-col items-center">
-        <p className="text-primary xl:text-[48px] text-[24px] font-medium text-center">
-          {title}
-        </p>
-        <Clients />
+    <section className="flex items-center justify-center py-20">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary text-center mb-12">
+            {title}
+          </h2>
+          <div className="w-full">
+            <Clients />
+          </div>
+        </div>
       </div>
     </section>
   );

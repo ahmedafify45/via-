@@ -48,8 +48,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     "filter[slug]": "portfolio",
   });
 
-  console.log("pageSettings", pageSettings);
-
   const seoData =
     locale === Languages.ARABIC
       ? pageSettings.data[0]?.seo_meta
@@ -102,22 +100,26 @@ async function Portfoliopage(props: PageProps) {
     }
 
     return (
-      <main className="my-[220px] mx-2 lg:mx-[80px]">
-        <Banner pageSettings={pageSettings.data} locale={locale} />
-        <Portfolio />
+      <main className="my-[220px] py-20 mx-2 xl:mx-[80px]">
+        <div className=" px-2">
+          <Banner pageSettings={pageSettings.data} locale={locale} />
+          <Portfolio />
+        </div>
       </main>
     );
   } catch (error) {
     console.error("Error loading portfolio page:", error);
     return (
-      <main className="my-[220px] mx-2 lg:mx-[80px] text-center">
-        <h2 className="text-2xl font-bold text-primary mb-4">Error</h2>
-        <p className="text-white">
-          Failed to load portfolio page. Please try again later.
-        </p>
-        <p className="text-sm text-gray-400 mt-2">
-          Error: {error instanceof Error ? error.message : "Unknown error"}
-        </p>
+      <main className="flex items-center justify-center py-20 mx-2 xl:mx-[80px]">
+        <div className="container px-4 text-center">
+          <h2 className="text-2xl font-bold text-primary mb-4">Error</h2>
+          <p className="text-white">
+            Failed to load portfolio page. Please try again later.
+          </p>
+          <p className="text-sm text-gray-400 mt-2">
+            Error: {error instanceof Error ? error.message : "Unknown error"}
+          </p>
+        </div>
       </main>
     );
   }

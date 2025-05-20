@@ -4,10 +4,9 @@ import { serverFetcher } from "@/lib/serverFetcher";
 import Banner from "@/components/custom/banner";
 import { Metadata } from "next";
 import { Languages } from "@/constants/enums";
+import { i18n } from "@/i18n.config";
 
 // Add dynamic configuration
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 interface PageSettings {
   title: string;
@@ -91,6 +90,10 @@ export async function generateMetadata({
       images: [pageSettings.data[0]?.banner?.data?.full_url || ""],
     },
   };
+}
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ locale }));
 }
 
 export default async function OurTeams({ params }: PageProps) {

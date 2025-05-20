@@ -78,8 +78,8 @@ function Clients() {
   }
 
   return (
-    <section className="py-8 md:py-16">
-      <div className="max-w-7xl px-4 md:px-6 ">
+    <section className="w-full">
+      <div className="w-full">
         <Swiper
           onBeforeInit={(swiper) => {
             swiperRef.current = swiper;
@@ -96,7 +96,7 @@ function Clients() {
                   ref={(el) => {
                     if (el) imageRefs.current[index] = el;
                   }}
-                  className="w-20 h-20 md:w-32 md:h-32 rounded-full m-auto overflow-hidden"
+                  className="w-20 h-20 md:w-32 md:h-32 rounded-full m-auto overflow-hidden relative z-10"
                 >
                   <Image
                     src={testimonial.avatar?.data?.full_url}
@@ -110,25 +110,21 @@ function Clients() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg text-center w-[90%] md:w-[1280px] max-h-[240px] md:max-h-[368px] flex absolute top-[45px] md:top-[60px] left-1/2 -translate-x-1/2 z-[-1]">
-                  <div className="rounded-lg flex gap-4 justify-center"></div>
+                <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg text-center w-[90%] md:w-[80%] lg:w-[90%] max-h-[240px] md:max-h-[368px] flex absolute top-[45px] md:top-[60px] left-1/2 -translate-x-1/2 z-0">
                   <div className="flex-1 flex flex-col items-center">
-                    <div className="relative -mt-10 md:-mt-16 mb-3 md:mb-8">
-                      <div className="absolute left-1/2 -translate-x-1/2 -top-4"></div>
-                    </div>
-                    <div className="pt-8 md:pt-16 px-2 md:px-8">
-                      <h3 className="text-base md:text-xl font-semibold mb-2 mt-[15px] md:mt-[27px]">
+                    <div className="pt-8 md:pt-16 px-4 md:px-8">
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 mt-[15px] md:mt-[27px]">
                         {locale === Languages.ARABIC
                           ? testimonial.name
                           : testimonial.name_en}
                       </h3>
-                      <p className="text-gray-600 mb-2 md:mb-4 text-sm md:text-base">
+                      <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">
                         {testimonial.company}
                       </p>
-                      <div className="flex justify-center mb-2 md:mb-6">
+                      <div className="flex justify-center mb-3 md:mb-6">
                         <StarRating rating={testimonial.rating} />
                       </div>
-                      <p className="text-gray-700 text-sm md:text-base leading-relaxed md:leading-loose max-w-2xl mx-auto line-clamp-3 md:line-clamp-none overflow-hidden">
+                      <p className="text-gray-700 text-sm md:text-base leading-relaxed md:leading-loose max-w-2xl mx-auto line-clamp-3 md:line-clamp-none">
                         {locale === Languages.ARABIC
                           ? testimonial.comment
                           : testimonial.comment_en}
@@ -140,25 +136,25 @@ function Clients() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="flex justify-center gap-4 mt-3">
+        <div className="flex justify-center gap-4 mt-8">
           <Button
-            className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-[32px] h-[32px] md:w-[36px] md:h-[36px]"
+            className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-10 h-10 md:w-12 md:h-12 transition-all duration-300"
             onClick={() => swiperRef.current?.slidePrev()}
           >
             <FontAwesomeIcon
               icon={faArrowLeft}
-              className={`w-[18px] md:w-[22px] ${
+              className={`w-5 md:w-6 ${
                 locale === Languages.ARABIC ? "rotate-180" : ""
               }`}
             />
           </Button>
           <Button
-            className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-[32px] h-[32px] md:w-[36px] md:h-[36px]"
+            className="bg-[#D6D6D6] text-black rounded-full hover:bg-primary w-10 h-10 md:w-12 md:h-12 transition-all duration-300"
             onClick={() => swiperRef.current?.slideNext()}
           >
             <FontAwesomeIcon
               icon={faArrowRight}
-              className={`w-[18px] md:w-[22px] ${
+              className={`w-5 md:w-6 ${
                 locale === Languages.ARABIC ? "rotate-180" : ""
               }`}
             />

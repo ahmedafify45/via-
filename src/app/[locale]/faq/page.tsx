@@ -20,5 +20,4 @@ async function Page(props: PageProps) {
     </main>
   );
 }
-
 export default Page;

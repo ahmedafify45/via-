@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
       icons: {
-        icon: faviconUrl || "/favicon.ico", // Fallback to default favicon if none set
+        icon: faviconUrl, // Fallback to default favicon if none set
       },
     };
   } catch (error) {

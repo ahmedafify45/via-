@@ -10,13 +10,6 @@ import ar from "@/dictionaries/ar.json";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const dictionaries = { en, ar };
 
@@ -25,16 +18,6 @@ function BookingForm() {
   const locale = (params?.locale as string) || "en";
   const safeLocale: "en" | "ar" = locale === "ar" ? "ar" : "en";
   const t = dictionaries[safeLocale].booking.form;
-
-  const timeSlots = [
-    "9:00AM - 10:00AM",
-    "10:00AM - 11:00AM",
-    "11:00AM - 12:00PM",
-    "12:00PM - 1:00PM",
-    "2:00PM - 3:00PM",
-    "3:00PM - 4:00PM",
-    "4:00PM - 5:00PM",
-  ];
 
   const [form, setForm] = useState({
     status: "published",
@@ -63,15 +46,11 @@ function BookingForm() {
     }
   };
 
-  const handleTimeSelect = (value: string) => {
-    setForm({ ...form, time_slot: value });
-  };
-
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!form.date_slot || !form.time_slot) {
-      toast.error("Please select a date and time slot", {
+      toast.error("Please select a date and enter your preferred time", {
         style: {
           background: "#17181C",
           color: "#fff",
@@ -136,7 +115,7 @@ function BookingForm() {
   return (
     <form
       onSubmit={handelSubmit}
-      className="mt-[30px] bg-[#17181C] py-[40px] md:py-[50px] md:px-[50px] rounded-[4px] max-w-[1500px] w-full"
+      className="mt-[30px] bg-[#17181C] py-[40px] md:py-[50px] md:px-[50px] rounded-[4px]  w-full"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
       <h2 className="text-white text-[20px] md:text-[24px] font-bold mb-6">
@@ -240,18 +219,14 @@ function BookingForm() {
             <label className="text-[16px] font-medium text-white mb-2 block">
               {t.fields.time.label}
             </label>
-            <Select onValueChange={handleTimeSelect} value={form.time_slot}>
-              <SelectTrigger className="w-full h-[44px] border-secondary bg-[#161718] text-white">
-                <SelectValue placeholder="Select a time slot" />
-              </SelectTrigger>
-              <SelectContent className="bg-[#161718] text-white">
-                {timeSlots.map((slot) => (
-                  <SelectItem key={slot} value={slot} className="text-white">
-                    {slot}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Input
+              className="w-full h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              type="time"
+              name="time_slot"
+              value={form.time_slot}
+              onChange={handelChange}
+              required
+            />
           </div>
         </div>
       </div>

@@ -55,7 +55,7 @@ async function OurPortfolio({ params }: OurPortfolioProps) {
   const portfolio = portfolioData.data[0];
 
   return (
-    <section className="">
+    <section className="px-2 xl:px-[80px]">
       <div>
         <div className="flex flex-col items-center justify-center pt-[40px] md:pt-[60px] lg:pt-[80px]">
           <h2 className="text-primary text-[32px] md:text-[40px] lg:text-[48px] font-bold text-center">

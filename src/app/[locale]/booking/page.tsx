@@ -11,5 +11,4 @@ function Bookingpage() {
     </main>
   );
 }
-
 export default Bookingpage;

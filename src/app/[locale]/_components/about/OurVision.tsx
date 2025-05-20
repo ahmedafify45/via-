@@ -37,9 +37,9 @@ function OurVision() {
 
   return (
     <div className="py-[80px]">
-      <div className="flex flex-col xl:flex-row items-center justify-between mx-6 xl:mx-[80px] gap-10">
+      <div className="flex flex-col xl:flex-row items-center justify-between mx-6 xl:mx-[80px] gap-15">
         <motion.div
-          className="max-w-[676px] flex-1 text-center xl:text-start order-2 xl:order-1"
+          className="max-w-full flex-1 text-center xl:text-start order-2 xl:order-1 px-4"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -49,7 +49,7 @@ function OurVision() {
             {title}
           </h3>
           <div
-            className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6 "
+            className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] xl:max-w-full mt-4 sm:mt-6 "
             dangerouslySetInnerHTML={{ __html: visionText }}
           />
         </motion.div>

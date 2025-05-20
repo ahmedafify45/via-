@@ -54,22 +54,28 @@ function TeammemberSection({ locale }: { locale: string }) {
     locale === "en" ? settings?.button_url_en : settings?.button_url;
 
   return (
-    <section className="xl:mx-[80px] mx-4 mt-[100px] flex items-center justify-center xl:block">
-      <div>
-        <div className="text-center">
-          <p className="xl:text-[48px] font-bold text-primary text-[20px]">
+    <section className="min-h-screen flex items-center justify-center py-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
             {title}
+          </h2>
+          <p className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto">
+            {subTitle}
           </p>
-          <p className="text-white text-[20px] font-medium mb-4">{subTitle}</p>
         </div>
+
         {response?.data && (
-          <TeamCard team={response.data.slice(0, howMany)} locale={locale} />
+          <div className="w-full">
+            <TeamCard team={response.data.slice(0, howMany)} locale={locale} />
+          </div>
         )}
+
         {buttonText && buttonUrl && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-12">
             <Link
               href={buttonUrl}
-              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
+              className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors text-lg font-medium"
             >
               {buttonText}
             </Link>

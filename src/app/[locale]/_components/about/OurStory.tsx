@@ -31,9 +31,9 @@ function OurStory() {
 
   return (
     <div className="w-full pb-[80px] overflow-hidden">
-      <div className="flex flex-col  xl:flex-row items-center justify-between mx-6 xl:mx-[80px] gap-10">
+      <div className="flex flex-col xl:flex-row items-center justify-between mx-6 xl:mx-[80px] gap-10">
         <motion.div
-          className="max-w-[676px] flex-1 text-center xl:text-start order-2 xl:order-1"
+          className="max-w-full flex-1 text-center xl:text-start order-2 xl:order-1"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}

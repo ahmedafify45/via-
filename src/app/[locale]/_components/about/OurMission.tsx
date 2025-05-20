@@ -73,11 +73,13 @@ function OurMission() {
             alt={title}
             width={200}
             height={320}
-            className="w-[150px] sm:w-[180px] xl:w-[200px] h-auto mx-auto md:mx-0 relative z-10"
+            className="w-[150px] sm:w-[180px] xl:w-full h-auto mx-auto md:mx-0 relative z-10"
           />
         </motion.div>
         <motion.div
-          className="text-center xl:text-start"
+          className={`text-center xl:text-start ${
+            locale === Languages.ENGLISH ? "ml-20" : "mr-10"
+          }`}
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -88,11 +90,11 @@ function OurMission() {
             duration: 0.8,
           }}
         >
-          <h2 className="text-[36px] xl:text-[48px] font-bold text-primary ">
+          <h2 className="text-[36px] xl:text-[48px] font-bold text-primary">
             {title}
           </h2>
           <div
-            className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF] max-w-[567px] mt-4 sm:mt-6"
+            className="text-[14px] sm:text-[20px] xl:text-[24px] font-medium text-[#FFFFFF]  mt-4 sm:mt-6"
             dangerouslySetInnerHTML={{ __html: missionText }}
           />
         </motion.div>

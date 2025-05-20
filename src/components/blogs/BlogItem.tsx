@@ -179,7 +179,7 @@ function BlogItem({
   };
 
   return (
-    <div className="xl:w-[313px] w-full">
+    <div className="xl:w-[500px] w-full">
       <form
         onSubmit={handleSearch}
         className="flex items-center bg-[#17181C] rounded-lg p-[16px] w-full h-[104px] border border-[#25231B]"

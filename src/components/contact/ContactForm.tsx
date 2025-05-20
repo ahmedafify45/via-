@@ -104,25 +104,24 @@ function ContactForm() {
   return (
     <form
       onSubmit={handelSubmit}
-      className="bg-[#17181C] p-[32px] md:p-[24px] sm:p-[16px] rounded-[2px]"
+      className="bg-[#17181C] p-6 md:p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      <div>
-        <h2 className="text-primary text-[24px] md:text-[20px] sm:text-[18px] font-bold">
+      <div className="mb-8">
+        <h2 className="text-primary text-2xl md:text-3xl font-bold mb-3">
           {t.title}
         </h2>
-        <p className="text-[14px] font-medium text-white mb-[34px] mt-[8px]">
-          {t.description}
-        </p>
+        <p className="text-white text-base md:text-lg">{t.description}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[27px] md:gap-[20px] sm:gap-[16px]">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {bookingForm.map((item) => (
-          <div key={item.id}>
-            <label className="text-[16px] md:text-[14px] font-medium text-white mb-[8px] block">
+          <div key={item.id} className="w-full">
+            <label className="text-white text-base font-medium mb-2 block">
               {item.label}
             </label>
             <Input
-              className="w-full md:w-[267px] h-[44px] border-secondary bg-[#161718] placeholder:text-[#808080] text-white"
+              className="w-full h-12 border-secondary bg-[#161718] placeholder:text-[#808080] text-white focus:ring-2 focus:ring-primary transition-all duration-300"
               type="text"
               placeholder={item.placeholder}
               name={item.name}
@@ -132,22 +131,22 @@ function ContactForm() {
           </div>
         ))}
       </div>
-      <div className="mt-[34px] md:mt-[24px] sm:mt-[20px]">
-        <label className="text-[16px] md:text-[14px] font-medium text-white mb-[8px] block">
+
+      <div className="mt-8">
+        <label className="text-white text-base font-medium mb-2 block">
           {t.message.label}
         </label>
-        <div>
-          <Textarea
-            className="w-full md:w-[561px] h-[104px] border-secondary bg-[#161718] placeholder:text-[#808080] resize-none overflow-y-auto text-white whitespace-pre-wrap"
-            placeholder={t.message.placeholder}
-            name="message"
-            value={form.message}
-            onChange={handelChange}
-            required
-          />
-        </div>
+        <Textarea
+          className="w-full h-32 border-secondary bg-[#161718] placeholder:text-[#808080] resize-none text-white focus:ring-2 focus:ring-primary transition-all duration-300"
+          placeholder={t.message.placeholder}
+          name="message"
+          value={form.message}
+          onChange={handelChange}
+          required
+        />
       </div>
-      <Button className="mt-[34px] md:mt-[24px] sm:mt-[20px] h-[48px] w-full md:w-[269px]">
+
+      <Button className="mt-8 w-full md:w-auto px-8 h-12 text-black hover:bg-primary/90 transition-all duration-300">
         {t.submit}
       </Button>
     </form>

@@ -77,7 +77,7 @@ function ServiceDetails() {
     <main className="py-[220px]">
       <div className="mx-4 xl:mx-[80px]">
         <Banner pageSettings={pageSettings?.data || []} locale={locale} />
-        <div className="relative w-full max-w-[1280px] aspect-[1280/472] mx-auto">
+        <div className="relative w-full  aspect-[1280/472] mx-auto">
           <Image
             src={service.photo?.data?.full_url}
             alt={displayName}
@@ -86,7 +86,7 @@ function ServiceDetails() {
           />
         </div>
         <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mt-8">
-          <div className="w-full lg:max-w-[853px]">
+          <div className="w-full">
             <h1 className="text-[32px] xl:text-[48px] font-bold text-primary">
               {displayName}
             </h1>
@@ -99,13 +99,15 @@ function ServiceDetails() {
             />
           </div>
           <div className="text-white bg-[#FFFFFF0D] p-4 md:p-6 rounded-lg w-full lg:w-[413px] mt-4 lg:mt-[32px]">
-            <p className="text-[20px] xl:text-[24px] mb-4">Our Services</p>
+            <p className="text-[20px] xl:text-[30px] mb-4 font-bold">
+              {params?.locale === Languages.ARABIC ? "خدماتنا" : "Our Services"}
+            </p>
             <div className="space-y-3">
               {services.map((s) => (
                 <Link
                   href={`/${locale}/services/${s.slug}`}
                   key={s.id}
-                  className={`block text-[16px] xl:text-[20px] hover:text-primary transition-colors ${
+                  className={`block text-[16px] hover:text-primary transition-colors ${
                     s.slug === params?.slug
                       ? "text-primary font-medium"
                       : "text-white"

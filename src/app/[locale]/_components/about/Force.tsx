@@ -93,7 +93,7 @@ function Force({ locale }: ForceProps) {
           {pageTitle}
         </h4>
         {pageSettingsResponse?.data?.[0] && (
-          <p className="text-white text-[20px] font-medium mt-4 max-w-[800px]">
+          <p className="text-white text-[20px] font-medium my-4 max-w-[800px]">
             {isEnglish
               ? pageSettingsResponse.data[0].seo_meta_en?.description
               : pageSettingsResponse.data[0].seo_meta?.description}

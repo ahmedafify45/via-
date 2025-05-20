@@ -104,7 +104,7 @@ function WhatChoose() {
               spaceBetween: 4,
             },
 
-            1521: {
+            1300: {
               slidesPerView: 3,
               spaceBetween: 24,
             },
@@ -113,7 +113,7 @@ function WhatChoose() {
         >
           {data.data.map((item) => (
             <SwiperSlide key={item.id}>
-              <div className="bg-white rounded-lg p-3 md:p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 h-[180px] xl:h-[193px] w-full  xl:w-[389px]">
+              <div className="bg-white rounded-lg p-3 md:p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 h-[180px] xl:h-[193px] w-full">
                 <div className="flex justify-center mb-2 w-[32px] h-[32px] md:w-[36px] md:h-[36px] lg:w-[40px] lg:h-[40px] text-primary text-[32px] md:text-[36px] lg:text-[40px]">
                   <FontAwesomeIcon icon={getIconName(item.icon) as any} />
                 </div>

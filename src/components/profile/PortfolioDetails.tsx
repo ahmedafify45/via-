@@ -173,59 +173,53 @@ function PortfolioDetails() {
             </div>
           </div>
         </div>
-        <div className="mt-[50px] md:mt-[158px] flex flex-col md:flex-row justify-between gap-6">
-          <div className="bg-[#FFFFFF0D] rounded-[4px] w-full p-4">
+        <div className="mt-[50px]  flex flex-col md:flex-row justify-between gap-6">
+          <div className="rounded-[4px] w-full p-10">
             <h2 className="text-[32px] xl:text-[48px] font-bold text-primary">
               {locale === Languages.ARABIC
                 ? "تفاصيل المشروع"
                 : "Project Details"}
             </h2>
             <div
-              className="text-[16px] xl:text-[18px] text-white font-medium"
+              className="text-[16px] xl:text-[18px] text-white "
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             ></div>
           </div>
-          <div className="bg-[#FFFFFF0D] py-[24px] md:py-[48px] px-[16px] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] w-full">
+          <div className="bg-[#FFFFFF0D] flex flex-col gap-[16px] md:gap-[24px] rounded-[4px] w-[600px] py-15 px-10">
             <div>
-              <h4 className="text-primary text-[18px] md:text-[32px] font-bold">
+              <h4 className="text-primary text-[18px] xl:text-[24px] font-bold">
                 {locale === Languages.ARABIC ? "العميل" : "Client"}
               </h4>
-              <p className="text-white text-[14px] xl:text-[24px] font-medium">
-                {portfolio.client}
-              </p>
+              <p className="text-white text-[14px] ">{portfolio.client}</p>
             </div>
             <div>
-              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+              <h4 className="text-primary text-[18px] xl:text-[24px] font-bold">
                 {locale === Languages.ARABIC ? "الموقع" : "Location"}
               </h4>
-              <p className="text-white text-[14px] xl:text-[24px] font-medium">
-                {portfolio.location}
-              </p>
+              <p className="text-white text-[14px] ">{portfolio.location}</p>
             </div>
             <div>
-              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+              <h4 className="text-primary text-[18px] xl:text-[24px] font-bold">
                 {locale === Languages.ARABIC ? "الحالة" : "Status"}
               </h4>
-              <p className="text-white text-[14px] xl:text-[24px]">
-                {portfolio.status}
-              </p>
+              <p className="text-white text-[14px]">{portfolio.status}</p>
             </div>
             <div>
-              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+              <h4 className="text-primary text-[18px] xl:text-[24px] font-bold">
                 {locale === Languages.ARABIC ? "الموقع الإلكتروني" : "Website"}
               </h4>
               <Link
                 href={portfolio.website}
-                className="text-white text-[14px] xl:text-[24px] hover:text-primary transition-all duration-200"
+                className="text-white text-[14px] hover:text-primary transition-all duration-200"
               >
                 {portfolio.website}
               </Link>
             </div>
             <div>
-              <h4 className="text-primary text-[18px] xl:text-[32px] font-bold">
+              <h4 className="text-primary text-[18px] xl:text-[24px] font-bold">
                 {locale === Languages.ARABIC ? "التاريخ" : "Date"}
               </h4>
-              <p className="text-white text-[14px] xl:text-[24px] font-medium">
+              <p className="text-white text-[14px] ">
                 {new Date(portfolio.date).toLocaleDateString()}
               </p>
             </div>
