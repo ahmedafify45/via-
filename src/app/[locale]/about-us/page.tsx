@@ -27,9 +27,9 @@ interface AboutSection {
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   const aboutSection = await serverFetcher<AboutSection>(
     "/items/about_section"
   );
