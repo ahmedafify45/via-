@@ -40,12 +40,11 @@ export async function generateMetadata({
       "/items/custom_pages",
       {
         fields: "name,name_en,seo_meta,seo_meta_en",
+        "filter[slug]": resolvedParams.slug,
       }
     );
 
-    const page = response.data.find(
-      (page) => page.slug === resolvedParams.slug
-    );
+    const page = response.data[0];
 
     if (!page) {
       return {
@@ -67,6 +66,16 @@ export async function generateMetadata({
     return {
       title,
       description,
+      openGraph: {
+        title,
+        description,
+        type: "website",
+      },
+      twitter: {
+        card: "summary",
+        title,
+        description,
+      },
     };
   } catch {
     return {
