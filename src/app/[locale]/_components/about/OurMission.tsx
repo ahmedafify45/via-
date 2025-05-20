@@ -78,7 +78,7 @@ function OurMission() {
         </motion.div>
         <motion.div
           className={`text-center xl:text-start ${
-            locale === Languages.ENGLISH ? "ml-20" : "mr-10"
+            locale === Languages.ENGLISH ? "ml-40" : "mr-10"
           }`}
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
